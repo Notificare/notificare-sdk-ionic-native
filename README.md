@@ -1,0 +1,1 @@
+notificare-sdk-ionic-native
