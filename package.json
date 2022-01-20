@@ -1,0 +1,24 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "app:sync": "lerna run ionic:sync --scope sample --stream",
+    "app:android": "lerna run ionic:android --scope sample --stream",
+    "app:android:studio": "lerna run ionic:android:studio --scope sample --stream",
+    "app:ios": "lerna run ionic:ios --scope sample --stream",
+    "app:ios:xcode": "lerna run ionic:ios:xcode --scope sample --stream",
+    "lint": "lerna run lint",
+    "pack": "lerna run pack",
+    "prepare": "husky install",
+    "typescript": "lerna run typescript"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.0.1",
+    "@commitlint/config-conventional": "^16.0.0",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  }
+}
