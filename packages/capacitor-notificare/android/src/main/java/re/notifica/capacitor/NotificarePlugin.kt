@@ -8,9 +8,9 @@ import com.getcapacitor.JSObject
 import com.getcapacitor.Plugin
 
 @CapacitorPlugin(name = "NotificarePlugin")
-class NotificarePlugin : Plugin() {
+public class NotificarePlugin : Plugin() {
     @PluginMethod
-    fun echo(call: PluginCall) {
+    public fun echo(call: PluginCall) {
         val value = call.getString("value")
         Log.i("Echo", value!!)
         val ret = JSObject()
