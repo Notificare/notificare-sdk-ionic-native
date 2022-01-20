@@ -46,6 +46,9 @@
     "docs:create-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; ln -s ../../README.md ../../CHANGELOG.md ../../MIGRATION.md .",
     "docs:replace-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; cp ../../README.md ../../CHANGELOG.md ../../MIGRATION.md ."
   },
+  "peerDependencies": {
+    "@capacitor/core": "^3.0.0"
+  },
   "devDependencies": {
     "@capacitor/android": "^3.0.0",
     "@capacitor/core": "^3.0.0",
@@ -54,9 +57,6 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.32.0",
     "typescript": "^4.5.4"
-  },
-  "peerDependencies": {
-    "@capacitor/core": "^3.0.0"
   },
   "capacitor": {
     "ios": {
