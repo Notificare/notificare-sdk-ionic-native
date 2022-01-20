@@ -67,3 +67,6 @@ NotificareServices.plist
 # Push providers
 google-services.json
 agconnect-services.json
+
+# Packed libs
+capacitor-notificare-*.tgz
