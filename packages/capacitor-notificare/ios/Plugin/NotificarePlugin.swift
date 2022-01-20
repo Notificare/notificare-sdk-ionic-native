@@ -1,8 +1,12 @@
 import Foundation
+import Capacitor
 
-@objc public class NotificarePlugin: NSObject {
-    @objc public func echo(_ value: String) -> String {
-        print(value)
-        return value
+@objc(NotificarePlugin)
+public class NotificarePlugin: CAPPlugin {
+    @objc func echo(_ call: CAPPluginCall) {
+        let value = call.getString("value") ?? ""
+        call.resolve([
+            "value": value
+        ])
     }
 }
