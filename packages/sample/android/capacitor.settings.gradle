@@ -16,3 +16,27 @@ project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacit
 
 include ':capacitor-notificare'
 project(':capacitor-notificare').projectDir = new File('../../capacitor-notificare/android')
+
+include ':capacitor-notificare-assets'
+project(':capacitor-notificare-assets').projectDir = new File('../../capacitor-notificare-assets/android')
+
+include ':capacitor-notificare-authentication'
+project(':capacitor-notificare-authentication').projectDir = new File('../../capacitor-notificare-authentication/android')
+
+include ':capacitor-notificare-geo'
+project(':capacitor-notificare-geo').projectDir = new File('../../capacitor-notificare-geo/android')
+
+include ':capacitor-notificare-inbox'
+project(':capacitor-notificare-inbox').projectDir = new File('../../capacitor-notificare-inbox/android')
+
+include ':capacitor-notificare-loyalty'
+project(':capacitor-notificare-loyalty').projectDir = new File('../../capacitor-notificare-loyalty/android')
+
+include ':capacitor-notificare-push'
+project(':capacitor-notificare-push').projectDir = new File('../../capacitor-notificare-push/android')
+
+include ':capacitor-notificare-push-ui'
+project(':capacitor-notificare-push-ui').projectDir = new File('../../capacitor-notificare-push-ui/android')
+
+include ':capacitor-notificare-scannables'
+project(':capacitor-notificare-scannables').projectDir = new File('../../capacitor-notificare-scannables/android')

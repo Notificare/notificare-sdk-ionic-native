@@ -14,6 +14,14 @@ dependencies {
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-notificare')
+    implementation project(':capacitor-notificare-assets')
+    implementation project(':capacitor-notificare-authentication')
+    implementation project(':capacitor-notificare-geo')
+    implementation project(':capacitor-notificare-inbox')
+    implementation project(':capacitor-notificare-loyalty')
+    implementation project(':capacitor-notificare-push')
+    implementation project(':capacitor-notificare-push-ui')
+    implementation project(':capacitor-notificare-scannables')
 
 }
 

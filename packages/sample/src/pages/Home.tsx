@@ -1,7 +1,9 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import type { FC } from 'react';
+
 import ExploreContainer from '../components/ExploreContainer';
+
 import './Home.css';
-import { FC } from "react";
 
 const Home: FC = () => {
   return (
