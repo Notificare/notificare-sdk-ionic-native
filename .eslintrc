@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "extends": [
+    "@ionic/eslint-config/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "packages/**/build",
+    "packages/**/dist",
+    "packages/**/android",
+    "packages/**/ios"
+  ]
+}
