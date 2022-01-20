@@ -31,16 +31,20 @@
     "CapacitorNotificarePushUI.podspec"
   ],
   "scripts": {
-    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
-    "verify:android": "cd android && ./gradlew clean build test && cd ..",
-    "verify:web": "npm run build",
-    "lint": "eslint . --ext ts,js",
-    "lint:fix": "yarn run lint:eslint --fix",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "build": "yarn clean && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
-    "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "typescript": "tsc --noEmit",
+    "verify": "yarn verify:android && yarn verify:ios && yarn verify:web",
+    "verify:android": "cd android && ./gradlew clean build && cd ..",
+    "verify:ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin && cd ..",
+    "verify:web": "yarn build",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "pack": "npm pack",
+    "prepack": "yarn build; yarn docs:replace-symbolic-links",
+    "postpack": "yarn docs:create-symbolic-links",
+    "prepare": "yarn build",
+    "docs:create-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; ln -s ../../README.md ../../CHANGELOG.md ../../MIGRATION.md .",
+    "docs:replace-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; cp ../../README.md ../../CHANGELOG.md ../../MIGRATION.md ."
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.0",
