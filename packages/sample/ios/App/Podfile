@@ -1,0 +1,30 @@
+platform :ios, '12.0'
+use_frameworks!
+
+# workaround to avoid Xcode caching of Pods that requires
+# Product -> Clean Build Folder after new Cordova plugins installed
+# Requires CocoaPods 1.6 or newer
+install! 'cocoapods', :disable_input_output_paths => true
+
+def capacitor_pods
+  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
+  pod 'CapacitorHaptics', :path => '../../node_modules/@capacitor/haptics'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+  pod 'CapacitorNotificare', :path => '../../../capacitor-notificare'
+  pod 'CapacitorNotificareAssets', :path => '../../../capacitor-notificare-assets'
+  pod 'CapacitorNotificareAuthentication', :path => '../../../capacitor-notificare-authentication'
+  pod 'CapacitorNotificareGeo', :path => '../../../capacitor-notificare-geo'
+  pod 'CapacitorNotificareInbox', :path => '../../../capacitor-notificare-inbox'
+  pod 'CapacitorNotificareLoyalty', :path => '../../../capacitor-notificare-loyalty'
+  pod 'CapacitorNotificarePush', :path => '../../../capacitor-notificare-push'
+  pod 'CapacitorNotificarePushUi', :path => '../../../capacitor-notificare-push-ui'
+  pod 'CapacitorNotificareScannables', :path => '../../../capacitor-notificare-scannables'
+end
+
+target 'App' do
+  capacitor_pods
+  # Add your Pods here
+end
