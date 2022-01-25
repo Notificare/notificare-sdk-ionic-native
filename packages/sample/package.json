@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "ionic:sync": "ionic cap sync",
-    "ionic:android": "ionic cap run android --external --target=898Y04KPS",
+    "ionic:android": "ionic cap run android -l --external --target=898Y04KPS",
     "ionic:android:studio": "ionic cap open android",
-    "ionic:ios": "ionic cap run ios",
+    "ionic:ios": "ionic cap run ios -l --external --target=f76a3697d523e78ea63272a519580a2c47d87731 ",
     "ionic:ios:xcode": "ionic cap open ios",
     "lint": "yarn run lint:eslint && yarn run lint:prettier --check",
     "lint:eslint": "eslint . --ext ts,js",
