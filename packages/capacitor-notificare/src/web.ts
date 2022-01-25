@@ -1,10 +1,119 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { NotificarePlugin } from './definitions';
+import type { NotificareApplication } from './models/notificare-application';
+import type { NotificareDevice } from './models/notificare-device';
+import type { NotificareDoNotDisturb } from './models/notificare-do-not-disturb';
+import type { NotificareNotification } from './models/notificare-notification';
+import type { NotificareDevicePlugin, NotificareEventsPlugin, NotificarePlugin } from './plugin';
 
 export class NotificarePluginWeb extends WebPlugin implements NotificarePlugin {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async echo(_options: { value: string }): Promise<{ value: string }> {
+  //
+  // Core
+  //
+
+  isConfigured(): Promise<{ result: boolean }> {
     throw this.unimplemented('Not implemented on web.');
+  }
+
+  isReady(): Promise<{ result: boolean }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  launch(): Promise<void> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  unlaunch(): Promise<void> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  getApplication(): Promise<{ result: NotificareApplication | null }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  fetchApplication(): Promise<{ result: NotificareApplication }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  fetchNotification(_options: { id: string }): Promise<{ result: NotificareNotification }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  //
+  // Device module
+  //
+
+  device(): NotificareDevicePlugin {
+    const _this = this;
+    return {
+      getCurrentDevice(): Promise<{ result: NotificareDevice | null }> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      getPreferredLanguage(): Promise<{ result: string | null }> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      updatePreferredLanguage(_options: { language: string | null }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      register(_options: { userId: string | null; userName: string | null }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      fetchTags(): Promise<{ result: string[] }> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      addTag(_options: { tag: string }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      addTags(_options: { tags: string[] }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      removeTag(_options: { tag: string }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      removeTags(_options: { tags: string[] }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      clearTags(): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      fetchDoNotDisturb(): Promise<{ result: NotificareDoNotDisturb | null }> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      updateDoNotDisturb(_options: { dnd: NotificareDoNotDisturb }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      clearDoNotDisturb(): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      fetchUserData(): Promise<{ result: Record<string, any> }> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      updateUserData(_options: { userData: Record<string, any> }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+    };
+  }
+
+  //
+  // Events
+  //
+
+  events(): NotificareEventsPlugin {
+    const _this = this;
+    return {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      logCustom(_options: { event: string; data?: Record<string, any> }): Promise<void> {
+        throw _this.unimplemented('Not implemented on web.');
+      },
+    };
   }
 }
