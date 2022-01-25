@@ -140,10 +140,7 @@ public class NotificarePlugin : Plugin() {
 
     @PluginMethod
     public fun updatePreferredLanguage(call: PluginCall) {
-        val language = call.getString("language") ?: run {
-            call.reject("Missing 'language' parameter.")
-            return
-        }
+        val language = call.getString("language")
 
         Notificare.device().updatePreferredLanguage(language, object : NotificareCallback<Unit> {
             override fun onSuccess(result: Unit) {

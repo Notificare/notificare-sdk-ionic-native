@@ -33,25 +33,6 @@ export interface NotificarePlugin {
   // Device module
   //
 
-  device(): NotificareDevicePlugin;
-
-  //
-  // Events module
-  //
-
-  events(): NotificareEventsPlugin;
-
-  //
-  // Event bridge
-  //
-
-  addListener(
-    eventName: string,
-    listenerFunc: (data: any) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
-}
-
-export interface NotificareDevicePlugin {
   getCurrentDevice(): Promise<{ result: NotificareDevice | null }>;
 
   getPreferredLanguage(): Promise<{ result: string | null }>;
@@ -81,8 +62,19 @@ export interface NotificareDevicePlugin {
   fetchUserData(): Promise<{ result: Record<string, any> }>;
 
   updateUserData(options: { userData: Record<string, any> }): Promise<void>;
-}
 
-export interface NotificareEventsPlugin {
+  //
+  // Events module
+  //
+
   logCustom(options: { event: string; data?: Record<string, any> }): Promise<void>;
+
+  //
+  // Event bridge
+  //
+
+  addListener(
+    eventName: string,
+    listenerFunc: (data: any) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle;
 }
