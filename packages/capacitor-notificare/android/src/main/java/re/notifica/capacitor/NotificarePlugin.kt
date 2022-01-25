@@ -155,15 +155,8 @@ public class NotificarePlugin : Plugin() {
 
     @PluginMethod
     public fun register(call: PluginCall) {
-        val userId = call.getString("userId") ?: run {
-            call.reject("Missing 'userId' parameter.")
-            return
-        }
-
-        val userName = call.getString("userName") ?: run {
-            call.reject("Missing 'userName' parameter.")
-            return
-        }
+        val userId = call.getString("userId")
+        val userName = call.getString("userName")
 
         Notificare.device().register(userId, userName, object : NotificareCallback<Unit> {
             override fun onSuccess(result: Unit) {
