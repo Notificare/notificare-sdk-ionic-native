@@ -1,8 +1,9 @@
-import './ExploreContainer.css';
 import { Notificare } from 'capacitor-notificare';
 import type { FC } from 'react';
 
-const ExploreContainer: FC = () => {
+import './index.css';
+
+export const ExploreContainer: FC = () => {
   return (
     <div className="container">
       <strong>Ready to create an app?</strong>
@@ -15,9 +16,10 @@ const ExploreContainer: FC = () => {
 
       <button
         onClick={async () => {
-          const result = await Notificare.echo({ value: 'Hello' });
+          console.log('=== calling === method ===');
+          const result = await Notificare.getApplication();
           console.log('=== result ===');
-          console.log(result);
+          console.log(JSON.stringify(result, null, 2));
         }}
       >
         Click me!
@@ -25,5 +27,3 @@ const ExploreContainer: FC = () => {
     </div>
   );
 };
-
-export default ExploreContainer;
