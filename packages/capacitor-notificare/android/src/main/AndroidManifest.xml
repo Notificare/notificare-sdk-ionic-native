@@ -1,3 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="re.notifica.capacitor">
+
+    <application>
+
+        <receiver
+            android:name=".NotificarePluginIntentReceiver"
+            android:exported="false" />
+
+    </application>
+
 </manifest>
