@@ -28,7 +28,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorNotificarePushUI.podspec"
+    "CapacitorNotificarePushUi.podspec"
   ],
   "scripts": {
     "build": "yarn clean && tsc && rollup -c rollup.config.js",
