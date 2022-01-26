@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 're.notifica.demo',
   appName: 'sample',
   webDir: 'build',
   bundledWebRuntime: false,
