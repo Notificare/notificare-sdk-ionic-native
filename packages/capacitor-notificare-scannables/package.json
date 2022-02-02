@@ -28,7 +28,9 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorNotificareScannables.podspec"
+    "CapacitorNotificareScannables.podspec",
+    "CHANGELOG.md",
+    "MIGRATION.md"
   ],
   "scripts": {
     "build": "yarn clean && tsc && rollup -c rollup.config.js",
