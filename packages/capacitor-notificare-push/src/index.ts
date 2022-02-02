@@ -1,10 +1,3 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-push';
 
-import type { NotificarePushPlugin } from './definitions';
-
-const NotificarePush = registerPlugin<NotificarePushPlugin>('NotificarePushPlugin', {
-  web: () => import('./web').then((m) => new m.NotificarePushPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificarePush };
+export * from './models/notificare-system-notification';
