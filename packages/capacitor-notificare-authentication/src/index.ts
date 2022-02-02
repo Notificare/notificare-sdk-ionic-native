@@ -1,10 +1,5 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-authentication';
 
-import type { NotificareAuthenticationPlugin } from './definitions';
-
-const NotificareAuthentication = registerPlugin<NotificareAuthenticationPlugin>('NotificareAuthenticationPlugin', {
-  web: () => import('./web').then((m) => new m.NotificareAuthenticationPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificareAuthentication };
+export * from './models/notificare-user';
+export * from './models/notificare-user-preference';
+export * from './models/notificare-user-segment';
