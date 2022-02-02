@@ -1,10 +1,3 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-scannables';
 
-import type { NotificareScannablesPlugin } from './definitions';
-
-const NotificareScannables = registerPlugin<NotificareScannablesPlugin>('NotificareScannablesPlugin', {
-  web: () => import('./web').then((m) => new m.NotificareScannablesPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificareScannables };
+export * from './models/notificare-scannable';
