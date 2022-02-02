@@ -1,0 +1,20 @@
+.details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.message {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.caption {
+  font-size: 12px;
+  font-weight: normal;
+}

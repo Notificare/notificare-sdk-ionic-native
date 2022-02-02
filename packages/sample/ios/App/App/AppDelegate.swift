@@ -1,13 +1,24 @@
+import CoreLocation
 import UIKit
 import Capacitor
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    private var locationManager: CLLocationManager!
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.ensurePermissions()
+        }
+        
         return true
     }
 
@@ -57,4 +68,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+extension AppDelegate {
+    private func ensurePermissions() {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+
+        guard authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways else {
+            locationManager.requestWhenInUseAuthorization()
+            return
+        }
+
+        guard authorizationStatus == .authorizedAlways else {
+            locationManager.requestAlwaysAuthorization()
+            return
+        }
+    }
+}
+
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        handleAuthorizationStatus(status)
+    }
+    
+    @available(iOS 14.0, *)
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        handleAuthorizationStatus(manager.authorizationStatus)
+    }
+    
+    private func handleAuthorizationStatus(_ status: CLAuthorizationStatus) {
+        ensurePermissions()
+    }
 }

@@ -1,6 +1,13 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonToast } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
+import { NotificareAssets } from 'capacitor-notificare-assets';
+import { NotificareAuthentication } from 'capacitor-notificare-authentication';
+import { NotificareGeo } from 'capacitor-notificare-geo';
+import { NotificareLoyalty } from 'capacitor-notificare-loyalty';
+import { NotificarePush } from 'capacitor-notificare-push';
+import { NotificareScannables } from 'capacitor-notificare-scannables';
 import type { FC } from 'react';
+import { useHistory } from 'react-router';
 
 import './index.css';
 
@@ -8,6 +15,7 @@ const TOAST_DURATION = 1000;
 
 export const Home: FC = () => {
   const [toast] = useIonToast();
+  const history = useHistory();
 
   // region Core
 
@@ -248,6 +256,339 @@ export const Home: FC = () => {
 
   // endregion
 
+  // region Notificare Assets
+
+  async function onFetchAssetsClicked() {
+    try {
+      const assets = await NotificareAssets.fetch('LANDSCAPES');
+      await toast({ message: JSON.stringify(assets), duration: TOAST_DURATION });
+
+      console.log('=== FETCH ASSETS ===');
+      console.log(JSON.stringify(assets, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
+  // region Notificare Push
+
+  async function onHasRemoteNotificationEnabledClicked() {
+    try {
+      const enabled = await NotificarePush.hasRemoteNotificationsEnabled();
+      await toast({ message: JSON.stringify(enabled), duration: TOAST_DURATION });
+
+      console.log('=== REMOTE NOTIFICATIONS ENABLED ===');
+      console.log(JSON.stringify(enabled, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onAllowedUIClicked() {
+    try {
+      const allowedUI = await NotificarePush.allowedUI();
+      await toast({ message: JSON.stringify(allowedUI), duration: TOAST_DURATION });
+
+      console.log('=== ALLOWED UI ===');
+      console.log(JSON.stringify(allowedUI, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onEnableRemoteNotificationsClicked() {
+    try {
+      await NotificarePush.enableRemoteNotifications();
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onDisableRemoteNotificationsClicked() {
+    try {
+      await NotificarePush.disableRemoteNotifications();
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
+  // region Notificare Geo
+
+  async function onLocationServicesEnabledClicked() {
+    try {
+      const enabled = await NotificareGeo.hasLocationServicesEnabled();
+      await toast({ message: JSON.stringify(enabled), duration: TOAST_DURATION });
+
+      console.log('=== LOCATION SERVICES ENABLED ===');
+      console.log(JSON.stringify(enabled, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onBluetoothEnabledClicked() {
+    try {
+      const enabled = await NotificareGeo.hasBluetoothEnabled();
+      await toast({ message: JSON.stringify(enabled), duration: TOAST_DURATION });
+
+      console.log('=== BLUETOOTH ENABLED ===');
+      console.log(JSON.stringify(enabled, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onEnableLocationUpdatesClicked() {
+    try {
+      await NotificareGeo.enableLocationUpdates();
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onDisableLocationUpdatesClicked() {
+    try {
+      await NotificareGeo.disableLocationUpdates();
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onRangingBeaconsClicked() {
+    history.push('/beacons');
+  }
+
+  // endregion
+
+  // region Notificare Inbox
+
+  async function onInboxClicked() {
+    history.push('/inbox');
+  }
+
+  // endregion
+
+  // region Notificare Loyalty
+
+  async function onFetchPassClicked() {
+    try {
+      const pass = await NotificareLoyalty.fetchPassBySerial('520d974e-b3d5-4d30-93b4-259f9d4bfa1d');
+      await toast({ message: JSON.stringify(pass), duration: TOAST_DURATION });
+
+      console.log('=== FETCH PASS ===');
+      console.log(JSON.stringify(pass, null, 2));
+
+      await NotificareLoyalty.present(pass);
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
+  // region Notificare Scannables
+
+  async function onStartScannableSessionClicked() {
+    try {
+      // await NotificareScannables.startScannableSession();
+
+      if (await NotificareScannables.canStartNfcScannableSession()) {
+        await NotificareScannables.startNfcScannableSession();
+      } else {
+        await NotificareScannables.startQrCodeScannableSession();
+      }
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
+  // region Notificare Authentication
+
+  async function onIsLoggedInClicked() {
+    try {
+      const result = await NotificareAuthentication.isLoggedIn();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== IS LOGGED IN ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onCreateAccountClicked() {
+    try {
+      await NotificareAuthentication.createAccount('helder+4@notifica.re', '123456', 'Helder Pinhal');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onLoginClicked() {
+    try {
+      await NotificareAuthentication.login('helder@notifica.re', '123456');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onLogoutClicked() {
+    try {
+      await NotificareAuthentication.logout();
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onFetchUserDetailsClicked() {
+    try {
+      const result = await NotificareAuthentication.fetchUserDetails();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== FETCH USER DETAILS ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onFetchUserPreferencesClicked() {
+    try {
+      const result = await NotificareAuthentication.fetchUserPreferences();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== FETCH USER PREFERENCES ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onFetchUserSegmentsClicked() {
+    try {
+      const result = await NotificareAuthentication.fetchUserSegments();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== FETCH USER SEGMENTS ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onSendPasswordResetClicked() {
+    try {
+      await NotificareAuthentication.sendPasswordReset('helder@notifica.re');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onResetPasswordClicked() {
+    try {
+      await NotificareAuthentication.resetPassword('helder@notifica.re', '---');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onChangePasswordClicked() {
+    try {
+      await NotificareAuthentication.changePassword('123456');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onValidateUserClicked() {
+    try {
+      await NotificareAuthentication.validateUser('---');
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onGeneratePushEmailClicked() {
+    try {
+      const result = await NotificareAuthentication.generatePushEmailAddress();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== GENERATE PUSH EMAIL ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onAddUserSegmentClicked() {
+    try {
+      const segments = await NotificareAuthentication.fetchUserSegments();
+
+      await NotificareAuthentication.addUserSegment(segments[0]);
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onRemoveUserSegmentClicked() {
+    try {
+      const segments = await NotificareAuthentication.fetchUserSegments();
+
+      await NotificareAuthentication.removeUserSegment(segments[0]);
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onAddUserSegmentToPreferenceClicked() {
+    try {
+      const preferences = await NotificareAuthentication.fetchUserPreferences();
+
+      const preference = preferences[0];
+      const option = preference.options[0];
+
+      await NotificareAuthentication.addUserSegmentToPreference(preference, option);
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onRemoveUserSegmentFromPreferenceClicked() {
+    try {
+      const preferences = await NotificareAuthentication.fetchUserPreferences();
+
+      const preference = preferences[0];
+      const option = preference.options[0];
+
+      await NotificareAuthentication.removeUserSegmentFromPreference(preference, option);
+      await toast({ message: 'Done', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
   return (
     <IonPage>
       <IonHeader>
@@ -276,6 +617,45 @@ export const Home: FC = () => {
           </IonButton>
           <IonButton expand="full" fill="clear" onClick={onFetchNotificationClicked}>
             Fetch notification
+          </IonButton>
+        </section>
+        <section id="push">
+          <p className="section-title">Push</p>
+          <IonButton expand="full" fill="clear" onClick={onHasRemoteNotificationEnabledClicked}>
+            Check remote notifications enabled
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onAllowedUIClicked}>
+            Check allowed UI
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onEnableRemoteNotificationsClicked}>
+            Enable remote notifications
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onDisableRemoteNotificationsClicked}>
+            Disable remote notifications
+          </IonButton>
+        </section>
+        <section id="geo">
+          <p className="section-title">Geo</p>
+          <IonButton expand="full" fill="clear" onClick={onLocationServicesEnabledClicked}>
+            Check location services enabled
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onBluetoothEnabledClicked}>
+            Check bluetooth enabled
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onEnableLocationUpdatesClicked}>
+            Enable location updates
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onDisableLocationUpdatesClicked}>
+            Disable location updates
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onRangingBeaconsClicked}>
+            View ranging beacons
+          </IonButton>
+        </section>
+        <section id="inbox">
+          <p className="section-title">Inbox</p>
+          <IonButton expand="full" fill="clear" onClick={onInboxClicked}>
+            Open inbox
           </IonButton>
         </section>
         <section id="device">
@@ -330,6 +710,75 @@ export const Home: FC = () => {
           <p className="section-title">Events</p>
           <IonButton expand="full" fill="clear" onClick={onLogCustomEventClicked}>
             Log custom event
+          </IonButton>
+        </section>
+        <section id="assets">
+          <p className="section-title">Assets</p>
+          <IonButton expand="full" fill="clear" onClick={onFetchAssetsClicked}>
+            Fetch assets
+          </IonButton>
+        </section>
+        <section id="loyalty">
+          <p className="section-title">Loyalty</p>
+          <IonButton expand="full" fill="clear" onClick={onFetchPassClicked}>
+            Fetch pass
+          </IonButton>
+        </section>
+        <section id="scannables">
+          <p className="section-title">Scannables</p>
+          <IonButton expand="full" fill="clear" onClick={onStartScannableSessionClicked}>
+            Start scannable session
+          </IonButton>
+        </section>
+        <section id="authentication">
+          <p className="section-title">Authentication</p>
+          <IonButton expand="full" fill="clear" onClick={onIsLoggedInClicked}>
+            Am I logged in?
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onCreateAccountClicked}>
+            Create an account
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onLoginClicked}>
+            Login
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onLogoutClicked}>
+            Logout
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onFetchUserDetailsClicked}>
+            Fetch user details
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onFetchUserPreferencesClicked}>
+            Fetch user preferences
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onFetchUserSegmentsClicked}>
+            Fetch user segments
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onSendPasswordResetClicked}>
+            Send password reset
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onResetPasswordClicked}>
+            Reset password
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onChangePasswordClicked}>
+            Change password
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onValidateUserClicked}>
+            Validate user
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onGeneratePushEmailClicked}>
+            Generate push email
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onAddUserSegmentClicked}>
+            Add user segment
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onRemoveUserSegmentClicked}>
+            Remove user segment
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onAddUserSegmentToPreferenceClicked}>
+            Add user segment to preference
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onRemoveUserSegmentFromPreferenceClicked}>
+            Remove user segment from preference
           </IonButton>
         </section>
       </IonContent>

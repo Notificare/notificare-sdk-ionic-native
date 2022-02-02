@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  padding: 16px;
+}
+
+.attachment-container {
+  margin-right: 16px;
+}
+
+.details-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.unread-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 16px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.message {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.caption {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.unread-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background-color: #2b43f7;
+  margin-top: 8px;
+}
+
+.attachment-image {
+  width: 96px;
+  height: 64px;
+}
