@@ -1,10 +1,3 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-assets';
 
-import type { NotificareAssetsPlugin } from './definitions';
-
-const NotificareAssets = registerPlugin<NotificareAssetsPlugin>('NotificareAssetsPlugin', {
-  web: () => import('./web').then((m) => new m.NotificareAssetsPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificareAssets };
+export * from './models/notificare-asset';
