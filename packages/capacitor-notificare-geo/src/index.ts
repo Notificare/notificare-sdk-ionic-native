@@ -1,10 +1,7 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-geo';
 
-import type { NotificareGeoPlugin } from './definitions';
-
-const NotificareGeo = registerPlugin<NotificareGeoPlugin>('NotificareGeoPlugin', {
-  web: () => import('./web').then((m) => new m.NotificareGeoPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificareGeo };
+export * from './models/notificare-beacon';
+export * from './models/notificare-heading';
+export * from './models/notificare-location';
+export * from './models/notificare-region';
+export * from './models/notificare-visit';
