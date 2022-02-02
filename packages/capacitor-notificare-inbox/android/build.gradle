@@ -52,6 +52,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
 
+    implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0'
+
     def notificare_version = '3.0.0-beta.2'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-inbox:$notificare_version"

@@ -1,10 +1,3 @@
-import { registerPlugin } from '@capacitor/core';
+export * from './notificare-inbox';
 
-import type { NotificareInboxPlugin } from './definitions';
-
-const NotificareInbox = registerPlugin<NotificareInboxPlugin>('NotificareInboxPlugin', {
-  web: () => import('./web').then((m) => new m.NotificareInboxPluginWeb()),
-});
-
-export * from './definitions';
-export { NotificareInbox };
+export * from './models/notificare-inbox-item';
