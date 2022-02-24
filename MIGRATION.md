@@ -24,7 +24,7 @@ buildscript {
         maven { url 'https://maven.notifica.re/releases' }
     }
     dependencies {
-        classpath 're.notifica.gradle:notificare-services:1.0.0'
+        classpath 're.notifica.gradle:notificare-services:1.0.1'
     }
 }
 
@@ -56,15 +56,15 @@ We have moved to several new packages. Here's all the dependencies available:
 ```json
 {
   "dependencies": {
-    "capacitor-notificare": "3.0.0-beta.2",
-    "capacitor-notificare-assets": "3.0.0-beta.2",
-    "capacitor-notificare-authentication": "3.0.0-beta.2",
-    "capacitor-notificare-geo": "3.0.0-beta.2",
-    "capacitor-notificare-inbox": "3.0.0-beta.2",
-    "capacitor-notificare-loyalty": "3.0.0-beta.2",
-    "capacitor-notificare-push": "3.0.0-beta.2",
-    "capacitor-notificare-push-ui": "3.0.0-beta.2",
-    "capacitor-notificare-scannables": "3.0.0-beta.2"
+    "capacitor-notificare": "3.0.0",
+    "capacitor-notificare-assets": "3.0.0",
+    "capacitor-notificare-authentication": "3.0.0",
+    "capacitor-notificare-geo": "3.0.0",
+    "capacitor-notificare-inbox": "3.0.0",
+    "capacitor-notificare-loyalty": "3.0.0",
+    "capacitor-notificare-push": "3.0.0",
+    "capacitor-notificare-push-ui": "3.0.0",
+    "capacitor-notificare-scannables": "3.0.0"
   }
 }
 ```
@@ -80,10 +80,10 @@ In the hypothetical scenario where you have an app that wants to add push notifi
 ```json
 {
   "dependencies": {
-    "capacitor-notificare": "3.0.0-beta.2",
-    "capacitor-notificare-inbox": "3.0.0-beta.2",
-    "capacitor-notificare-push": "3.0.0-beta.2",
-    "capacitor-notificare-push-ui": "3.0.0-beta.2"
+    "capacitor-notificare": "3.0.0",
+    "capacitor-notificare-inbox": "3.0.0",
+    "capacitor-notificare-push": "3.0.0",
+    "capacitor-notificare-push-ui": "3.0.0"
   }
 }
 ```
