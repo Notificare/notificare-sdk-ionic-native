@@ -2,7 +2,7 @@
 
 # Notificare Ionic Native SDK
 
-[![GitHub release](https://img.shields.io/github/v/release/notificare/notificare-sdk-ionic-native?include_prereleases)](https://github.com/notificare/notificare-sdk-ionic-native/releases)
+[![GitHub release](https://img.shields.io/github/v/release/notificare/notificare-sdk-ionic-native)](https://github.com/notificare/notificare-sdk-ionic-native/releases)
 [![License](https://img.shields.io/github/license/notificare/notificare-sdk-ionic-native)](https://github.com/notificare/notificare-sdk-ionic-native/blob/main/LICENSE)
 
 The Notificare Ionic Native SDK makes it quick and easy to communicate efficiently with many of the Notificare API services and enables you to seamlessly integrate our various features, from Push Notifications to Contextualised Storage.
@@ -14,7 +14,6 @@ Table of contents
 =================
 
 * [Features](#features)
-* [Releases](#releases)
 * [Installation](#installation)
   * [Requirements](#requirements)
   * [Configuration](#configuration)
