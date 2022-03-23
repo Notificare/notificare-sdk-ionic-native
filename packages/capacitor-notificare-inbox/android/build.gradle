@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
     }
 }
@@ -54,7 +54,7 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0'
 
-    def notificare_version = '3.0.0'
+    def notificare_version = '3.0.1'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-inbox:$notificare_version"
 }
