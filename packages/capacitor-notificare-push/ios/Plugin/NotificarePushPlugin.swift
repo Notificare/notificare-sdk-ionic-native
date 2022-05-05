@@ -204,6 +204,18 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         }
     }
     
+    public func notificare(_ notificarePush: NotificarePush, didOpenUnknownNotification userInfo: [AnyHashable : Any]) {
+        let data: [String: Any] = Dictionary(uniqueKeysWithValues: userInfo.compactMap {
+            guard let key = $0.key as? String else {
+                return nil
+            }
+            
+            return (key, $0.value)
+        })
+        
+        EventBroker.instance.dispatchEvent("unknown_notification_opened", data: data)
+    }
+    
     public func notificare(_ notificarePush: NotificarePush, didOpenAction action: NotificareNotification.Action, for notification: NotificareNotification) {
         do {
             let data = [
@@ -217,9 +229,26 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         }
     }
     
-    //    public func notificare(_ notificarePush: NotificarePush, didReceiveUnknownAction action: String, for notification: [AnyHashable : Any], responseText: String?) {
-    //
-    //    }
+    public func notificare(_ notificarePush: NotificarePush, didOpenUnknownAction action: String, for notification: [AnyHashable : Any], responseText: String?) {
+        let notificationMap: [String: Any] = Dictionary(uniqueKeysWithValues: notification.compactMap {
+            guard let key = $0.key as? String else {
+                return nil
+            }
+            
+            return (key, $0.value)
+        })
+        
+        var data: [String: Any] = [
+            "notification": notificationMap,
+            "action": action,
+        ]
+        
+        if let responseText = responseText {
+            data["responseText"] = responseText
+        }
+        
+        EventBroker.instance.dispatchEvent("unknown_notification_action_opened", data: data)
+    }
     
     public func notificare(_ notificarePush: NotificarePush, didChangeNotificationSettings granted: Bool) {
         EventBroker.instance.dispatchEvent("notification_settings_changed", data: ["granted": granted])
