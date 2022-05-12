@@ -8,4 +8,9 @@ CAP_PLUGIN(NotificareGeoPlugin, "NotificareGeoPlugin",
            CAP_PLUGIN_METHOD(hasBluetoothEnabled, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(enableLocationUpdates, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(disableLocationUpdates, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(checkPermissionStatus, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(shouldShowPermissionRationale, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(presentPermissionRationale, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(requestPermission, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(openAppSettings, CAPPluginReturnPromise);
 )
