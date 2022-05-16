@@ -67,10 +67,22 @@ export class NotificarePush {
     return NativePlugin.addListener('notification_opened', callback);
   }
 
+  public static onUnknownNotificationOpened(
+    callback: (notification: Record<string, any>) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return NativePlugin.addListener('unknown_notification_opened', callback);
+  }
+
   public static onNotificationActionOpened(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return NativePlugin.addListener('notification_action_opened', callback);
+  }
+
+  public static onUnknownNotificationActionOpened(
+    callback: (data: { notification: Record<string, any>; action: string; responseText?: string }) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return NativePlugin.addListener('unknown_notification_action_opened', callback);
   }
 
   public static onNotificationSettingsChanged(

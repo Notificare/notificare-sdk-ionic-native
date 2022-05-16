@@ -2,7 +2,7 @@ import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIon
 import { Notificare } from 'capacitor-notificare';
 import { NotificareAssets } from 'capacitor-notificare-assets';
 import { NotificareAuthentication } from 'capacitor-notificare-authentication';
-import { NotificareGeo } from 'capacitor-notificare-geo';
+import { NotificareGeo, PermissionGroup, PermissionStatus } from 'capacitor-notificare-geo';
 import { NotificareLoyalty } from 'capacitor-notificare-loyalty';
 import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
@@ -346,11 +346,86 @@ export const Home: FC = () => {
 
   async function onEnableLocationUpdatesClicked() {
     try {
+      if (await ensureForegroundLocationPermission()) {
+        console.log('Foreground location permissions granted.');
+
+        if (await ensureBackgroundLocationPermission()) {
+          console.log('Background location permissions granted.');
+
+          if (await ensureBluetoothScanPermission()) {
+            console.log('Bluetooth scan permissions granted.');
+          }
+        }
+      }
+
       await NotificareGeo.enableLocationUpdates();
       await toast({ message: 'Done.', duration: TOAST_DURATION });
     } catch (e) {
       await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
     }
+  }
+
+  async function ensureForegroundLocationPermission(): Promise<boolean> {
+    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_WHEN_IN_USE);
+    if (status == PermissionStatus.GRANTED) return true;
+
+    if (status == PermissionStatus.PERMANENTLY_DENIED) {
+      // NOTE: Present some UI to the user explaining they need to grant the permission
+      // via the Settings app.
+      await NotificareGeo.openAppSettings();
+      return false;
+    }
+
+    if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.LOCATION_WHEN_IN_USE)) {
+      await NotificareGeo.presentPermissionRationale(PermissionGroup.LOCATION_WHEN_IN_USE, {
+        title: 'Sample',
+        message: 'We need access to foreground location in order to show relevant content.',
+      });
+    }
+
+    return (await NotificareGeo.requestPermission(PermissionGroup.LOCATION_WHEN_IN_USE)) == PermissionStatus.GRANTED;
+  }
+
+  async function ensureBackgroundLocationPermission(): Promise<boolean> {
+    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_ALWAYS);
+    if (status == PermissionStatus.GRANTED) return true;
+
+    if (status == PermissionStatus.PERMANENTLY_DENIED) {
+      // NOTE: Present some UI to the user explaining they need to grant the permission
+      // via the Settings app.
+      await NotificareGeo.openAppSettings();
+      return false;
+    }
+
+    if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.LOCATION_ALWAYS)) {
+      await NotificareGeo.presentPermissionRationale(PermissionGroup.LOCATION_ALWAYS, {
+        title: 'Sample',
+        message: 'We need access to background location in order to show relevant content.',
+      });
+    }
+
+    return (await NotificareGeo.requestPermission(PermissionGroup.LOCATION_ALWAYS)) == PermissionStatus.GRANTED;
+  }
+
+  async function ensureBluetoothScanPermission(): Promise<boolean> {
+    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.BLUETOOTH_SCAN);
+    if (status == PermissionStatus.GRANTED) return true;
+
+    if (status == PermissionStatus.PERMANENTLY_DENIED) {
+      // NOTE: Present some UI to the user explaining they need to grant the permission
+      // via the Settings app.
+      await NotificareGeo.openAppSettings();
+      return false;
+    }
+
+    if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.BLUETOOTH_SCAN)) {
+      await NotificareGeo.presentPermissionRationale(PermissionGroup.BLUETOOTH_SCAN, {
+        title: 'Sample',
+        message: 'We need access to bluetooth scan in order to show relevant content.',
+      });
+    }
+
+    return (await NotificareGeo.requestPermission(PermissionGroup.BLUETOOTH_SCAN)) == PermissionStatus.GRANTED;
   }
 
   async function onDisableLocationUpdatesClicked() {

@@ -53,7 +53,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
 
-    def notificare_version = '3.0.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+
+    def notificare_version = '3.1.0'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-geo:$notificare_version"
     implementation "re.notifica:notificare-geo-gms:$notificare_version"

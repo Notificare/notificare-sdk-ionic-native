@@ -1,5 +1,6 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 
+import type { PermissionGroup, PermissionStatus } from './enums';
 import type { NotificareBeacon } from './models/notificare-beacon';
 import type { NotificareHeading } from './models/notificare-heading';
 import type { NotificareLocation } from './models/notificare-location';
@@ -28,6 +29,36 @@ export class NotificareGeo {
 
   public static async disableLocationUpdates(): Promise<void> {
     await NativePlugin.disableLocationUpdates();
+  }
+
+  //
+  // Permission utilities
+  //
+
+  public static async checkPermissionStatus(permission: PermissionGroup): Promise<PermissionStatus> {
+    const { result } = await NativePlugin.checkPermissionStatus({ permission });
+    return result;
+  }
+
+  public static async shouldShowPermissionRationale(permission: PermissionGroup): Promise<boolean> {
+    const { result } = await NativePlugin.shouldShowPermissionRationale({ permission });
+    return result;
+  }
+
+  public static async presentPermissionRationale(
+    permission: PermissionGroup,
+    rationale: PermissionRationale
+  ): Promise<void> {
+    await NativePlugin.presentPermissionRationale({ permission, rationale });
+  }
+
+  public static async requestPermission(permission: PermissionGroup): Promise<PermissionStatus> {
+    const { result } = await NativePlugin.requestPermission({ permission });
+    return result;
+  }
+
+  public static async openAppSettings(): Promise<void> {
+    await NativePlugin.openAppSettings();
   }
 
   //
@@ -81,4 +112,10 @@ export class NotificareGeo {
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return NativePlugin.addListener('heading_updated', callback);
   }
+}
+
+export interface PermissionRationale {
+  title?: string;
+  message: string;
+  buttonText?: string;
 }
