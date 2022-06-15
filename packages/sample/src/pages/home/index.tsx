@@ -346,18 +346,12 @@ export const Home: FC = () => {
 
   async function onEnableLocationUpdatesClicked() {
     try {
-      if (await ensureForegroundLocationPermission()) {
-        console.log('Foreground location permissions granted.');
+      const hasFullCapabilities =
+        (await ensureForegroundLocationPermission()) &&
+        (await ensureBackgroundLocationPermission()) &&
+        (await ensureBluetoothScanPermission());
 
-        if (await ensureBackgroundLocationPermission()) {
-          console.log('Background location permissions granted.');
-
-          if (await ensureBluetoothScanPermission()) {
-            console.log('Bluetooth scan permissions granted.');
-          }
-        }
-      }
-
+      // Calling enableLocationUpdates() will evaluate the given permissions, if any, and enable the available capabilities.
       await NotificareGeo.enableLocationUpdates();
       await toast({ message: 'Done.', duration: TOAST_DURATION });
     } catch (e) {
@@ -370,8 +364,7 @@ export const Home: FC = () => {
     if (status == PermissionStatus.GRANTED) return true;
 
     if (status == PermissionStatus.PERMANENTLY_DENIED) {
-      // NOTE: Present some UI to the user explaining they need to grant the permission
-      // via the Settings app.
+      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
       await NotificareGeo.openAppSettings();
       return false;
     }
@@ -391,8 +384,7 @@ export const Home: FC = () => {
     if (status == PermissionStatus.GRANTED) return true;
 
     if (status == PermissionStatus.PERMANENTLY_DENIED) {
-      // NOTE: Present some UI to the user explaining they need to grant the permission
-      // via the Settings app.
+      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
       await NotificareGeo.openAppSettings();
       return false;
     }
@@ -412,8 +404,7 @@ export const Home: FC = () => {
     if (status == PermissionStatus.GRANTED) return true;
 
     if (status == PermissionStatus.PERMANENTLY_DENIED) {
-      // NOTE: Present some UI to the user explaining they need to grant the permission
-      // via the Settings app.
+      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
       await NotificareGeo.openAppSettings();
       return false;
     }
