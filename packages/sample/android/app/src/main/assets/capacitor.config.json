@@ -1,5 +1,5 @@
 {
-	"appId": "re.notifica.demo",
+	"appId": "re.notifica.sample.app",
 	"appName": "sample",
 	"webDir": "build",
 	"bundledWebRuntime": false

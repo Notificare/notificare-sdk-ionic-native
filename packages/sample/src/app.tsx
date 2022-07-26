@@ -4,6 +4,7 @@ import { Notificare } from 'capacitor-notificare';
 import { NotificareAuthentication } from 'capacitor-notificare-authentication';
 import { NotificareGeo } from 'capacitor-notificare-geo';
 import { NotificareInbox } from 'capacitor-notificare-inbox';
+import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificarePushUI } from 'capacitor-notificare-push-ui';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
@@ -268,6 +269,42 @@ export const App: FC = () => {
         } catch (e) {
           await toast(JSON.stringify(e), TOAST_DURATION);
         }
+      }),
+
+      // endregion
+
+      // region Notificare Monetize
+
+      NotificareMonetize.onBillingSetupFinished(() => {
+        console.log('=== BILLING SETUP FINISHED ===');
+      }),
+      NotificareMonetize.onBillingSetupFailed(({ code, message }) => {
+        console.log('=== BILLING SETUP FAILED ===');
+        console.log(JSON.stringify({ code, message }, null, 2));
+      }),
+      NotificareMonetize.onProductsUpdated((products) => {
+        console.log('=== PRODUCTS UPDATED ===');
+        console.log(JSON.stringify(products, null, 2));
+        console.log('Type: ' + typeof products);
+      }),
+      NotificareMonetize.onPurchasesUpdated((purchases) => {
+        console.log('=== PURCHASES UPDATED ===');
+        console.log(JSON.stringify(purchases, null, 2));
+      }),
+      NotificareMonetize.onPurchaseFinished((purchase) => {
+        console.log('=== PURCHASE FINISHED ===');
+        console.log(JSON.stringify(purchase, null, 2));
+      }),
+      NotificareMonetize.onPurchaseRestored((purchase) => {
+        console.log('=== PURCHASE RESTORED ===');
+        console.log(JSON.stringify(purchase, null, 2));
+      }),
+      NotificareMonetize.onPurchaseCanceled(() => {
+        console.log('=== PURCHASE CANCELED ===');
+      }),
+      NotificareMonetize.onPurchaseFailed(({ code, message, errorMessage }) => {
+        console.log('=== PURCHASE FAILED ===');
+        console.log(JSON.stringify({ code, message, errorMessage }, null, 2));
       }),
 
       // endregion

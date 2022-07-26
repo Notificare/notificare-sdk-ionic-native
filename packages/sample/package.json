@@ -33,6 +33,7 @@
     "capacitor-notificare-geo": "^3.0.0",
     "capacitor-notificare-inbox": "^3.0.0",
     "capacitor-notificare-loyalty": "^3.0.0",
+    "capacitor-notificare-monetize": "^3.0.0",
     "capacitor-notificare-push": "^3.0.0",
     "capacitor-notificare-push-ui": "^3.0.0",
     "capacitor-notificare-scannables": "^3.0.0",
