@@ -32,6 +32,9 @@ project(':capacitor-notificare-inbox').projectDir = new File('../../capacitor-no
 include ':capacitor-notificare-loyalty'
 project(':capacitor-notificare-loyalty').projectDir = new File('../../capacitor-notificare-loyalty/android')
 
+include ':capacitor-notificare-monetize'
+project(':capacitor-notificare-monetize').projectDir = new File('../../capacitor-notificare-monetize/android')
+
 include ':capacitor-notificare-push'
 project(':capacitor-notificare-push').projectDir = new File('../../capacitor-notificare-push/android')
 

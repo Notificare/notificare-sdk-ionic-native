@@ -40,6 +40,10 @@
 		"classpath": "re.notifica.loyalty.capacitor.NotificareLoyaltyPlugin"
 	},
 	{
+		"pkg": "capacitor-notificare-monetize",
+		"classpath": "re.notifica.monetize.capacitor.NotificareMonetizePlugin"
+	},
+	{
 		"pkg": "capacitor-notificare-push",
 		"classpath": "re.notifica.push.capacitor.NotificarePushPlugin"
 	},
