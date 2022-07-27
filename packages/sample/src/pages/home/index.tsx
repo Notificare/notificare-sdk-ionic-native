@@ -4,6 +4,7 @@ import { NotificareAssets } from 'capacitor-notificare-assets';
 import { NotificareAuthentication } from 'capacitor-notificare-authentication';
 import { NotificareGeo, PermissionGroup, PermissionStatus } from 'capacitor-notificare-geo';
 import { NotificareLoyalty } from 'capacitor-notificare-loyalty';
+import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
 import type { FC } from 'react';
@@ -655,6 +656,56 @@ export const Home: FC = () => {
 
   // endregion
 
+  // region Notificare Monetize
+
+  async function onRefreshClicked() {
+    try {
+      await NotificareMonetize.refresh();
+      await toast({ message: 'Done.' });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onGetProductsClicked() {
+    try {
+      const result = await NotificareMonetize.getProducts();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== PRODUCTS ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onGetPurchasesClicked() {
+    try {
+      const result = await NotificareMonetize.getPurchases();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== PURCHASES ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onStartPurchaseClicked() {
+    try {
+      const result = await NotificareMonetize.getProducts();
+
+      if (result.length > 0) {
+        await NotificareMonetize.startPurchaseFlow(result[0]);
+        await toast({ message: 'Done.' });
+      }
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
   return (
     <IonPage>
       <IonHeader>
@@ -845,6 +896,21 @@ export const Home: FC = () => {
           </IonButton>
           <IonButton expand="full" fill="clear" onClick={onRemoveUserSegmentFromPreferenceClicked}>
             Remove user segment from preference
+          </IonButton>
+        </section>
+        <section id="monetize">
+          <p className="section-title">Monetize</p>
+          <IonButton expand="full" fill="clear" onClick={onRefreshClicked}>
+            Refresh
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onGetProductsClicked}>
+            Get products
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onGetPurchasesClicked}>
+            Get purchases
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onStartPurchaseClicked}>
+            Start purchase
           </IonButton>
         </section>
       </IonContent>
