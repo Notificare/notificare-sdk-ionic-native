@@ -32,6 +32,10 @@
 		"classpath": "re.notifica.geo.capacitor.NotificareGeoPlugin"
 	},
 	{
+		"pkg": "capacitor-notificare-in-app-messaging",
+		"classpath": "re.notifica.iam.capacitor.NotificareInAppMessagingPlugin"
+	},
+	{
 		"pkg": "capacitor-notificare-inbox",
 		"classpath": "re.notifica.inbox.capacitor.NotificareInboxPlugin"
 	},

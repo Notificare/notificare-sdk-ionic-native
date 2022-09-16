@@ -3,6 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Notificare } from 'capacitor-notificare';
 import { NotificareAuthentication } from 'capacitor-notificare-authentication';
 import { NotificareGeo } from 'capacitor-notificare-geo';
+import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { NotificareInbox } from 'capacitor-notificare-inbox';
 import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import { NotificarePush } from 'capacitor-notificare-push';
@@ -285,7 +286,6 @@ export const App: FC = () => {
       NotificareMonetize.onProductsUpdated((products) => {
         console.log('=== PRODUCTS UPDATED ===');
         console.log(JSON.stringify(products, null, 2));
-        console.log('Type: ' + typeof products);
       }),
       NotificareMonetize.onPurchasesUpdated((purchases) => {
         console.log('=== PURCHASES UPDATED ===');
@@ -305,6 +305,31 @@ export const App: FC = () => {
       NotificareMonetize.onPurchaseFailed(({ code, message, errorMessage }) => {
         console.log('=== PURCHASE FAILED ===');
         console.log(JSON.stringify({ code, message, errorMessage }, null, 2));
+      }),
+
+      // endregion
+
+      // region Notificare In-App Messaging
+
+      NotificareInAppMessaging.onMessagePresented((message) => {
+        console.log('=== MESSAGE PRESENTED ===');
+        console.log(JSON.stringify(message, null, 2));
+      }),
+      NotificareInAppMessaging.onMessageFinishedPresenting((message) => {
+        console.log('=== MESSAGE FINISHED PRESENTING ===');
+        console.log(JSON.stringify(message, null, 2));
+      }),
+      NotificareInAppMessaging.onMessageFailedToPresent((message) => {
+        console.log('=== MESSAGE FAILED TO PRESENT ===');
+        console.log(JSON.stringify(message, null, 2));
+      }),
+      NotificareInAppMessaging.onActionExecuted(({ message, action }) => {
+        console.log('=== ACTION EXECUTED ===');
+        console.log(JSON.stringify({ message, action }, null, 2));
+      }),
+      NotificareInAppMessaging.onActionFailedToExecute(({ message, action, error }) => {
+        console.log('=== ACTION FAILED TO EXECUTE ===');
+        console.log(JSON.stringify({ message, action, error }, null, 2));
       }),
 
       // endregion
