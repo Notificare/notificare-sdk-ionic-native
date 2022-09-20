@@ -26,6 +26,9 @@ project(':capacitor-notificare-authentication').projectDir = new File('../../cap
 include ':capacitor-notificare-geo'
 project(':capacitor-notificare-geo').projectDir = new File('../../capacitor-notificare-geo/android')
 
+include ':capacitor-notificare-in-app-messaging'
+project(':capacitor-notificare-in-app-messaging').projectDir = new File('../../capacitor-notificare-in-app-messaging/android')
+
 include ':capacitor-notificare-inbox'
 project(':capacitor-notificare-inbox').projectDir = new File('../../capacitor-notificare-inbox/android')
 

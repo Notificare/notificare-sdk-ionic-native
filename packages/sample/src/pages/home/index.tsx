@@ -3,6 +3,7 @@ import { Notificare } from 'capacitor-notificare';
 import { NotificareAssets } from 'capacitor-notificare-assets';
 import { NotificareAuthentication } from 'capacitor-notificare-authentication';
 import { NotificareGeo, PermissionGroup, PermissionStatus } from 'capacitor-notificare-geo';
+import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { NotificareLoyalty } from 'capacitor-notificare-loyalty';
 import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import { NotificarePush } from 'capacitor-notificare-push';
@@ -706,6 +707,40 @@ export const Home: FC = () => {
 
   // endregion
 
+  // region Notificare In-App Messaging
+
+  async function onCheckSuppressedStateClicked() {
+    try {
+      const result = await NotificareInAppMessaging.hasMessagesSuppressed();
+      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
+
+      console.log('=== HAS MESSAGES SUPPRESSED ===');
+      console.log(JSON.stringify(result, null, 2));
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onSuppressMessagesClicked() {
+    try {
+      await NotificareInAppMessaging.setMessagesSuppressed(true);
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  async function onUnSuppressMessagesClicked() {
+    try {
+      await NotificareInAppMessaging.setMessagesSuppressed(false);
+      await toast({ message: 'Done.', duration: TOAST_DURATION });
+    } catch (e) {
+      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
+    }
+  }
+
+  // endregion
+
   return (
     <IonPage>
       <IonHeader>
@@ -911,6 +946,18 @@ export const Home: FC = () => {
           </IonButton>
           <IonButton expand="full" fill="clear" onClick={onStartPurchaseClicked}>
             Start purchase
+          </IonButton>
+        </section>
+        <section id="in_app_messaging">
+          <p className="section-title">In-App Messaging</p>
+          <IonButton expand="full" fill="clear" onClick={onCheckSuppressedStateClicked}>
+            Check suppressed state
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onSuppressMessagesClicked}>
+            Suppress messages
+          </IonButton>
+          <IonButton expand="full" fill="clear" onClick={onUnSuppressMessagesClicked}>
+            Un-suppress messages
           </IonButton>
         </section>
       </IonContent>

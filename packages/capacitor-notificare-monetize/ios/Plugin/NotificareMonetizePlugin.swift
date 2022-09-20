@@ -57,6 +57,7 @@ public class NotificareMonetizePlugin: CAPPlugin {
         }
         
         Notificare.shared.monetize().startPurchaseFlow(for: product)
+        call.resolve()
     }
 }
 
