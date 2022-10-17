@@ -135,10 +135,16 @@ def update_native_android_libraries(version)
 end
 
 def update_native_ios_libraries(version)
+  # Update podspec files
   files = Dir['../packages/capacitor-notificare*/*.podspec']
   regex = /notificare_version = '.*'/
   replacement = "notificare_version = '#{version}'"
+  files.each { |file| update_file(file, regex, replacement) }
 
+  # Update Podfile files
+  files = Dir['../packages/capacitor-notificare*/ios/Podfile']
+  regex = /pod 'Notificare\/(Notificare.*Kit)', '.*'/
+  replacement = "pod 'Notificare/\\1', '#{version}'"
   files.each { |file| update_file(file, regex, replacement) }
 end
 
