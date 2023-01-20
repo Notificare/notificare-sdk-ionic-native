@@ -12,7 +12,7 @@ export interface NotificareInAppMessagingPlugin {
 
   hasMessagesSuppressed(): Promise<{ result: boolean }>;
 
-  setMessagesSuppressed(options: { suppressed: boolean }): Promise<void>;
+  setMessagesSuppressed(options: { suppressed: boolean; evaluateContext?: boolean }): Promise<void>;
 
   //
   // Event bridge

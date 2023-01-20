@@ -8,7 +8,7 @@ export class NotificareInAppMessagingPluginWeb extends WebPlugin implements Noti
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setMessagesSuppressed(_options: { suppressed: boolean }): Promise<void> {
+  setMessagesSuppressed(_options: { suppressed: boolean; evaluateContext?: boolean }): Promise<void> {
     throw this.unimplemented('Not implemented on web.');
   }
 }
