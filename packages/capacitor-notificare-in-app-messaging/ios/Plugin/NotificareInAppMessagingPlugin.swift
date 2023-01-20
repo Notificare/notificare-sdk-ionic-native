@@ -21,8 +21,11 @@ public class NotificareInAppMessagingPlugin: CAPPlugin {
             call.reject("Missing 'suppressed' parameter.")
             return
         }
-
-        Notificare.shared.inAppMessaging().hasMessagesSuppressed = suppressed
+        
+        let evaluateContext = call.getBool("evaluateContext") ?? false
+        
+        Notificare.shared.inAppMessaging().setMessagesSuppressed(suppressed, evaluateContext: evaluateContext)
+        
         call.resolve()
     }
 }

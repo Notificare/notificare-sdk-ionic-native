@@ -13,8 +13,8 @@ export class NotificareInAppMessaging {
     return result;
   }
 
-  public static async setMessagesSuppressed(suppressed: boolean): Promise<void> {
-    await NativePlugin.setMessagesSuppressed({ suppressed });
+  public static async setMessagesSuppressed(suppressed: boolean, evaluateContext?: boolean): Promise<void> {
+    await NativePlugin.setMessagesSuppressed({ suppressed, evaluateContext });
   }
 
   //
