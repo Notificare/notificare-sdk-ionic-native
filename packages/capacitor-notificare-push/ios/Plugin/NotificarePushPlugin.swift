@@ -176,6 +176,19 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         }
     }
     
+    public func notificare(_ notificarePush: NotificarePush, didReceiveNotification notification: NotificareNotification, deliveryMechanism: NotificareNotificationDeliveryMechanism) {
+        do {
+            let data: [String: Any] = [
+                "notification": try notification.toJson(),
+                "deliveryMechanism": deliveryMechanism.rawValue,
+            ]
+            
+            EventBroker.instance.dispatchEvent("notification_info_received", data: data)
+        } catch {
+            NotificareLogger.error("Failed to emit the notification_info_received event.", error: error)
+        }
+    }
+    
     public func notificare(_ notificarePush: NotificarePush, didReceiveSystemNotification notification: NotificareSystemNotification) {
         do {
             EventBroker.instance.dispatchEvent("system_notification_received", data: try notification.toJson())
