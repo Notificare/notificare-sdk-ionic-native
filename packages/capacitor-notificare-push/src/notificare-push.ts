@@ -1,6 +1,7 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 import type { NotificareNotification, NotificareNotificationAction } from 'capacitor-notificare';
 
+import type { NotificareNotificationDeliveryMechanism } from './models/notificare-notification-delivery-mechanism';
 import type { NotificareSystemNotification } from './models/notificare-system-notification';
 import { NativePlugin } from './plugin';
 
@@ -43,10 +44,22 @@ export class NotificarePush {
   // Events
   //
 
+  /**
+   * @deprecated Listen to onNotificationInfoReceived(notification, deliveryMechanism) instead.
+   */
   public static onNotificationReceived(
     callback: (notification: NotificareNotification) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return NativePlugin.addListener('notification_received', callback);
+  }
+
+  public static onNotificationInfoReceived(
+    callback: (data: {
+      notification: NotificareNotification;
+      deliveryMechanism: NotificareNotificationDeliveryMechanism;
+    }) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return NativePlugin.addListener('notification_info_received', callback);
   }
 
   public static onSystemNotificationReceived(
