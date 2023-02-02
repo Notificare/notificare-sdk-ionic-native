@@ -5,6 +5,8 @@ import NotificarePushKit
 
 @objc(NotificarePushPlugin)
 public class NotificarePushPlugin: CAPPlugin {
+    private let notificationCenter = UNUserNotificationCenter.current()
+    
     public override func load() {
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.push().delegate = self
@@ -16,45 +18,7 @@ public class NotificarePushPlugin: CAPPlugin {
             return
         }
         
-        var authorizationOptions: UNAuthorizationOptions = []
-        
-        options.forEach { option in
-            if option == "alert" {
-                authorizationOptions = [authorizationOptions, .alert]
-            }
-            
-            if option == "badge" {
-                authorizationOptions = [authorizationOptions, .badge]
-            }
-            
-            if option == "sound" {
-                authorizationOptions = [authorizationOptions, .sound]
-            }
-            
-            if option == "carPlay" {
-                authorizationOptions = [authorizationOptions, .carPlay]
-            }
-            
-            if #available(iOS 12.0, *) {
-                if option == "providesAppNotificationSettings" {
-                    authorizationOptions = [authorizationOptions, .providesAppNotificationSettings]
-                }
-                
-                if option == "provisional" {
-                    authorizationOptions = [authorizationOptions, .provisional]
-                }
-                
-                if option == "criticalAlert" {
-                    authorizationOptions = [authorizationOptions, .criticalAlert]
-                }
-            }
-            
-            if #available(iOS 13.0, *) {
-                if option == "announcement" {
-                    authorizationOptions = [authorizationOptions, .announcement]
-                }
-            }
-        }
+        let authorizationOptions = handleAuthorizationOptions(options: options)
         
         Notificare.shared.push().authorizationOptions = authorizationOptions
         call.resolve()
@@ -164,6 +128,122 @@ public class NotificarePushPlugin: CAPPlugin {
             Notificare.shared.push().disableRemoteNotifications()
             call.resolve()
         }
+    }
+    
+    @objc func checkPermissionStatus(_ call: CAPPluginCall) {
+        checkPermissionStatus(callback: { (status) -> Void in
+            call.resolve(["result": status.rawValue])
+        })
+    }
+    
+    @objc func shouldShowPermissionRationale(_ call: CAPPluginCall) {
+        call.resolve(["result": false])
+    }
+    
+    @objc func presentPermissionRationale(_ call: CAPPluginCall) {
+        call.reject("This method is not implemented in iOS.")
+    }
+    
+    @objc func requestPermission(_ call: CAPPluginCall) {
+        checkPermissionStatus(callback: { (status) -> Void in
+            if (status == .granted || status == .permanentlyDenied) {
+                call.resolve(["result": status.rawValue])
+                return
+            } else {
+                let options = call.getArray("options", String.self) ?? []
+                let authorizationOptions = self.handleAuthorizationOptions(options: options)
+                
+                self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
+                    if (error == nil) {
+                        call.resolve(granted ? ["result": PermissionStatus.granted.rawValue] : ["result": PermissionStatus.denied.rawValue])
+                        return
+                    }
+                    
+                    call.reject("Unable to request notifications permission.", error?.localizedDescription)
+                }
+            }
+        })
+    }
+    
+    @objc func openAppSettings(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else {
+                call.reject("Unable to open the application settings.")
+                return
+            }
+            
+            UIApplication.shared.open(url) { success in
+                if success {
+                    call.resolve()
+                } else {
+                    call.reject("Unable to open the application settings.")
+                }
+            }
+        }
+    }
+    
+    private func handleAuthorizationOptions(options: [String]) -> UNAuthorizationOptions {
+        var authorizationOptions: UNAuthorizationOptions = []
+        
+        if (options.isEmpty) {
+            authorizationOptions = [.alert, .badge, .sound]
+        } else {
+            options.forEach { option in
+                if option == "alert" {
+                    authorizationOptions = [authorizationOptions, .alert]
+                }
+                
+                if option == "badge" {
+                    authorizationOptions = [authorizationOptions, .badge]
+                }
+                
+                if option == "sound" {
+                    authorizationOptions = [authorizationOptions, .sound]
+                }
+                
+                if option == "carPlay" {
+                    authorizationOptions = [authorizationOptions, .carPlay]
+                }
+                
+                if #available(iOS 12.0, *) {
+                    if option == "providesAppNotificationSettings" {
+                        authorizationOptions = [authorizationOptions, .providesAppNotificationSettings]
+                    }
+                    
+                    if option == "provisional" {
+                        authorizationOptions = [authorizationOptions, .provisional]
+                    }
+                    
+                    if option == "criticalAlert" {
+                        authorizationOptions = [authorizationOptions, .criticalAlert]
+                    }
+                }
+                
+                if #available(iOS 13.0, *) {
+                    if option == "announcement" {
+                        authorizationOptions = [authorizationOptions, .announcement]
+                    }
+                }
+            }
+        }
+        
+        return authorizationOptions
+    }
+    
+    private func checkPermissionStatus(callback: @escaping (PermissionStatus) -> Void) {
+        notificationCenter.getNotificationSettings(completionHandler: { (permission) in
+            var status = PermissionStatus.denied
+            
+            if permission.authorizationStatus == .authorized {
+                status = PermissionStatus.granted
+            }
+            
+            if (permission.authorizationStatus == .denied) {
+                status = PermissionStatus.permanentlyDenied
+            }
+            
+            callback(status)
+        })
     }
 }
 
@@ -279,3 +359,12 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         EventBroker.instance.dispatchEvent("failed_to_register_for_remote_notifications", data: ["error": error.localizedDescription])
     }
 }
+
+extension NotificarePushPlugin {
+    internal enum PermissionStatus: String, CaseIterable {
+        case denied = "denied"
+        case granted = "granted"
+        case permanentlyDenied = "permanently_denied"
+    }
+}
+
