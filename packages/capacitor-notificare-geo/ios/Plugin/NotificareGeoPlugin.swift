@@ -73,16 +73,28 @@ public class NotificareGeoPlugin: CAPPlugin {
             return
         }
         
-        guard permission != .bluetoothScan else {
-            call.resolve(["result": PermissionStatus.granted.rawValue])
+        let status = checkPermissionStatus(permission)
+        
+        if (status == .granted || status == .permanentlyDenied) {
+            call.resolve(["result": status.rawValue])
             return
         }
         
-        let status = checkPermissionStatus(permission)
+        if (permission == .locationWhenInUse) {
+            if ((Bundle.main.infoDictionary?["NSLocationWhenInUseUsageDescription"]) == nil) {
+                call.reject("Missing 'NSLocationWhenInUseUsageDescription' in the app bundle's Info.plist file.")
+                return
+            }
+        }
         
-        if permission == .locationAlways && authorizationStatus == .authorizedWhenInUse {
-            if UserDefaults.standard.bool(forKey: REQUESTED_LOCATION_ALWAYS_KEY) {
-                call.resolve(["result": status.rawValue])
+        if (permission == .locationAlways) {
+            if ((Bundle.main.infoDictionary?["NSLocationAlwaysAndWhenInUseUsageDescription"]) == nil) {
+                call.reject("Missing 'NSLocationAlwaysAndWhenInUseUsageDescription' in the app bundle's Info.plist file.")
+                return
+            }
+            
+            if (authorizationStatus == .notDetermined) {
+                call.reject("Location 'When in Use' should be requested before 'Location Always' request.")
                 return
             }
         }
@@ -93,6 +105,13 @@ public class NotificareGeoPlugin: CAPPlugin {
         if permission == .locationWhenInUse {
             locationManager.requestWhenInUseAuthorization()
         } else if permission == .locationAlways {
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(applicationDidBecomeActive),
+                name: UIApplication.didBecomeActiveNotification,
+                object: nil
+            )
+            
             locationManager.requestAlwaysAuthorization()
             UserDefaults.standard.set(true, forKey: REQUESTED_LOCATION_ALWAYS_KEY)
         }
@@ -112,6 +131,25 @@ public class NotificareGeoPlugin: CAPPlugin {
                     call.reject("Unable to open the application settings.")
                 }
             }
+        }
+    }
+    
+    @objc private func applicationDidBecomeActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        
+        guard let requestedPermissionCall = requestedPermissionCall else {
+            return
+        }
+        
+        if (authorizationStatus != .authorizedAlways) {
+            requestedPermissionCall.resolve(["result": PermissionStatus.denied.rawValue])
+            
+            self.requestedPermission = nil
+            self.requestedPermissionCall = nil
         }
     }
     
@@ -136,6 +174,8 @@ public class NotificareGeoPlugin: CAPPlugin {
                 return UserDefaults.standard.bool(forKey: REQUESTED_LOCATION_ALWAYS_KEY) ? .permanentlyDenied : .denied
             case .authorizedAlways:
                 return .granted
+            @unknown default:
+                return .denied
             }
         }
         
@@ -148,6 +188,8 @@ public class NotificareGeoPlugin: CAPPlugin {
             return .permanentlyDenied
         case .authorizedWhenInUse, .authorizedAlways:
             return .granted
+        @unknown default:
+            return .denied
         }
     }
 }
@@ -246,7 +288,16 @@ extension NotificareGeoPlugin: CLLocationManagerDelegate {
         }
         
         let status = determinePermissionStatus(requestedPermission, authorizationStatus: authorizationStatus)
-        requestedPermissionCall.resolve(["result": status.rawValue])
+        
+        // If status is 'Permanently Denied' we will consider that result as 'Denied' because the permission just changed
+        // This will only affect 'When in Use' permission
+        
+        if (status == .permanentlyDenied) {
+            requestedPermissionCall.resolve(["result": PermissionStatus.denied.rawValue])
+        } else {
+            requestedPermissionCall.resolve(["result": status.rawValue])
+        }
+        
         
         self.requestedPermission = nil
         self.requestedPermissionCall = nil
