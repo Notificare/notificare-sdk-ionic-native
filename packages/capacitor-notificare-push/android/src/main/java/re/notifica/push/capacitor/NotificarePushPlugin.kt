@@ -60,7 +60,7 @@ public class NotificarePushPlugin : Plugin() {
                 permissionRequestCall?.resolve(JSObject().put("result", PermissionStatus.GRANTED.rawValue))
             } else {
                 if (!shouldShowRationale &&
-                    !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+                    !ActivityCompat.shouldShowRequestPermissionRationale(activity, PUSH_PERMISSION)
                 ) {
                     permissionRequestCall?.resolve(
                         JSObject().put(
@@ -146,7 +146,7 @@ public class NotificarePushPlugin : Plugin() {
             return
         }
 
-        val granted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        val granted = ContextCompat.checkSelfPermission(context, PUSH_PERMISSION) == PackageManager.PERMISSION_GRANTED
         call.resolve(
             JSObject().put(
                 "result",
@@ -162,7 +162,7 @@ public class NotificarePushPlugin : Plugin() {
             return
         }
 
-        val result = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+        val result = ActivityCompat.shouldShowRequestPermissionRationale(activity, PUSH_PERMISSION)
 
         call.resolve(JSObject().put("result", result))
     }
@@ -222,18 +222,18 @@ public class NotificarePushPlugin : Plugin() {
             return
         }
 
-        val granted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        val granted = ContextCompat.checkSelfPermission(context, PUSH_PERMISSION) == PackageManager.PERMISSION_GRANTED
 
         if (granted) {
             call.resolve(JSObject().put("result", PermissionStatus.GRANTED.rawValue))
             return
         }
 
-        shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+        shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, PUSH_PERMISSION)
         hasOnGoingPermissionRequest = true
         permissionRequestCall = call
 
-        notificationsPermissionLauncher.launch(permission)
+        notificationsPermissionLauncher.launch(PUSH_PERMISSION)
     }
 
     @PluginMethod
@@ -258,7 +258,7 @@ public class NotificarePushPlugin : Plugin() {
 
     public companion object {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-        private const val permission = Manifest.permission.POST_NOTIFICATIONS
+        private const val PUSH_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
         internal fun onMainThread(action: () -> Unit) = Handler(Looper.getMainLooper()).post(action)
     }
 
