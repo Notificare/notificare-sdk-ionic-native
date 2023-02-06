@@ -11,7 +11,7 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.getcapacitor.*
 import com.getcapacitor.annotation.CapacitorPlugin
@@ -53,7 +53,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
                         PermissionStatus.GRANTED
                     } else {
                         if (!shouldShowRationale &&
-                            !shouldShowRequestPermissionRationale(activity, permissions.keys.first())
+                            !ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions.keys.first())
                         ) {
                             PermissionStatus.PERMANENTLY_DENIED
                         } else {
@@ -146,7 +146,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
             return
         }
 
-        val showRationale = shouldShowRequestPermissionRationale(activity, manifestPermissions.first())
+        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, manifestPermissions.first())
         call.resolve(JSObject().put("result", showRationale))
     }
 
@@ -232,7 +232,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
             return
         }
 
-        shouldShowRationale = shouldShowRequestPermissionRationale(activity, manifestPermissions.first())
+        shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, manifestPermissions.first())
         hasOnGoingPermissionRequest = true
         permissionRequestCall = call
 
