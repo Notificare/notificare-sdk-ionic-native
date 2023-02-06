@@ -1,7 +1,7 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 import type { NotificareNotification, NotificareNotificationAction } from 'capacitor-notificare';
 
-import type { NotificationsPermissionStatus } from './enums';
+import type { PushPermissionStatus } from './enums';
 import type { NotificareNotificationDeliveryMechanism } from './models/notificare-notification-delivery-mechanism';
 import type { NotificareSystemNotification } from './models/notificare-system-notification';
 import { NativePlugin } from './plugin';
@@ -45,7 +45,7 @@ export class NotificarePush {
   // Permission utilities
   //
 
-  public static async checkPermissionStatus(): Promise<NotificationsPermissionStatus> {
+  public static async checkPermissionStatus(): Promise<PushPermissionStatus> {
     const { result } = await NativePlugin.checkPermissionStatus();
     return result;
   }
@@ -55,12 +55,12 @@ export class NotificarePush {
     return result;
   }
 
-  public static async presentPermissionRationale(rationale: PermissionRationale): Promise<void> {
+  public static async presentPermissionRationale(rationale: PushPermissionRationale): Promise<void> {
     await NativePlugin.presentPermissionRationale({ rationale });
   }
 
-  public static async requestPermission(options?: string[]): Promise<NotificationsPermissionStatus> {
-    const { result } = await NativePlugin.requestPermission({ options });
+  public static async requestPermission(): Promise<PushPermissionStatus> {
+    const { result } = await NativePlugin.requestPermission();
     return result;
   }
 
@@ -145,7 +145,7 @@ export class NotificarePush {
   }
 }
 
-export interface PermissionRationale {
+export interface PushPermissionRationale {
   title?: string;
   message: string;
   buttonText?: string;
