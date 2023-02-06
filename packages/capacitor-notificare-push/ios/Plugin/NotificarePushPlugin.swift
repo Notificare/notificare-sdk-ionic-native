@@ -169,9 +169,9 @@ public class NotificarePushPlugin: CAPPlugin {
     }
     
     @objc func checkPermissionStatus(_ call: CAPPluginCall) {
-        checkPermissionStatus(callback: { (status) -> Void in
+        checkPermissionStatus { status in
             call.resolve(["result": status.rawValue])
-        })
+        }
     }
     
     @objc func shouldShowPermissionRationale(_ call: CAPPluginCall) {
@@ -183,23 +183,23 @@ public class NotificarePushPlugin: CAPPlugin {
     }
     
     @objc func requestPermission(_ call: CAPPluginCall) {
-        checkPermissionStatus(callback: { (status) -> Void in
-            if (status == .granted || status == .permanentlyDenied) {
+        checkPermissionStatus { status in
+            guard status != .granted && status != .permanentlyDenied else {
                 call.resolve(["result": status.rawValue])
                 return
-            } else {
-                let authorizationOptions = Notificare.shared.push().authorizationOptions
-                
-                self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
-                    if (error == nil) {
-                        call.resolve(granted ? ["result": PermissionStatus.granted.rawValue] : ["result": PermissionStatus.denied.rawValue])
-                        return
-                    }
-                    
-                    call.reject("Unable to request notifications permission.", error?.localizedDescription)
-                }
             }
-        })
+            
+            let authorizationOptions = Notificare.shared.push().authorizationOptions
+            
+            self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
+                if (error == nil) {
+                    call.resolve(granted ? ["result": PermissionStatus.granted.rawValue] : ["result": PermissionStatus.denied.rawValue])
+                    return
+                }
+                
+                call.reject("Unable to request notifications permission.", error?.localizedDescription)
+            }
+        }
     }
     
     @objc func openAppSettings(_ call: CAPPluginCall) {
@@ -219,20 +219,20 @@ public class NotificarePushPlugin: CAPPlugin {
         }
     }
     
-    private func checkPermissionStatus(callback: @escaping (PermissionStatus) -> Void) {
-        notificationCenter.getNotificationSettings(completionHandler: { (permission) in
-            var status = PermissionStatus.denied
+    private func checkPermissionStatus(_ completion: @escaping (PermissionStatus) -> Void) {
+        notificationCenter.getNotificationSettings { status in
+            var permissionStatus = PermissionStatus.denied
             
-            if permission.authorizationStatus == .authorized {
-                status = PermissionStatus.granted
+            if status.authorizationStatus == .authorized {
+                permissionStatus = PermissionStatus.granted
             }
             
-            if (permission.authorizationStatus == .denied) {
-                status = PermissionStatus.permanentlyDenied
+            if (status.authorizationStatus == .denied) {
+                permissionStatus = PermissionStatus.permanentlyDenied
             }
             
-            callback(status)
-        })
+            completion(permissionStatus)
+        }
     }
 }
 
