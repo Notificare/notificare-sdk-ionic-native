@@ -12,7 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -59,7 +59,9 @@ public class NotificarePushPlugin : Plugin() {
             if (granted) {
                 permissionRequestCall?.resolve(JSObject().put("result", PermissionStatus.GRANTED.rawValue))
             } else {
-                if (!shouldShowRationale && !shouldShowRequestPermissionRationale(activity, permission)) {
+                if (!shouldShowRationale &&
+                    !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+                ) {
                     permissionRequestCall?.resolve(
                         JSObject().put(
                             "result",
@@ -160,7 +162,7 @@ public class NotificarePushPlugin : Plugin() {
             return
         }
 
-        val result = shouldShowRequestPermissionRationale(activity, permission)
+        val result = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
 
         call.resolve(JSObject().put("result", result))
     }
@@ -227,7 +229,7 @@ public class NotificarePushPlugin : Plugin() {
             return
         }
 
-        shouldShowRationale = shouldShowRequestPermissionRationale(activity, permission)
+        shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
         hasOnGoingPermissionRequest = true
         permissionRequestCall = call
 
