@@ -225,7 +225,7 @@ public class NotificarePushPlugin : Plugin() {
         val granted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
         if (granted) {
-            call.resolve(JSObject().put("result", PermissionStatus.GRANTED))
+            call.resolve(JSObject().put("result", PermissionStatus.GRANTED.rawValue))
             return
         }
 
