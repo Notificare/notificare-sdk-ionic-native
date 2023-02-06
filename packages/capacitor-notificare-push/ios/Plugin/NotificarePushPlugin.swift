@@ -18,7 +18,45 @@ public class NotificarePushPlugin: CAPPlugin {
             return
         }
         
-        let authorizationOptions = handleAuthorizationOptions(options: options)
+        var authorizationOptions: UNAuthorizationOptions = []
+        
+        options.forEach { option in
+            if option == "alert" {
+                authorizationOptions = [authorizationOptions, .alert]
+            }
+            
+            if option == "badge" {
+                authorizationOptions = [authorizationOptions, .badge]
+            }
+            
+            if option == "sound" {
+                authorizationOptions = [authorizationOptions, .sound]
+            }
+            
+            if option == "carPlay" {
+                authorizationOptions = [authorizationOptions, .carPlay]
+            }
+            
+            if #available(iOS 12.0, *) {
+                if option == "providesAppNotificationSettings" {
+                    authorizationOptions = [authorizationOptions, .providesAppNotificationSettings]
+                }
+                
+                if option == "provisional" {
+                    authorizationOptions = [authorizationOptions, .provisional]
+                }
+                
+                if option == "criticalAlert" {
+                    authorizationOptions = [authorizationOptions, .criticalAlert]
+                }
+            }
+            
+            if #available(iOS 13.0, *) {
+                if option == "announcement" {
+                    authorizationOptions = [authorizationOptions, .announcement]
+                }
+            }
+        }
         
         Notificare.shared.push().authorizationOptions = authorizationOptions
         call.resolve()
@@ -150,8 +188,7 @@ public class NotificarePushPlugin: CAPPlugin {
                 call.resolve(["result": status.rawValue])
                 return
             } else {
-                let options = call.getArray("options", String.self) ?? []
-                let authorizationOptions = self.handleAuthorizationOptions(options: options)
+                let authorizationOptions = Notificare.shared.push().authorizationOptions
                 
                 self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
                     if (error == nil) {
@@ -180,54 +217,6 @@ public class NotificarePushPlugin: CAPPlugin {
                 }
             }
         }
-    }
-    
-    private func handleAuthorizationOptions(options: [String]) -> UNAuthorizationOptions {
-        var authorizationOptions: UNAuthorizationOptions = []
-        
-        if (options.isEmpty) {
-            authorizationOptions = [.alert, .badge, .sound]
-        } else {
-            options.forEach { option in
-                if option == "alert" {
-                    authorizationOptions = [authorizationOptions, .alert]
-                }
-                
-                if option == "badge" {
-                    authorizationOptions = [authorizationOptions, .badge]
-                }
-                
-                if option == "sound" {
-                    authorizationOptions = [authorizationOptions, .sound]
-                }
-                
-                if option == "carPlay" {
-                    authorizationOptions = [authorizationOptions, .carPlay]
-                }
-                
-                if #available(iOS 12.0, *) {
-                    if option == "providesAppNotificationSettings" {
-                        authorizationOptions = [authorizationOptions, .providesAppNotificationSettings]
-                    }
-                    
-                    if option == "provisional" {
-                        authorizationOptions = [authorizationOptions, .provisional]
-                    }
-                    
-                    if option == "criticalAlert" {
-                        authorizationOptions = [authorizationOptions, .criticalAlert]
-                    }
-                }
-                
-                if #available(iOS 13.0, *) {
-                    if option == "announcement" {
-                        authorizationOptions = [authorizationOptions, .announcement]
-                    }
-                }
-            }
-        }
-        
-        return authorizationOptions
     }
     
     private func checkPermissionStatus(callback: @escaping (PermissionStatus) -> Void) {
