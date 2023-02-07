@@ -5,6 +5,8 @@ import NotificarePushKit
 
 @objc(NotificarePushPlugin)
 public class NotificarePushPlugin: CAPPlugin {
+    private let notificationCenter = UNUserNotificationCenter.current()
+    
     public override func load() {
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.push().delegate = self
@@ -165,6 +167,73 @@ public class NotificarePushPlugin: CAPPlugin {
             call.resolve()
         }
     }
+    
+    @objc func checkPermissionStatus(_ call: CAPPluginCall) {
+        checkPermissionStatus { status in
+            call.resolve(["result": status.rawValue])
+        }
+    }
+    
+    @objc func shouldShowPermissionRationale(_ call: CAPPluginCall) {
+        call.resolve(["result": false])
+    }
+    
+    @objc func presentPermissionRationale(_ call: CAPPluginCall) {
+        call.reject("This method is not implemented in iOS.")
+    }
+    
+    @objc func requestPermission(_ call: CAPPluginCall) {
+        checkPermissionStatus { status in
+            guard status != .granted && status != .permanentlyDenied else {
+                call.resolve(["result": status.rawValue])
+                return
+            }
+            
+            let authorizationOptions = Notificare.shared.push().authorizationOptions
+            
+            self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
+                if error == nil {
+                    call.resolve(granted ? ["result": PermissionStatus.granted.rawValue] : ["result": PermissionStatus.denied.rawValue])
+                    return
+                }
+                
+                call.reject("Unable to request notifications permission.", error?.localizedDescription)
+            }
+        }
+    }
+    
+    @objc func openAppSettings(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else {
+                call.reject("Unable to open the application settings.")
+                return
+            }
+            
+            UIApplication.shared.open(url) { success in
+                if success {
+                    call.resolve()
+                } else {
+                    call.reject("Unable to open the application settings.")
+                }
+            }
+        }
+    }
+    
+    private func checkPermissionStatus(_ completion: @escaping (PermissionStatus) -> Void) {
+        notificationCenter.getNotificationSettings { status in
+            var permissionStatus = PermissionStatus.denied
+            
+            if status.authorizationStatus == .authorized {
+                permissionStatus = PermissionStatus.granted
+            }
+            
+            if status.authorizationStatus == .denied {
+                permissionStatus = PermissionStatus.permanentlyDenied
+            }
+            
+            completion(permissionStatus)
+        }
+    }
 }
 
 extension NotificarePushPlugin: NotificarePushDelegate {
@@ -279,3 +348,12 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         EventBroker.instance.dispatchEvent("failed_to_register_for_remote_notifications", data: ["error": error.localizedDescription])
     }
 }
+
+extension NotificarePushPlugin {
+    internal enum PermissionStatus: String, CaseIterable {
+        case denied = "denied"
+        case granted = "granted"
+        case permanentlyDenied = "permanently_denied"
+    }
+}
+

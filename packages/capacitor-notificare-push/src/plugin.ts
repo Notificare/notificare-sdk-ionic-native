@@ -1,6 +1,9 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 import { registerPlugin } from '@capacitor/core';
 
+import type { PushPermissionStatus } from './enums';
+import type { PushPermissionRationale } from './notificare-push';
+
 export const NativePlugin = registerPlugin<NotificarePushPlugin>('NotificarePushPlugin', {
   web: () => import('./web').then((m) => new m.NotificarePushPluginWeb()),
 });
@@ -23,6 +26,20 @@ export interface NotificarePushPlugin {
   enableRemoteNotifications(): Promise<void>;
 
   disableRemoteNotifications(): Promise<void>;
+
+  //
+  // Permission utilities
+  //
+
+  checkPermissionStatus(): Promise<{ result: PushPermissionStatus }>;
+
+  shouldShowPermissionRationale(): Promise<{ result: boolean }>;
+
+  presentPermissionRationale(options: { rationale: PushPermissionRationale }): Promise<void>;
+
+  requestPermission(): Promise<{ result: PushPermissionStatus }>;
+
+  openAppSettings(): Promise<void>;
 
   //
   // Event bridge
