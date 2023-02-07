@@ -192,7 +192,7 @@ public class NotificarePushPlugin: CAPPlugin {
             let authorizationOptions = Notificare.shared.push().authorizationOptions
             
             self.notificationCenter.requestAuthorization(options: authorizationOptions) { (granted, error) in
-                if (error == nil) {
+                if error == nil {
                     call.resolve(granted ? ["result": PermissionStatus.granted.rawValue] : ["result": PermissionStatus.denied.rawValue])
                     return
                 }
@@ -227,7 +227,7 @@ public class NotificarePushPlugin: CAPPlugin {
                 permissionStatus = PermissionStatus.granted
             }
             
-            if (status.authorizationStatus == .denied) {
+            if status.authorizationStatus == .denied {
                 permissionStatus = PermissionStatus.permanentlyDenied
             }
             
