@@ -1,4 +1,4 @@
-platform :ios, '12.0'
+platform :ios, '13.0'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -24,9 +24,20 @@ def capacitor_pods
   pod 'CapacitorNotificarePush', :path => '../../../capacitor-notificare-push'
   pod 'CapacitorNotificarePushUi', :path => '../../../capacitor-notificare-push-ui'
   pod 'CapacitorNotificareScannables', :path => '../../../capacitor-notificare-scannables'
+  pod 'CapacitorNotificareUserInbox', :path => '../../../capacitor-notificare-user-inbox'
 end
 
 target 'App' do
   capacitor_pods
   # Add your Pods here
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # Suppress warning when pod supports a version lower than the minimum supported by Capacitor (Capacitor 4 - iOS 13).
+      # This warning is harmless but confusing--it's not a bad thing for dependencies to support a lower version.
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    end
+  end
 end
