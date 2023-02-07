@@ -6,7 +6,7 @@ import { NotificareGeo, PermissionGroup, PermissionStatus } from 'capacitor-noti
 import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { NotificareLoyalty } from 'capacitor-notificare-loyalty';
 import { NotificareMonetize } from 'capacitor-notificare-monetize';
-import { NotificarePush } from 'capacitor-notificare-push';
+import { NotificarePush, PushPermissionStatus } from 'capacitor-notificare-push';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
 import type { FC } from 'react';
 import { useHistory } from 'react-router';
@@ -302,8 +302,15 @@ export const Home: FC = () => {
 
   async function onEnableRemoteNotificationsClicked() {
     try {
-      await NotificarePush.enableRemoteNotifications();
-      await toast({ message: 'Done.', duration: TOAST_DURATION });
+      const permissionRequest = await NotificarePush.requestPermission();
+
+      if (permissionRequest == PushPermissionStatus.GRANTED) {
+        await NotificarePush.enableRemoteNotifications();
+        await toast({ message: 'Done.', duration: TOAST_DURATION });
+        return;
+      }
+
+      await toast({ message: 'Permission not granted.', duration: TOAST_DURATION });
     } catch (e) {
       await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
     }

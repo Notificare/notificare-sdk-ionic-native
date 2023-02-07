@@ -46,3 +46,6 @@ project(':capacitor-notificare-push-ui').projectDir = new File('../../capacitor-
 
 include ':capacitor-notificare-scannables'
 project(':capacitor-notificare-scannables').projectDir = new File('../../capacitor-notificare-scannables/android')
+
+include ':capacitor-notificare-user-inbox'
+project(':capacitor-notificare-user-inbox').projectDir = new File('../../capacitor-notificare-user-inbox/android')

@@ -73,6 +73,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="re.notifica.push.ui.NotificationActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@style/AppTheme.Translucent" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
