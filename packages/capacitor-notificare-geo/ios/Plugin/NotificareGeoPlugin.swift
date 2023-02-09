@@ -75,7 +75,7 @@ public class NotificareGeoPlugin: CAPPlugin {
         
         let status = checkPermissionStatus(permission)
         
-        if (status == .granted || status == .permanentlyDenied) {
+        if status == .granted || status == .permanentlyDenied || status == .restricted {
             call.resolve(["result": status.rawValue])
             return
         }
