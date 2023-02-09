@@ -31,6 +31,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         private val TAG = NotificareGeoPlugin::class.java.simpleName
     }
 
+    private var shouldShowRationale = false
     private var hasOnGoingPermissionRequest = false
     private var permissionRequestCall: PluginCall? = null
 
@@ -47,7 +48,19 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         ) { permissions ->
             val status = permissions
                 .all { it.value }
-                .let { granted -> if (granted) PermissionStatus.GRANTED else PermissionStatus.DENIED }
+                .let { granted ->
+                    if (granted) {
+                        PermissionStatus.GRANTED
+                    } else {
+                        if (!shouldShowRationale &&
+                            !ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions.keys.first())
+                        ) {
+                            PermissionStatus.PERMANENTLY_DENIED
+                        } else {
+                            PermissionStatus.DENIED
+                        }
+                    }
+                }
 
             permissionRequestCall?.resolve(JSObject().put("result", status.rawValue))
             permissionRequestCall = null
@@ -170,13 +183,15 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             NotificareLogger.debug("Presenting permission rationale for '$permission'.")
 
-            AlertDialog.Builder(activity)
-                .setTitle(title)
-                .setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton(buttonText, null)
-                .setOnDismissListener { call.resolve() }
-                .show()
+            activity.runOnUiThread {
+                AlertDialog.Builder(activity)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton(buttonText, null)
+                    .setOnDismissListener { call.resolve() }
+                    .show()
+            }
         } catch (e: Exception) {
             call.reject("Unable to present the rationale alert.", e)
         }
@@ -217,6 +232,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
             return
         }
 
+        shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, manifestPermissions.first())
         hasOnGoingPermissionRequest = true
         permissionRequestCall = call
 
@@ -424,14 +440,12 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
     internal enum class PermissionStatus {
         DENIED,
         GRANTED,
-        RESTRICTED,
         PERMANENTLY_DENIED;
 
         internal val rawValue: String
             get() = when (this) {
                 DENIED -> "denied"
                 GRANTED -> "granted"
-                RESTRICTED -> "restricted"
                 PERMANENTLY_DENIED -> "permanently_denied"
             }
 

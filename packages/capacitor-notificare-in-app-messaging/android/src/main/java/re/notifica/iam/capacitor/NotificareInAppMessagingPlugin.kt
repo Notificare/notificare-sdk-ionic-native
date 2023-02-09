@@ -46,7 +46,10 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
                 return
             }
 
-            Notificare.inAppMessaging().hasMessagesSuppressed = suppressed
+            val evaluateContext = call.getBoolean("evaluateContext") ?: false
+
+            Notificare.inAppMessaging().setMessagesSuppressed(suppressed, evaluateContext)
+
             call.resolve()
         } catch (e: Exception) {
             call.reject(e.localizedMessage)

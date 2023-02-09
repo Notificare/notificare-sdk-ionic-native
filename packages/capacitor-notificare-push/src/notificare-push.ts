@@ -1,6 +1,8 @@
 import type { PluginListenerHandle } from '@capacitor/core';
 import type { NotificareNotification, NotificareNotificationAction } from 'capacitor-notificare';
 
+import type { PushPermissionStatus } from './enums';
+import type { NotificareNotificationDeliveryMechanism } from './models/notificare-notification-delivery-mechanism';
 import type { NotificareSystemNotification } from './models/notificare-system-notification';
 import { NativePlugin } from './plugin';
 
@@ -40,13 +42,52 @@ export class NotificarePush {
   }
 
   //
+  // Permission utilities
+  //
+
+  public static async checkPermissionStatus(): Promise<PushPermissionStatus> {
+    const { result } = await NativePlugin.checkPermissionStatus();
+    return result;
+  }
+
+  public static async shouldShowPermissionRationale(): Promise<boolean> {
+    const { result } = await NativePlugin.shouldShowPermissionRationale();
+    return result;
+  }
+
+  public static async presentPermissionRationale(rationale: PushPermissionRationale): Promise<void> {
+    await NativePlugin.presentPermissionRationale({ rationale });
+  }
+
+  public static async requestPermission(): Promise<PushPermissionStatus> {
+    const { result } = await NativePlugin.requestPermission();
+    return result;
+  }
+
+  public static async openAppSettings(): Promise<void> {
+    await NativePlugin.openAppSettings();
+  }
+
+  //
   // Events
   //
 
+  /**
+   * @deprecated Listen to onNotificationInfoReceived(notification, deliveryMechanism) instead.
+   */
   public static onNotificationReceived(
     callback: (notification: NotificareNotification) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return NativePlugin.addListener('notification_received', callback);
+  }
+
+  public static onNotificationInfoReceived(
+    callback: (data: {
+      notification: NotificareNotification;
+      deliveryMechanism: NotificareNotificationDeliveryMechanism;
+    }) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return NativePlugin.addListener('notification_info_received', callback);
   }
 
   public static onSystemNotificationReceived(
@@ -102,4 +143,10 @@ export class NotificarePush {
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
     return NativePlugin.addListener('failed_to_register_for_remote_notifications', ({ error }) => callback(error));
   }
+}
+
+export interface PushPermissionRationale {
+  title?: string;
+  message: string;
+  buttonText?: string;
 }

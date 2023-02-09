@@ -11,4 +11,9 @@ CAP_PLUGIN(NotificarePushPlugin, "NotificarePushPlugin",
            CAP_PLUGIN_METHOD(allowedUI, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(enableRemoteNotifications, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(disableRemoteNotifications, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(checkPermissionStatus, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(shouldShowPermissionRationale, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(presentPermissionRationale, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(requestPermission, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(openAppSettings, CAPPluginReturnPromise);
 )

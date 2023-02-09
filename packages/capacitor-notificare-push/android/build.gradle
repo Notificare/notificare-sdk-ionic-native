@@ -13,10 +13,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 33
     }
     buildTypes {
         release {
@@ -56,7 +56,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.0'
 
-    def notificare_version = '3.4.1'
+    def notificare_version = '3.5.0'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-push:$notificare_version"
     implementation "re.notifica:notificare-push-gms:$notificare_version"
