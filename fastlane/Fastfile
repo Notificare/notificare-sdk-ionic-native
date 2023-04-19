@@ -32,6 +32,81 @@ lane :update_native_libraries do |options|
 end
 
 desc <<-DESC
+Updates Kotlin version version of each Flutter package.
+
+#### Options
+* `version`: The new version for Kotlin.
+
+#### Examples
+```sh
+bundle exec fastlane update_kotlin_version version:1.7.20
+```
+DESC
+lane :update_kotlin_version do |options|
+  version = options[:version]
+
+  if version.nil?
+    UI.user_error!("Missing required 'version' parameter.")
+  end
+
+  files = Dir['../packages/capacitor-notificare*/android/build.gradle']
+  regex = /classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:.*'/
+  replacement = "classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:#{version}'"
+
+  files.each { |file| update_file(file, regex, replacement) }
+end
+
+desc <<-DESC
+Updates Android Appcompat dependency version of each Flutter package.
+
+#### Options
+* `version`: The new version for Appcompat dependency.
+
+#### Examples
+```sh
+bundle exec fastlane update_android_appcompat version:1.5.1
+```
+DESC
+lane :update_android_appcompat do |options|
+  version = options[:version]
+
+  if version.nil?
+    UI.user_error!("Missing required 'version' parameter.")
+  end
+
+  files = Dir['../packages/capacitor-notificare*/android/build.gradle']
+  regex = /implementation 'androidx.appcompat:appcompat:.*'/
+  replacement = "implementation 'androidx.appcompat:appcompat:#{version}'"
+
+  files.each { |file| update_file(file, regex, replacement) }
+end
+
+desc <<-DESC
+Updates Android Lifecycle dependency version of each Flutter package.
+
+#### Options
+* `version`: The new version for Lifecycle dependency.
+
+#### Examples
+```sh
+bundle exec fastlane update_android_lifecycle version:2.5.1
+```
+DESC
+lane :update_android_lifecycle do |options|
+  version = options[:version]
+
+  if version.nil?
+    UI.user_error!("Missing required 'version' parameter.")
+  end
+
+  files = Dir['../packages/capacitor-notificare*/android/build.gradle']
+  regex = /implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:.*'/
+  replacement = "implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:#{version}'"
+
+  files.each { |file| update_file(file, regex, replacement) }
+end
+
+desc <<-DESC
 Updates the version of each package.
 
 #### Options

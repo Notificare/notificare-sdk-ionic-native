@@ -33,6 +33,57 @@ bundle exec fastlane update_native_libraries version:3.4.0 platform:ios
 ```
 
 
+### update_kotlin_version
+
+```sh
+[bundle exec] fastlane update_kotlin_version
+```
+
+Updates Kotlin version version of each Flutter package.
+
+#### Options
+* `version`: The new version for Kotlin.
+
+#### Examples
+```sh
+bundle exec fastlane update_kotlin_version version:1.7.20
+```
+
+
+### update_android_appcompat
+
+```sh
+[bundle exec] fastlane update_android_appcompat
+```
+
+Updates Android Appcompat dependency version of each Flutter package.
+
+#### Options
+* `version`: The new version for Appcompat dependency.
+
+#### Examples
+```sh
+bundle exec fastlane update_android_appcompat version:1.5.1
+```
+
+
+### update_android_lifecycle
+
+```sh
+[bundle exec] fastlane update_android_lifecycle
+```
+
+Updates Android Lifecycle dependency version of each Flutter package.
+
+#### Options
+* `version`: The new version for Lifecycle dependency.
+
+#### Examples
+```sh
+bundle exec fastlane update_android_lifecycle version:2.5.1
+```
+
+
 ### bump
 
 ```sh
