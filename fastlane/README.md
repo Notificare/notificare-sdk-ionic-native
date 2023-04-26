@@ -33,6 +33,23 @@ bundle exec fastlane update_native_libraries version:3.4.0 platform:ios
 ```
 
 
+### update_kotlin_version
+
+```sh
+[bundle exec] fastlane update_kotlin_version
+```
+
+Updates Kotlin version of each package.
+
+#### Options
+* `version`: The new version for Kotlin.
+
+#### Examples
+```sh
+bundle exec fastlane update_kotlin_version version:1.7.20
+```
+
+
 ### bump
 
 ```sh
@@ -70,7 +87,7 @@ bundle exec fastlane update_sample
 [bundle exec] fastlane publish
 ```
 
-Validates and publishes each Flutter package.
+Validates and publishes each package.
 
 #### Options
 * `dry_run`: Only run in validation mode.
