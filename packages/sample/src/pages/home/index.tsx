@@ -600,18 +600,6 @@ export const Home: FC = () => {
     }
   }
 
-  async function onGeneratePushEmailClicked() {
-    try {
-      const result = await NotificareAuthentication.generatePushEmailAddress();
-      await toast({ message: JSON.stringify(result), duration: TOAST_DURATION });
-
-      console.log('=== GENERATE PUSH EMAIL ===');
-      console.log(JSON.stringify(result, null, 2));
-    } catch (e) {
-      await toast({ message: JSON.stringify(e), duration: TOAST_DURATION });
-    }
-  }
-
   async function onAddUserSegmentClicked() {
     try {
       const segments = await NotificareAuthentication.fetchUserSegments();
@@ -923,9 +911,6 @@ export const Home: FC = () => {
           </IonButton>
           <IonButton expand="full" fill="clear" onClick={onValidateUserClicked}>
             Validate user
-          </IonButton>
-          <IonButton expand="full" fill="clear" onClick={onGeneratePushEmailClicked}>
-            Generate push email
           </IonButton>
           <IonButton expand="full" fill="clear" onClick={onAddUserSegmentClicked}>
             Add user segment
