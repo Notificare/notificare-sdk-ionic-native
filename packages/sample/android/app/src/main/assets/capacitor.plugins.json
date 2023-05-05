@@ -24,10 +24,6 @@
 		"classpath": "re.notifica.assets.capacitor.NotificareAssetsPlugin"
 	},
 	{
-		"pkg": "capacitor-notificare-authentication",
-		"classpath": "re.notifica.authentication.capacitor.NotificareAuthenticationPlugin"
-	},
-	{
 		"pkg": "capacitor-notificare-geo",
 		"classpath": "re.notifica.geo.capacitor.NotificareGeoPlugin"
 	},

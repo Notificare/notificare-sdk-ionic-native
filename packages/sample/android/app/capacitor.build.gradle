@@ -15,7 +15,6 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-notificare')
     implementation project(':capacitor-notificare-assets')
-    implementation project(':capacitor-notificare-authentication')
     implementation project(':capacitor-notificare-geo')
     implementation project(':capacitor-notificare-in-app-messaging')
     implementation project(':capacitor-notificare-inbox')

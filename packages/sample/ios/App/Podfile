@@ -17,7 +17,6 @@ def capacitor_pods
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
   pod 'CapacitorNotificare', :path => '../../../capacitor-notificare'
   pod 'CapacitorNotificareAssets', :path => '../../../capacitor-notificare-assets'
-  pod 'CapacitorNotificareAuthentication', :path => '../../../capacitor-notificare-authentication'
   pod 'CapacitorNotificareGeo', :path => '../../../capacitor-notificare-geo'
   pod 'CapacitorNotificareInAppMessaging', :path => '../../../capacitor-notificare-in-app-messaging'
   pod 'CapacitorNotificareInbox', :path => '../../../capacitor-notificare-inbox'
