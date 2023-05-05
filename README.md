@@ -59,7 +59,6 @@ yarn add capacitor-notificare
 
 # Optional modules
 yarn add capacitor-notificare-assets
-yarn add capacitor-notificare-authentication
 yarn add capacitor-notificare-geo
 yarn add capacitor-notificare-in-app-messaging
 yarn add capacitor-notificare-inbox

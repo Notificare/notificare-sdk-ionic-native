@@ -1,7 +1,6 @@
 import { IonApp, IonRouterOutlet, setupIonicReact, useIonToast } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Notificare } from 'capacitor-notificare';
-import { NotificareAuthentication } from 'capacitor-notificare-authentication';
 import { NotificareGeo } from 'capacitor-notificare-geo';
 import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { NotificareInbox } from 'capacitor-notificare-inbox';
@@ -245,31 +244,6 @@ export const App: FC = () => {
       NotificareScannables.onScannableSessionFailed((error) => {
         console.log('=== SCANNABLE SESSION FAILED ===');
         console.log(JSON.stringify(error, null, 2));
-      }),
-
-      // endregion
-
-      // region Notificare Authentication
-
-      NotificareAuthentication.onPasswordResetTokenReceived(async (token) => {
-        console.log('=== PASSWORD RESET TOKEN RECEIVED ===');
-        console.log(JSON.stringify(token, null, 2));
-
-        try {
-          await NotificareAuthentication.resetPassword('123456', token);
-        } catch (e) {
-          await toast(JSON.stringify(e), TOAST_DURATION);
-        }
-      }),
-      NotificareAuthentication.onValidateUserTokenReceived(async (token) => {
-        console.log('=== VALIDATE USER TOKEN RECEIVED ===');
-        console.log(JSON.stringify(token, null, 2));
-
-        try {
-          await NotificareAuthentication.validateUser(token);
-        } catch (e) {
-          await toast(JSON.stringify(e), TOAST_DURATION);
-        }
       }),
 
       // endregion

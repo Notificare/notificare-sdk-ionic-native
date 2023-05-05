@@ -29,7 +29,6 @@
     "@ionic/react-router": "^6.5.2",
     "capacitor-notificare": "^3.5.0",
     "capacitor-notificare-assets": "^3.5.0",
-    "capacitor-notificare-authentication": "^3.5.0",
     "capacitor-notificare-geo": "^3.5.0",
     "capacitor-notificare-in-app-messaging": "^3.5.0",
     "capacitor-notificare-inbox": "^3.5.0",

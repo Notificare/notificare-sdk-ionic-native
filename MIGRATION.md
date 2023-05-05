@@ -58,7 +58,6 @@ We have moved to several new packages. Here's all the dependencies available:
   "dependencies": {
     "capacitor-notificare": "3.0.0",
     "capacitor-notificare-assets": "3.0.0",
-    "capacitor-notificare-authentication": "3.0.0",
     "capacitor-notificare-geo": "3.0.0",
     "capacitor-notificare-inbox": "3.0.0",
     "capacitor-notificare-loyalty": "3.0.0",

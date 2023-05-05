@@ -20,9 +20,6 @@ project(':capacitor-notificare').projectDir = new File('../../capacitor-notifica
 include ':capacitor-notificare-assets'
 project(':capacitor-notificare-assets').projectDir = new File('../../capacitor-notificare-assets/android')
 
-include ':capacitor-notificare-authentication'
-project(':capacitor-notificare-authentication').projectDir = new File('../../capacitor-notificare-authentication/android')
-
 include ':capacitor-notificare-geo'
 project(':capacitor-notificare-geo').projectDir = new File('../../capacitor-notificare-geo/android')
 
