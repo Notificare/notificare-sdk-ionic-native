@@ -2,7 +2,7 @@
 
 ## Upcoming release
 
-#### Native changes
+#### 3.5.2
 
 ##### Android
 
