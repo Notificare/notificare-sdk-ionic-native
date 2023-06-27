@@ -1,4 +1,4 @@
-import { IonApp, IonRouterOutlet, setupIonicReact, useIonToast } from '@ionic/react';
+import { IonAlert, IonApp, IonRouterOutlet, IonToast, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Notificare } from 'capacitor-notificare';
 import { NotificareGeo } from 'capacitor-notificare-geo';
@@ -9,12 +9,20 @@ import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificarePushUI } from 'capacitor-notificare-push-ui';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
 import type { FC } from 'react';
-import { useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import { Beacons } from './pages/beacons';
-import { Home } from './pages/home';
-import { Inbox } from './pages/inbox';
+import { AssetsView } from './pages/assets/assets_view';
+import { Beacons } from './pages/beacons/beacons_view';
+import { DeviceView } from './pages/device/device_view';
+import { CustomEventView } from './pages/events/custom_event_view';
+import { HomeView } from './pages/home/home_view';
+import { InboxView } from './pages/inbox/inbox_view';
+import { MonetizeView } from './pages/monetize/monetize_view';
+import { MonetizeProductsView } from './pages/monetize/views/monetize_products_view';
+import { MonetizePurchasesView } from './pages/monetize/views/monetize_purchases_view';
+import { ScannablesView } from './pages/scannables/scannables_view';
+import { TagsView } from './pages/tags/tags_view';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,10 +45,25 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-const TOAST_DURATION = 500;
+export const mainContext = createContext({
+  isReady: false,
+  notificationsSettingsGranted: false,
+  badge: 0,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  setInfoAlert: (_info: InformationalAlert) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  addToastInfoMessage: (_info: ToastInfo) => {},
+});
 
 export const App: FC = () => {
-  const [toast] = useIonToast();
+  const [isReady, setIsReady] = useState(false);
+  const [notificationsSettingsGranted, setNotificationsSettingsGranted] = useState(false);
+  const [badge, setBadge] = useState(0);
+  const [infoAlert, setInfoAlert] = useState<InformationalAlert | null>(null);
+  const [toastInfo, setToastInfo] = useState<ToastInfo>({
+    type: 'idle',
+  });
+  const [toastInfoMessages, setToastInfoMessages] = useState<ToastInfo[]>([]);
 
   useEffect(function launch() {
     (async () => {
@@ -54,10 +77,13 @@ export const App: FC = () => {
       // region Notificare events
 
       Notificare.onReady(async (application) => {
+        setIsReady(true);
+        setBadge(await NotificareInbox.getBadge());
+
         console.log('=== ON READY ===');
         console.log(JSON.stringify(application, null, 2));
 
-        await toast(`Notificare is ready: ${application.name}`, TOAST_DURATION);
+        addToastInfoMessage({ type: 'idle', message: `Notificare is ready: ${application.name}` });
 
         if (await NotificarePush.hasRemoteNotificationsEnabled()) {
           await NotificarePush.enableRemoteNotifications();
@@ -68,21 +94,22 @@ export const App: FC = () => {
         }
       }),
       Notificare.onUnlaunched(async () => {
+        setIsReady(false);
         console.log('=== ON UNLAUNCHED ===');
 
-        await toast('Notificare has finished un-launching.', TOAST_DURATION);
+        addToastInfoMessage({ type: 'idle', message: 'Notificare has finished un-launching.' });
       }),
       Notificare.onDeviceRegistered(async (device) => {
         console.log('=== DEVICE REGISTERED ===');
         console.log(JSON.stringify(device, null, 2));
 
-        await toast(`Device registered: ${device.id}`, TOAST_DURATION);
+        addToastInfoMessage({ type: 'idle', message: `Device registered: ${device.id}` });
       }),
       Notificare.onUrlOpened(async (url) => {
         console.log('=== URL OPENED ===');
         console.log(JSON.stringify(url, null, 2));
 
-        await toast(`URL opened: ${url}`, TOAST_DURATION);
+        addToastInfoMessage({ type: 'idle', message: `URL opened: ${url}` });
       }),
 
       // endregion
@@ -122,6 +149,8 @@ export const App: FC = () => {
         console.log(JSON.stringify({ notification, action, responseText }, null, 2));
       }),
       NotificarePush.onNotificationSettingsChanged((granted) => {
+        setNotificationsSettingsGranted(granted);
+
         console.log('=== NOTIFICATION SETTINGS CHANGED ===');
         console.log(JSON.stringify(granted, null, 2));
       }),
@@ -188,6 +217,8 @@ export const App: FC = () => {
         console.log(JSON.stringify(items, null, 2));
       }),
       NotificareInbox.onBadgeUpdated((badge) => {
+        setBadge(badge);
+
         console.log('=== BADGE UPDATED ===');
         console.log(JSON.stringify(badge, null, 2));
       }),
@@ -312,24 +343,126 @@ export const App: FC = () => {
     return () => subscriptions.forEach((s) => s.remove());
   }, []);
 
+  useEffect(
+    function processActionStatusMessages() {
+      if (toastInfoMessages.length > 0 && toastInfo.message === undefined) {
+        setToastInfo(toastInfoMessages[0]);
+      }
+    },
+    [toastInfoMessages]
+  );
+
+  function addToastInfoMessage(info: ToastInfo) {
+    if (toastInfoMessages.length > 0) {
+      toastInfoMessages.push(info);
+
+      return;
+    }
+
+    setToastInfoMessages((prevState) => [...prevState, info]);
+  }
+
+  function removeToastInfoMessages() {
+    setToastInfoMessages((prevState) => prevState.slice(1));
+  }
+
+  function resetToast() {
+    setToastInfo({ type: 'idle' });
+
+    setTimeout(() => {
+      removeToastInfoMessages();
+    }, 500);
+  }
+
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/inbox">
-            <Inbox />
-          </Route>
-          <Route exact path="/beacons">
-            <Beacons />
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
+      <mainContext.Provider
+        value={{
+          isReady,
+          notificationsSettingsGranted,
+          badge,
+          setInfoAlert,
+          addToastInfoMessage,
+        }}
+      >
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+
+            <Route exact path="/home">
+              <HomeView />
+            </Route>
+
+            <Route exact path="/device">
+              <DeviceView />
+            </Route>
+
+            <Route exact path="/inbox">
+              <InboxView />
+            </Route>
+
+            <Route exact path="/tags">
+              <TagsView />
+            </Route>
+
+            <Route exact path="/beacons">
+              <Beacons />
+            </Route>
+
+            <Route exact path="/scannables">
+              <ScannablesView />
+            </Route>
+
+            <Route exact path="/assets">
+              <AssetsView />
+            </Route>
+
+            <Route exact path="/monetize">
+              <MonetizeView />
+            </Route>
+
+            <Route exact path="/monetize/products">
+              <MonetizeProductsView />
+            </Route>
+
+            <Route exact path="/monetize/purchases">
+              <MonetizePurchasesView />
+            </Route>
+
+            <Route exact path="/events">
+              <CustomEventView />
+            </Route>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </mainContext.Provider>
+
+      <IonAlert
+        isOpen={infoAlert !== null}
+        header={infoAlert?.title ?? ''}
+        message={infoAlert?.message ?? ''}
+        buttons={['OK']}
+        onDidDismiss={() => setInfoAlert(null)}
+      ></IonAlert>
+
+      <IonToast
+        isOpen={toastInfo.message !== undefined}
+        message={toastInfo.message}
+        onDidDismiss={resetToast}
+        duration={2000}
+        color={toastInfo.type === 'error' ? 'danger' : toastInfo.type === 'success' ? 'success' : 'dark'}
+      ></IonToast>
     </IonApp>
   );
 };
+
+interface InformationalAlert {
+  title: string;
+  message: string;
+}
+
+interface ToastInfo {
+  message?: string;
+  type: 'idle' | 'success' | 'error';
+}

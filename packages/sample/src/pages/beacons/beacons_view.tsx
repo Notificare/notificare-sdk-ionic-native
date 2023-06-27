@@ -1,12 +1,21 @@
-import { IonContent, IonHeader, IonItem, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonBackButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import type { NotificareBeacon, NotificareRegion } from 'capacitor-notificare-geo';
 import { NotificareGeo } from 'capacitor-notificare-geo';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import '../../styles/index.css';
 
-import { Beacon } from '../../components/beacon';
-
-import './index.css';
+import { BeaconView } from '../../components/beacon/beacon_view';
 
 export const Beacons: FC = () => {
   const [data, setData] = useState<{ region: NotificareRegion; beacons: NotificareBeacon[] }>();
@@ -20,18 +29,16 @@ export const Beacons: FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+
           <IonTitle>Beacons</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Beacons</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         {(data == null || data.beacons.length === 0) && (
-          <section className="empty-state-container">
+          <section className="no-data-container">
             <p>No beacons in range</p>
           </section>
         )}
@@ -39,8 +46,8 @@ export const Beacons: FC = () => {
         {data != null && data.beacons.length > 0 && (
           <IonList>
             {data.beacons.map((beacon) => (
-              <IonItem key={beacon.id}>
-                <Beacon beacon={beacon} />
+              <IonItem lines="full" key={beacon.id}>
+                <BeaconView beacon={beacon} />
               </IonItem>
             ))}
           </IonList>

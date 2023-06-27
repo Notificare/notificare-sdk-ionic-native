@@ -1,0 +1,171 @@
+import { IonBadge, IonCard, IonIcon, IonItem, IonLabel, IonText, IonToggle } from '@ionic/react';
+import { NotificarePush, PushPermissionStatus } from 'capacitor-notificare-push';
+import { fileTrayOutline, informationCircleOutline, notificationsOutline, pricetagOutline } from 'ionicons/icons';
+import type { FC } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import '../../../styles/index.css';
+import { useHistory } from 'react-router';
+
+import { mainContext } from '../../../app';
+
+export const RemoteNotificationsCardView: FC = () => {
+  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const setInfoAlert = useContext(mainContext).setInfoAlert;
+  const notificationsSettingsGranted = useContext(mainContext).notificationsSettingsGranted;
+  const badge = useContext(mainContext).badge;
+  const history = useHistory();
+  const [hasNotificationsEnabled, setHasNotificationsEnabled] = useState(false);
+  const [statusLoaded, setStatusLoaded] = useState(false);
+
+  useEffect(
+    function checkNotificationsStatus() {
+      (async () => {
+        try {
+          const enabled = (await NotificarePush.hasRemoteNotificationsEnabled()) && (await NotificarePush.allowedUI());
+
+          setHasNotificationsEnabled(enabled);
+        } catch (e) {
+          console.log('=== Error checking remote notifications status ===');
+          console.log(JSON.stringify(e));
+
+          addToastInfoMessage({
+            message: 'Error checking remote notifications status.',
+            type: 'error',
+          });
+        }
+
+        setStatusLoaded(true);
+      })();
+    },
+    [notificationsSettingsGranted]
+  );
+
+  async function updateNotificationsStatus(enabled: boolean) {
+    if (!statusLoaded) return;
+
+    setHasNotificationsEnabled(enabled);
+
+    if (!enabled) {
+      try {
+        await NotificarePush.disableRemoteNotifications();
+        console.log('=== Disabled remote notifications successfully ===');
+
+        addToastInfoMessage({
+          message: 'Disabled remote notifications successfully.',
+          type: 'success',
+        });
+      } catch (e) {
+        console.log('=== Error disabling remote notifications ===');
+        console.log(JSON.stringify(e));
+
+        addToastInfoMessage({
+          message: 'Error disabling remote notifications.',
+          type: 'error',
+        });
+      }
+
+      return;
+    }
+
+    try {
+      if (await ensureNotificationsPermission()) {
+        await NotificarePush.enableRemoteNotifications();
+        console.log('=== Enabled remote notifications successfully ===');
+
+        addToastInfoMessage({
+          message: 'Enabled remote notifications successfully.',
+          type: 'success',
+        });
+
+        return;
+      }
+    } catch (e) {
+      console.log('=== Error enabling remote notifications ===');
+      console.log(JSON.stringify(e));
+
+      addToastInfoMessage({
+        message: 'Error enabling remote notifications.',
+        type: 'error',
+      });
+    }
+
+    setHasNotificationsEnabled(false);
+  }
+
+  async function ensureNotificationsPermission(): Promise<boolean> {
+    let status = await NotificarePush.checkPermissionStatus();
+    if (status === PushPermissionStatus.GRANTED) return true;
+
+    status = await NotificarePush.requestPermission();
+    return status === PushPermissionStatus.GRANTED;
+  }
+
+  async function showNotificationsInfo() {
+    try {
+      const allowedUi = await NotificarePush.allowedUI();
+      const hasRemoteNotificationsEnabled = await NotificarePush.hasRemoteNotificationsEnabled();
+      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled}`;
+
+      setInfoAlert({ title: 'Notifications Status', message: infoMessage });
+    } catch (e) {
+      console.log('=== Error getting allowedUi / hasRemoteNotificationsEnabled ===');
+      console.log(JSON.stringify(e));
+
+      addToastInfoMessage({
+        message: 'Error getting allowedUi / hasRemoteNotificationsEnabled.',
+        type: 'error',
+      });
+    }
+  }
+
+  function onInboxClicked() {
+    history.push('/inbox');
+  }
+
+  function onTagsClicked() {
+    history.push('/tags');
+  }
+  return (
+    <div className="margin-top">
+      <div className="section-title-row">
+        <IonText className="section-title">Notifications</IonText>
+
+        <button className="info-button" onClick={showNotificationsInfo}>
+          <IonIcon icon={informationCircleOutline} size="small" />
+        </button>
+      </div>
+
+      <IonCard className="ion-card-margin">
+        <IonItem detail={false} lines="none">
+          <IonIcon icon={notificationsOutline} size="small" />
+
+          <IonLabel className="label-with-icon">Notifications</IonLabel>
+
+          <IonToggle
+            slot="end"
+            checked={hasNotificationsEnabled}
+            onIonChange={(e) => updateNotificationsStatus(e.detail.checked)}
+          />
+        </IonItem>
+
+        <div className="divider-horizontal-margin" />
+
+        <IonItem detail={true} lines="none" button onClick={onInboxClicked}>
+          <IonIcon icon={fileTrayOutline} size="small" />
+
+          <IonLabel className="label-with-icon">Inbox</IonLabel>
+
+          {badge > 0 && <IonBadge slot="end">{badge}</IonBadge>}
+        </IonItem>
+
+        <div className="divider-horizontal-margin" />
+
+        <IonItem detail={true} lines="none" button onClick={onTagsClicked}>
+          <IonIcon icon={pricetagOutline} size="small" />
+
+          <IonLabel className="label-with-icon">Tags</IonLabel>
+        </IonItem>
+      </IonCard>
+    </div>
+  );
+};
