@@ -34,7 +34,7 @@ target 'App' do
 end
 
 target 'NotificationServiceExtension' do
-  pod 'Notificare/NotificareNotificationServiceExtensionKit', '>= 3.5.2'
+  pod 'Notificare/NotificareNotificationServiceExtensionKit', '>= 3.5.4'
 end
 
 post_install do |installer|
