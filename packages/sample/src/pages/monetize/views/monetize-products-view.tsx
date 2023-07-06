@@ -13,43 +13,42 @@ import {
 import type { NotificareProduct } from 'capacitor-notificare-monetize';
 import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../styles/index.css';
 
-import { mainContext } from '../../../app';
-import { DataFieldView } from '../../../components/data-field/data_field_view';
+import { DataFieldView } from '../../../components/data-field/data-field-view';
+import { useToastContext } from '../../../contexts/toast';
 
 export const MonetizeProductsView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [products, setProducts] = useState<NotificareProduct[]>([]);
 
-  useEffect(function loadInitialData() {
-    (async () => {
-      await getProducts();
-    })();
-  }, []);
+  useEffect(
+    function loadProducts() {
+      (async () => {
+        try {
+          const result = await NotificareMonetize.getProducts();
 
-  async function getProducts() {
-    try {
-      const result = await NotificareMonetize.getProducts();
+          setProducts(result);
+          console.log('=== Got products successfully ===');
 
-      setProducts(result);
-      console.log('=== Got products successfully ===');
+          addToastInfoMessage({
+            message: 'Got products successfully.',
+            type: 'success',
+          });
+        } catch (e) {
+          console.log('=== Error getting product ===');
+          console.log(JSON.stringify(e));
 
-      addToastInfoMessage({
-        message: 'Got products successfully.',
-        type: 'success',
-      });
-    } catch (e) {
-      console.log('=== Error getting product ===');
-      console.log(JSON.stringify(e));
-
-      addToastInfoMessage({
-        message: 'Error getting product.',
-        type: 'error',
-      });
-    }
-  }
+          addToastInfoMessage({
+            message: 'Error getting product.',
+            type: 'error',
+          });
+        }
+      })();
+    },
+    [addToastInfoMessage]
+  );
 
   async function purchase(product: NotificareProduct) {
     try {

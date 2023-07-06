@@ -17,27 +17,39 @@ import { NotificareInbox } from 'capacitor-notificare-inbox';
 import { NotificarePushUI } from 'capacitor-notificare-push-ui';
 import { mailOpenOutline, refresh, trashOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
-import { InboxItemView } from '../../components/inbox-item/inbox_item_view';
+import { InboxItemView } from '../../components/inbox-item/inbox-item-view';
+import { useToastContext } from '../../contexts/toast';
 
 export const InboxView: FC = () => {
   let pressTimer: string | number | NodeJS.Timeout | undefined;
 
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [items, setItems] = useState<NotificareInboxItem[]>([]);
   const [isActionSheetOpen, setIsActionSheetOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<NotificareInboxItem | null>(null);
   const [isPressed, setIsPressed] = useState(false);
 
-  useEffect(function loadItems() {
-    (async () => {
-      const items = await NotificareInbox.getItems();
-      setItems(items);
-    })();
-  }, []);
+  useEffect(
+    function loadItems() {
+      (async () => {
+        try {
+          setItems(await NotificareInbox.getItems());
+        } catch (e) {
+          console.log('=== Error getting inbox items ===');
+          console.log(JSON.stringify(e));
+
+          addToastInfoMessage({
+            message: 'Error getting inbox items.',
+            type: 'error',
+          });
+        }
+      })();
+    },
+    [addToastInfoMessage]
+  );
 
   useEffect(function setupListeners() {
     const subscriptions = [NotificareInbox.onInboxUpdated(setItems)];

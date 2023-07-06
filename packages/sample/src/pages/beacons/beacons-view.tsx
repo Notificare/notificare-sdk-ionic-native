@@ -15,7 +15,7 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import '../../styles/index.css';
 
-import { BeaconView } from '../../components/beacon/beacon_view';
+import { BeaconView } from '../../components/beacon/beacon-view';
 
 export const Beacons: FC = () => {
   const [data, setData] = useState<{ region: NotificareRegion; beacons: NotificareBeacon[] }>();

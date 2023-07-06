@@ -2,13 +2,13 @@ import { IonCard, IonIcon, IonItem, IonLabel, IonText, IonToggle } from '@ionic/
 import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { chatboxEllipsesOutline, cloudOfflineOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../../../styles/index.css';
 
-import { mainContext } from '../../../app';
+import { useToastContext } from '../../../contexts/toast';
 
 export const InAppMessagingCardView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [evaluateContext, setEvaluateContext] = useState(false);
   const [suppressed, setSuppressed] = useState(false);
 

@@ -2,15 +2,18 @@ import { IonCard, IonIcon, IonItem, IonLabel, IonText } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import { informationCircleOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext } from 'react';
 import '../../../styles/index.css';
 
-import { mainContext } from '../../../app';
+import { useAlertDialogContext } from '../../../contexts/alert-dialog';
+import { useToastContext } from '../../../contexts/toast';
 
-export const LaunchFlowCardView: FC = () => {
-  const isReady = useContext(mainContext).isReady;
-  const setInfoAlert = useContext(mainContext).setInfoAlert;
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+type LaunchFlowCardProps = {
+  isReady: boolean;
+};
+
+export const LaunchFlowCardView: FC<LaunchFlowCardProps> = ({ isReady }) => {
+  const { setCurrentAlertDialog } = useAlertDialogContext();
+  const { addToastInfoMessage } = useToastContext();
 
   async function launchNotificare() {
     try {
@@ -40,13 +43,13 @@ export const LaunchFlowCardView: FC = () => {
     }
   }
 
-  async function showLaunchFlowInfo() {
+  async function showNotificareStatusInfo() {
     try {
       const isConfiguredStatus = await Notificare.isConfigured();
       const isReadyStatus = await Notificare.isReady();
       const infoMessage = `isConfigured: ${isConfiguredStatus} <br> isReady: ${isReadyStatus}`;
 
-      setInfoAlert({ title: 'Notificare Status', message: infoMessage });
+      setCurrentAlertDialog({ title: 'Notificare Status', message: infoMessage });
     } catch (e) {
       console.log('=== Error getting isConfigured / isReady  ===');
       console.log(JSON.stringify(e));
@@ -58,7 +61,7 @@ export const LaunchFlowCardView: FC = () => {
       <div className="section-title-row">
         <IonText className="section-title">Launch Flow</IonText>
 
-        <button className="info-button" onClick={showLaunchFlowInfo}>
+        <button className="info-button" onClick={showNotificareStatusInfo}>
           <IonIcon icon={informationCircleOutline} size="small" />
         </button>
       </div>

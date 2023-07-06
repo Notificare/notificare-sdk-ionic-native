@@ -1,6 +1,6 @@
 import type { NotificareBeacon } from 'capacitor-notificare-geo';
 import type { FC } from 'react';
-import './beacon_style.css';
+import './beacon-style.css';
 
 export const BeaconView: FC<BeaconProps> = ({ beacon }) => {
   return (

@@ -13,24 +13,18 @@ import {
 } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
-import { DataFieldView } from '../../components/data-field/data_field_view';
+import { DataFieldView } from '../../components/data-field/data-field-view';
+import { useToastContext } from '../../contexts/toast';
 
 export const DeviceView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [deviceData, setDeviceData] = useState<Record<string, string>>({});
   const [userData, setUserData] = useState<Record<string, string>>({});
 
-  useEffect(function loadInitialData() {
-    (async () => {
-      await getDeviceData();
-    })();
-  }, []);
-
-  async function getDeviceData() {
+  const loadDeviceData = useCallback(async () => {
     try {
       const currentDevice = await Notificare.device().getCurrentDevice();
       if (currentDevice == null) {
@@ -63,7 +57,16 @@ export const DeviceView: FC = () => {
         type: 'error',
       });
     }
-  }
+  }, [addToastInfoMessage]);
+
+  useEffect(
+    function loadInitialData() {
+      (async () => {
+        await loadDeviceData();
+      })();
+    },
+    [loadDeviceData]
+  );
 
   async function registerDeviceWithUser() {
     try {
@@ -75,7 +78,7 @@ export const DeviceView: FC = () => {
         type: 'success',
       });
 
-      await getDeviceData();
+      await loadDeviceData();
     } catch (e) {
       console.log('=== Error registering device with user ===');
       console.log(JSON.stringify(e));
@@ -97,7 +100,7 @@ export const DeviceView: FC = () => {
         type: 'success',
       });
 
-      await getDeviceData();
+      await loadDeviceData();
     } catch (e) {
       console.log('=== Error registering device as anonymous ===');
       console.log(JSON.stringify(e));
@@ -119,7 +122,7 @@ export const DeviceView: FC = () => {
         type: 'success',
       });
 
-      await getDeviceData();
+      await loadDeviceData();
     } catch (e) {
       console.log('=== Error updating preferred language ===');
       console.log(JSON.stringify(e));
@@ -141,7 +144,7 @@ export const DeviceView: FC = () => {
         type: 'success',
       });
 
-      await getDeviceData();
+      await loadDeviceData();
     } catch (e) {
       console.log('=== Error cleaning preferred language ===');
       console.log(JSON.stringify(e));
@@ -166,7 +169,7 @@ export const DeviceView: FC = () => {
         type: 'success',
       });
 
-      await getDeviceData();
+      await loadDeviceData();
     } catch (e) {
       console.log('=== Error updating user data ===');
       console.log(JSON.stringify(e));

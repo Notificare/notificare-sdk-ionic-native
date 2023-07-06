@@ -2,44 +2,44 @@ import { IonCard, IonIcon, IonItem, IonLabel, IonText, IonToggle } from '@ionic/
 import { NotificareGeo, PermissionGroup, PermissionStatus } from 'capacitor-notificare-geo';
 import { informationCircleOutline, locationOutline, radioOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../styles/index.css';
 import { useHistory } from 'react-router';
 
-import { mainContext } from '../../../app';
+import { useAlertDialogContext } from '../../../contexts/alert-dialog';
+import { useToastContext } from '../../../contexts/toast';
 
 export const GeoCardView: FC = () => {
-  const history = useHistory();
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
-  const setInfoAlert = useContext(mainContext).setInfoAlert;
+  const { setCurrentAlertDialog } = useAlertDialogContext();
+  const { addToastInfoMessage } = useToastContext();
   const [hasLocationEnabled, setHasLocationEnabled] = useState(false);
   const [statusLoaded, setStatusLoaded] = useState(false);
+  const history = useHistory();
 
-  useEffect(function loadInitialData() {
-    (async () => {
-      await checkLocationStatus();
-    })();
-  }, []);
+  useEffect(
+    function checkLocationStatus() {
+      (async () => {
+        try {
+          const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_WHEN_IN_USE);
 
-  async function checkLocationStatus() {
-    try {
-      const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_WHEN_IN_USE);
+          const enabled = (await NotificareGeo.hasLocationServicesEnabled()) && status === PermissionStatus.GRANTED;
 
-      const enabled = (await NotificareGeo.hasLocationServicesEnabled()) && status === PermissionStatus.GRANTED;
+          setHasLocationEnabled(enabled);
+        } catch (e) {
+          console.log('=== Error checking location status ===');
+          console.log(JSON.stringify(e));
 
-      setHasLocationEnabled(enabled);
-    } catch (e) {
-      console.log('=== Error checking location status ===');
-      console.log(JSON.stringify(e));
+          addToastInfoMessage({
+            message: 'Error checking location status.',
+            type: 'error',
+          });
+        }
 
-      addToastInfoMessage({
-        message: 'Error checking location status.',
-        type: 'error',
-      });
-    }
-
-    setStatusLoaded(true);
-  }
+        setStatusLoaded(true);
+      })();
+    },
+    [addToastInfoMessage]
+  );
 
   async function updateLocationStatus(enabled: boolean) {
     if (!statusLoaded) return;
@@ -71,10 +71,10 @@ export const GeoCardView: FC = () => {
     try {
       if (await ensureForegroundLocationPermission()) {
         await NotificareGeo.enableLocationUpdates();
-        console.log('=== Enabled location updates successfully ===');
+        console.log('=== Enabled foreground location updates successfully ===');
 
         addToastInfoMessage({
-          message: 'Enabled location updates successfully successfully.',
+          message: 'Enabled foreground location updates successfully.',
           type: 'success',
         });
       } else {
@@ -115,14 +115,8 @@ export const GeoCardView: FC = () => {
   }
 
   async function ensureForegroundLocationPermission(): Promise<boolean> {
-    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_WHEN_IN_USE);
+    let status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_WHEN_IN_USE);
     if (status == PermissionStatus.GRANTED) return true;
-
-    if (status == PermissionStatus.PERMANENTLY_DENIED) {
-      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
-      await NotificareGeo.openAppSettings();
-      return false;
-    }
 
     if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.LOCATION_WHEN_IN_USE)) {
       await NotificareGeo.presentPermissionRationale(PermissionGroup.LOCATION_WHEN_IN_USE, {
@@ -131,18 +125,20 @@ export const GeoCardView: FC = () => {
       });
     }
 
-    return (await NotificareGeo.requestPermission(PermissionGroup.LOCATION_WHEN_IN_USE)) == PermissionStatus.GRANTED;
-  }
-
-  async function ensureBackgroundLocationPermission(): Promise<boolean> {
-    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_ALWAYS);
-    if (status == PermissionStatus.GRANTED) return true;
+    status = await NotificareGeo.requestPermission(PermissionGroup.LOCATION_WHEN_IN_USE);
 
     if (status == PermissionStatus.PERMANENTLY_DENIED) {
       // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
       await NotificareGeo.openAppSettings();
       return false;
     }
+
+    return status === PermissionStatus.GRANTED;
+  }
+
+  async function ensureBackgroundLocationPermission(): Promise<boolean> {
+    let status = await NotificareGeo.checkPermissionStatus(PermissionGroup.LOCATION_ALWAYS);
+    if (status == PermissionStatus.GRANTED) return true;
 
     if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.LOCATION_ALWAYS)) {
       await NotificareGeo.presentPermissionRationale(PermissionGroup.LOCATION_ALWAYS, {
@@ -151,18 +147,23 @@ export const GeoCardView: FC = () => {
       });
     }
 
-    return (await NotificareGeo.requestPermission(PermissionGroup.LOCATION_ALWAYS)) == PermissionStatus.GRANTED;
+    status = await NotificareGeo.requestPermission(PermissionGroup.LOCATION_ALWAYS);
+
+    if (status == PermissionStatus.PERMANENTLY_DENIED) {
+      addToastInfoMessage({
+        message: 'Background location permission is permanently denied.',
+        type: 'error',
+      });
+
+      return false;
+    }
+
+    return status === PermissionStatus.GRANTED;
   }
 
   async function ensureBluetoothScanPermission(): Promise<boolean> {
-    const status = await NotificareGeo.checkPermissionStatus(PermissionGroup.BLUETOOTH_SCAN);
+    let status = await NotificareGeo.checkPermissionStatus(PermissionGroup.BLUETOOTH_SCAN);
     if (status == PermissionStatus.GRANTED) return true;
-
-    if (status == PermissionStatus.PERMANENTLY_DENIED) {
-      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
-      await NotificareGeo.openAppSettings();
-      return false;
-    }
 
     if (await NotificareGeo.shouldShowPermissionRationale(PermissionGroup.BLUETOOTH_SCAN)) {
       await NotificareGeo.presentPermissionRationale(PermissionGroup.BLUETOOTH_SCAN, {
@@ -171,16 +172,27 @@ export const GeoCardView: FC = () => {
       });
     }
 
-    return (await NotificareGeo.requestPermission(PermissionGroup.BLUETOOTH_SCAN)) == PermissionStatus.GRANTED;
+    status = await NotificareGeo.requestPermission(PermissionGroup.BLUETOOTH_SCAN);
+
+    if (status == PermissionStatus.PERMANENTLY_DENIED) {
+      addToastInfoMessage({
+        message: 'Bluetooth permission to scan nearby devices is permanently denied.',
+        type: 'error',
+      });
+
+      return false;
+    }
+
+    return status === PermissionStatus.GRANTED;
   }
 
-  async function showLocationInfo() {
+  async function showLocationStatusInfo() {
     try {
       const hasLocationServicesEnabled = await NotificareGeo.hasLocationServicesEnabled();
       const hasBluetoothEnabled = await NotificareGeo.hasBluetoothEnabled();
       const infoMessage = `hasLocationEnabled: ${hasLocationServicesEnabled} <br> hasBluetoothEnabled: ${hasBluetoothEnabled}`;
 
-      setInfoAlert({ title: 'Location Status', message: infoMessage });
+      setCurrentAlertDialog({ title: 'Location Status', message: infoMessage });
     } catch (e) {
       console.log('=== Error getting hasLocationServicesEnabled / hasBluetoothEnabled ===');
       console.log(JSON.stringify(e));
@@ -201,7 +213,7 @@ export const GeoCardView: FC = () => {
       <div className="section-title-row">
         <IonText className="section-title">Geo</IonText>
 
-        <button className="info-button" onClick={showLocationInfo}>
+        <button className="info-button" onClick={showLocationStatusInfo}>
           <IonIcon icon={informationCircleOutline} size="small" />
         </button>
       </div>

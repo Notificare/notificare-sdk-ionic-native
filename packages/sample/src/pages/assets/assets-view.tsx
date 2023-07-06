@@ -14,15 +14,15 @@ import {
 import type { NotificareAsset } from 'capacitor-notificare-assets';
 import { NotificareAssets } from 'capacitor-notificare-assets';
 import type { FC } from 'react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
+import { useToastContext } from '../../contexts/toast';
 
-import { AssetDetailsView } from './views/asset_details_view';
+import { AssetDetailsView } from './views/asset-details-view';
 
 export const AssetsView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [assetsGroup, setAssetsGroup] = useState('');
   const [assets, setAssets] = useState<NotificareAsset[]>([]);
 

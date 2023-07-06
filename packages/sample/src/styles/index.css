@@ -2,6 +2,10 @@
   margin-bottom: 16px;
 }
 
+.no-data-container {
+  margin: 16px;
+}
+
 .margin-top {
   margin-top: 32px;
 }
@@ -21,6 +25,12 @@
   display: flex;
 }
 
+.section-title-row {
+  display: flex;
+  margin: 32px 16px 8px;
+  flex-direction: row;
+}
+
 .check-box-row {
   flex-direction: row;
   align-items: center;
@@ -34,6 +44,11 @@
   text-align: center;
 }
 
+.info-button {
+  background-color: transparent;
+  color: black;
+}
+
 .section-title {
   flex: 1;
 }
@@ -42,33 +57,27 @@
   font-size: 16px;
 }
 
-.section-title-row {
-  display: flex;
-  margin: 32px 16px 8px;
-  flex-direction: row;
-}
-
-.info-button {
-  background-color: transparent;
-  color: black;
-}
-
-.no-data-container {
-  margin: 16px;
-}
-
 .divider-horizontal-margin {
-  height: 0.5px;
+  height: 1px;
   background-color: grey;
   margin-left: 44px;
 }
 
 .divider-vertical {
   width: 1px;
-  background: black;
+  background: grey;
 }
 
 .ion-card-margin {
-  margin-bottom: 0;
   margin-top: 0;
+  margin-bottom: 0;
+}
+
+.dnd-card {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.badge {
+  margin-right: 16px;
 }

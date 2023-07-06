@@ -13,42 +13,41 @@ import {
 import type { NotificarePurchase } from 'capacitor-notificare-monetize';
 import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../styles/index.css';
 
-import { mainContext } from '../../../app';
-import { DataFieldView } from '../../../components/data-field/data_field_view';
+import { DataFieldView } from '../../../components/data-field/data-field-view';
+import { useToastContext } from '../../../contexts/toast';
 
 export const MonetizePurchasesView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [purchases, setPurchases] = useState<NotificarePurchase[]>([]);
 
-  useEffect(function loadInitialData() {
-    (async () => {
-      await getPurchases();
-    })();
-  }, []);
+  useEffect(
+    function loadPurchases() {
+      (async () => {
+        try {
+          const result = await NotificareMonetize.getPurchases();
+          setPurchases(result);
+          console.log('=== Got purchases successfully ===');
 
-  async function getPurchases() {
-    try {
-      const result = await NotificareMonetize.getPurchases();
-      setPurchases(result);
-      console.log('=== Got purchases successfully ===');
+          addToastInfoMessage({
+            message: 'Got purchases successfully.',
+            type: 'success',
+          });
+        } catch (e) {
+          console.log('=== Error getting purchases ===');
+          console.log(JSON.stringify(e));
 
-      addToastInfoMessage({
-        message: 'Got purchases successfully.',
-        type: 'success',
-      });
-    } catch (e) {
-      console.log('=== Error getting purchases ===');
-      console.log(JSON.stringify(e));
-
-      addToastInfoMessage({
-        message: 'Error getting purchases.',
-        type: 'error',
-      });
-    }
-  }
+          addToastInfoMessage({
+            message: 'Error getting purchases.',
+            type: 'error',
+          });
+        }
+      })();
+    },
+    [addToastInfoMessage]
+  );
 
   return (
     <IonPage>

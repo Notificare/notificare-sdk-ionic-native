@@ -3,7 +3,7 @@ import type { NotificareNotificationAttachment } from 'capacitor-notificare';
 import type { NotificareInboxItem } from 'capacitor-notificare-inbox';
 import { formatDistanceToNow } from 'date-fns';
 import type { FC } from 'react';
-import './inbox_item_style.css';
+import './inbox-item-style.css';
 
 export const InboxItemView: FC<InboxItemProps> = ({ item }) => {
   return (

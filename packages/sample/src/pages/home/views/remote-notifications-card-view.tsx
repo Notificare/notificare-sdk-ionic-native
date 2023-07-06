@@ -1,43 +1,82 @@
 import { IonBadge, IonCard, IonIcon, IonItem, IonLabel, IonText, IonToggle } from '@ionic/react';
+import { NotificareInbox } from 'capacitor-notificare-inbox';
 import { NotificarePush, PushPermissionStatus } from 'capacitor-notificare-push';
 import { fileTrayOutline, informationCircleOutline, notificationsOutline, pricetagOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import '../../../styles/index.css';
 import { useHistory } from 'react-router';
 
-import { mainContext } from '../../../app';
+import { useAlertDialogContext } from '../../../contexts/alert-dialog';
+import { useToastContext } from '../../../contexts/toast';
 
 export const RemoteNotificationsCardView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
-  const setInfoAlert = useContext(mainContext).setInfoAlert;
-  const notificationsSettingsGranted = useContext(mainContext).notificationsSettingsGranted;
-  const badge = useContext(mainContext).badge;
-  const history = useHistory();
+  const { setCurrentAlertDialog } = useAlertDialogContext();
+  const { addToastInfoMessage } = useToastContext();
+  const [badge, setBadge] = useState(0);
   const [hasNotificationsEnabled, setHasNotificationsEnabled] = useState(false);
   const [statusLoaded, setStatusLoaded] = useState(false);
+  const history = useHistory();
+
+  const checkNotificationsStatus = useCallback(async () => {
+    try {
+      const enabled = (await NotificarePush.hasRemoteNotificationsEnabled()) && (await NotificarePush.allowedUI());
+
+      setHasNotificationsEnabled(enabled);
+    } catch (e) {
+      console.log('=== Error checking remote notifications status ===');
+      console.log(JSON.stringify(e));
+
+      addToastInfoMessage({
+        message: 'Error checking remote notifications status.',
+        type: 'error',
+      });
+    }
+  }, [addToastInfoMessage]);
 
   useEffect(
-    function checkNotificationsStatus() {
+    function setupListeners() {
+      const subscriptions = [
+        NotificareInbox.onBadgeUpdated(setBadge),
+
+        NotificarePush.onNotificationSettingsChanged(async () => await checkNotificationsStatus()),
+      ];
+
+      return () => subscriptions.forEach((s) => s.remove());
+    },
+    [checkNotificationsStatus]
+  );
+
+  useEffect(
+    function checkInitialStatus() {
       (async () => {
-        try {
-          const enabled = (await NotificarePush.hasRemoteNotificationsEnabled()) && (await NotificarePush.allowedUI());
-
-          setHasNotificationsEnabled(enabled);
-        } catch (e) {
-          console.log('=== Error checking remote notifications status ===');
-          console.log(JSON.stringify(e));
-
-          addToastInfoMessage({
-            message: 'Error checking remote notifications status.',
-            type: 'error',
-          });
-        }
+        await checkNotificationsStatus();
 
         setStatusLoaded(true);
       })();
     },
-    [notificationsSettingsGranted]
+    [checkNotificationsStatus]
+  );
+
+  useEffect(
+    function getBadge() {
+      (async () => {
+        try {
+          const result = await NotificareInbox.getBadge();
+
+          setBadge(result);
+        } catch (e) {
+          console.log('=== Error getting badge ===');
+          console.log(JSON.stringify(e));
+
+          addToastInfoMessage({
+            message: 'Error getting badge.',
+            type: 'error',
+          });
+        }
+      })();
+    },
+    [addToastInfoMessage]
   );
 
   async function updateNotificationsStatus(enabled: boolean) {
@@ -97,16 +136,23 @@ export const RemoteNotificationsCardView: FC = () => {
     if (status === PushPermissionStatus.GRANTED) return true;
 
     status = await NotificarePush.requestPermission();
+
+    if (status == PushPermissionStatus.PERMANENTLY_DENIED) {
+      // TODO: Show some informational UI, educating the user to change the permission via the Settings app.
+      await NotificarePush.openAppSettings();
+      return false;
+    }
+
     return status === PushPermissionStatus.GRANTED;
   }
 
-  async function showNotificationsInfo() {
+  async function showNotificationsStatusInfo() {
     try {
       const allowedUi = await NotificarePush.allowedUI();
       const hasRemoteNotificationsEnabled = await NotificarePush.hasRemoteNotificationsEnabled();
       const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled}`;
 
-      setInfoAlert({ title: 'Notifications Status', message: infoMessage });
+      setCurrentAlertDialog({ title: 'Notifications Status', message: infoMessage });
     } catch (e) {
       console.log('=== Error getting allowedUi / hasRemoteNotificationsEnabled ===');
       console.log(JSON.stringify(e));
@@ -130,7 +176,7 @@ export const RemoteNotificationsCardView: FC = () => {
       <div className="section-title-row">
         <IonText className="section-title">Notifications</IonText>
 
-        <button className="info-button" onClick={showNotificationsInfo}>
+        <button className="info-button" onClick={showNotificationsStatusInfo}>
           <IonIcon icon={informationCircleOutline} size="small" />
         </button>
       </div>
@@ -155,7 +201,11 @@ export const RemoteNotificationsCardView: FC = () => {
 
           <IonLabel className="label-with-icon">Inbox</IonLabel>
 
-          {badge > 0 && <IonBadge slot="end">{badge}</IonBadge>}
+          {badge > 0 && (
+            <IonBadge className="badge" slot="end">
+              {badge}
+            </IonBadge>
+          )}
         </IonItem>
 
         <div className="divider-horizontal-margin" />

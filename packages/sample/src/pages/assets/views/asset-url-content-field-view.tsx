@@ -1,18 +1,20 @@
 import { IonItem, IonLabel } from '@ionic/react';
 import type { FC } from 'react';
 import React from 'react';
-import './asset_url_content_field_style.css';
+import './asset-url-content-field-style.css';
 
-export const AssetUrlContentFieldView: FC<{ label: string; url: string | undefined | null }> = (props: {
+type AssetUrlContentFieldProps = {
   label: string;
   url: string | undefined | null;
-}) => {
+};
+
+export const AssetUrlContentFieldView: FC<AssetUrlContentFieldProps> = ({ label, url }) => {
   return (
     <IonItem>
-      <IonLabel>{props.label}</IonLabel>
+      <IonLabel>{label}</IonLabel>
 
-      {props.url !== undefined && props.url !== null ? (
-        <Attachment url={props.url} />
+      {url !== undefined && url !== null ? (
+        <Attachment url={url} />
       ) : (
         <IonLabel color="medium" className="asset-empty-url">
           -

@@ -12,13 +12,13 @@ import {
 } from '@ionic/react';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
+import { useToastContext } from '../../contexts/toast';
 
 export const ScannablesView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [isNfcAvailable, setIsNfcAvailable] = useState(false);
 
   useEffect(function loadInitialData() {

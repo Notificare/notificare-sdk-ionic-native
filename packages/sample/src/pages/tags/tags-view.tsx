@@ -13,22 +13,16 @@ import {
 } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
+import { useToastContext } from '../../contexts/toast';
 
 export const TagsView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [tags, setTags] = useState<string[]>([]);
 
-  useEffect(function loadInitialData() {
-    (async () => {
-      await fetchTags();
-    })();
-  }, []);
-
-  async function fetchTags() {
+  const fetchTags = useCallback(async () => {
     try {
       const result = await Notificare.device().fetchTags();
       setTags(result);
@@ -47,7 +41,16 @@ export const TagsView: FC = () => {
         type: 'error',
       });
     }
-  }
+  }, [addToastInfoMessage]);
+
+  useEffect(
+    function loadInitialData() {
+      (async () => {
+        await fetchTags();
+      })();
+    },
+    [fetchTags]
+  );
 
   async function addTags() {
     try {

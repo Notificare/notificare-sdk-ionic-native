@@ -14,13 +14,13 @@ import {
 } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import type { FC } from 'react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import '../../styles/index.css';
 
-import { mainContext } from '../../app';
+import { useToastContext } from '../../contexts/toast';
 
 export const CustomEventView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [eventName, setEventName] = useState('');
   const [shouldIncludeDataFields, setShouldIncludeDataFields] = useState(false);
   const dataFields = {

@@ -2,35 +2,38 @@ import { IonCard, IonIcon, IonItem, IonLabel, IonToggle } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import { banOutline } from 'ionicons/icons';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../../styles/index.css';
 
-import { mainContext } from '../../../app';
+import { useToastContext } from '../../../contexts/toast';
 
 export const DnDNotificationsCardView: FC = () => {
-  const addToastInfoMessage = useContext(mainContext).addToastInfoMessage;
+  const { addToastInfoMessage } = useToastContext();
   const [hasDndEnabled, setHasDndEnabled] = useState(false);
   const [statusLoaded, setStatusLoaded] = useState(false);
 
-  useEffect(function checkDndStatus() {
-    (async () => {
-      try {
-        const dnd = await Notificare.device().fetchDoNotDisturb();
-        setHasDndEnabled(dnd != null);
-        console.log('=== DnD fetched successfully ===');
-      } catch (e) {
-        console.log('=== Error fetching DnD ===');
-        console.log(JSON.stringify(e));
+  useEffect(
+    function checkDndStatus() {
+      (async () => {
+        try {
+          const dnd = await Notificare.device().fetchDoNotDisturb();
+          setHasDndEnabled(dnd != null);
+          console.log('=== DnD fetched successfully ===');
+        } catch (e) {
+          console.log('=== Error fetching DnD ===');
+          console.log(JSON.stringify(e));
 
-        addToastInfoMessage({
-          message: 'Error fetching DnD.',
-          type: 'error',
-        });
-      }
+          addToastInfoMessage({
+            message: 'Error fetching DnD.',
+            type: 'error',
+          });
+        }
 
-      setStatusLoaded(true);
-    })();
-  }, []);
+        setStatusLoaded(true);
+      })();
+    },
+    [addToastInfoMessage]
+  );
 
   async function updateDndStatus(enabled: boolean) {
     if (!statusLoaded) return;
@@ -84,7 +87,7 @@ export const DnDNotificationsCardView: FC = () => {
   }
 
   return (
-    <IonCard className="ion-card-margin">
+    <IonCard className="dnd-card">
       <IonItem detail={false} lines="none">
         <IonIcon icon={banOutline} size="small" />
 
