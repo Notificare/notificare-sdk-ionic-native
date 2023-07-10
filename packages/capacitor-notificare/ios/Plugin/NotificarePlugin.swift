@@ -347,10 +347,8 @@ public class NotificarePlugin: CAPPlugin {
         
         Notificare.shared.device().updateUserData(userData) { result in
             switch result {
-            case let .success(userData):
-                call.resolve([
-                    "result": userData
-                ])
+            case .success:
+                call.resolve()
             case let .failure(error):
                 call.reject(error.localizedDescription)
             }
