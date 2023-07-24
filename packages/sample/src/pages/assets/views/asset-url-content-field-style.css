@@ -1,0 +1,11 @@
+.asset-attachment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 8px 0 8px 0;
+}
+
+.asset-empty-url {
+  margin: 0;
+  text-align: right;
+}

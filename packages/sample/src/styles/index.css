@@ -1,0 +1,83 @@
+.main-container {
+  margin-bottom: 16px;
+}
+
+.no-data-container {
+  margin: 16px;
+}
+
+.margin-top {
+  margin-top: 32px;
+}
+
+.label-with-icon {
+  margin-left: 8px;
+}
+
+.row {
+  flex-direction: row;
+  padding: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.launch-flow-row {
+  display: flex;
+}
+
+.section-title-row {
+  display: flex;
+  margin: 32px 16px 8px;
+  flex-direction: row;
+}
+
+.check-box-row {
+  flex-direction: row;
+  align-items: center;
+  margin: 12px 12px 0;
+  align-self: flex-end;
+}
+
+.sample-button {
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+.info-button {
+  background-color: transparent;
+  color: black;
+}
+
+.section-title {
+  flex: 1;
+}
+
+.sample-subtitle {
+  font-size: 16px;
+}
+
+.divider-horizontal-margin {
+  height: 1px;
+  background-color: grey;
+  margin-left: 44px;
+}
+
+.divider-vertical {
+  width: 1px;
+  background: grey;
+}
+
+.ion-card-margin {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.dnd-card {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.badge {
+  margin-right: 16px;
+}

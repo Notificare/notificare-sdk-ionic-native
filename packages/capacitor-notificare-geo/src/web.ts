@@ -1,6 +1,7 @@
 import { WebPlugin } from '@capacitor/core';
 
 import type { PermissionGroup, PermissionStatus } from './enums';
+import type { NotificareRegion } from './models/notificare-region';
 import type { PermissionRationale } from './notificare-geo';
 import type { NotificareGeoPlugin } from './plugin';
 
@@ -12,6 +13,16 @@ export class NotificareGeoPluginWeb extends WebPlugin implements NotificareGeoPl
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   hasBluetoothEnabled(): Promise<{ result: boolean }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getMonitoredRegions(): Promise<{ result: NotificareRegion[] }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getEnteredRegions(): Promise<{ result: NotificareRegion[] }> {
     throw this.unimplemented('Not implemented on web.');
   }
 

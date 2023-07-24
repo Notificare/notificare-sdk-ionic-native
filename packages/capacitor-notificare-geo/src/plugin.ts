@@ -2,6 +2,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
 import { registerPlugin } from '@capacitor/core';
 
 import type { PermissionGroup, PermissionStatus } from './enums';
+import type { NotificareRegion } from './models/notificare-region';
 import type { PermissionRationale } from './notificare-geo';
 
 export const NativePlugin = registerPlugin<NotificareGeoPlugin>('NotificareGeoPlugin', {
@@ -16,6 +17,10 @@ export interface NotificareGeoPlugin {
   hasLocationServicesEnabled(): Promise<{ result: boolean }>;
 
   hasBluetoothEnabled(): Promise<{ result: boolean }>;
+
+  getMonitoredRegions(): Promise<{ result: NotificareRegion[] }>;
+
+  getEnteredRegions(): Promise<{ result: NotificareRegion[] }>;
 
   enableLocationUpdates(): Promise<void>;
 
