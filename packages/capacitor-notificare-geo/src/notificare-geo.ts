@@ -23,6 +23,16 @@ export class NotificareGeo {
     return result;
   }
 
+  public static async getMonitoredRegions(): Promise<NotificareRegion[]> {
+    const { result } = await NativePlugin.getMonitoredRegions();
+    return result;
+  }
+
+  public static async getEnteredRegions(): Promise<NotificareRegion[]> {
+    const { result } = await NativePlugin.getEnteredRegions();
+    return result;
+  }
+
   public static async enableLocationUpdates(): Promise<void> {
     await NativePlugin.enableLocationUpdates();
   }

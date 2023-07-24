@@ -87,6 +87,32 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
     }
 
     @PluginMethod
+    public fun getMonitoredRegions(call: PluginCall) {
+        try {
+            call.resolve(
+                JSObject().apply {
+                    put("result", JSArray(Notificare.geo().monitoredRegions.map { it.toJson() }))
+                }
+            )
+        } catch (e: Exception) {
+            call.reject(e.localizedMessage)
+        }
+    }
+
+    @PluginMethod
+    public fun getEnteredRegions(call: PluginCall) {
+        try {
+            call.resolve(
+                JSObject().apply {
+                    put("result", JSArray(Notificare.geo().enteredRegions.map { it.toJson() }))
+                }
+            )
+        } catch (e: Exception) {
+            call.reject(e.localizedMessage)
+        }
+    }
+
+    @PluginMethod
     public fun enableLocationUpdates(call: PluginCall) {
         Notificare.geo().enableLocationUpdates()
         call.resolve()
