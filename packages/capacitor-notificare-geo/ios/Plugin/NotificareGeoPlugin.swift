@@ -38,6 +38,26 @@ public class NotificareGeoPlugin: CAPPlugin {
             "result": Notificare.shared.geo().hasBluetoothEnabled
         ])
     }
+
+    @objc func getMonitoredRegions(_ call: CAPPluginCall) {
+        do {
+            call.resolve([
+                "result": try Notificare.shared.geo().monitoredRegions.map { try $0.toJson() }
+            ])
+        } catch {
+            call.reject(error.localizedDescription)
+        }
+    }
+
+    @objc func getEnteredRegions(_ call: CAPPluginCall) {
+        do {
+            call.resolve([
+                "result": try Notificare.shared.geo().enteredRegions.map { try $0.toJson() }
+            ])
+        } catch {
+            call.reject(error.localizedDescription)
+        }
+    }
     
     @objc func enableLocationUpdates(_ call: CAPPluginCall) {
         Notificare.shared.geo().enableLocationUpdates()
