@@ -222,7 +222,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
         }
     }
     
-    public func notificare(_ notificarePushUI: NotificarePushUI, shouldPerformSelectorWithURL url: URL, in action: NotificareNotification.Action, for notification: NotificareNotification) {
+    public func notificare(_ notificarePushUI: NotificarePushUI, didReceiveCustomAction url: URL, in action: NotificareNotification.Action, for notification: NotificareNotification) {
         do {
             EventBroker.instance.dispatchEvent("custom_action_received", data: [
                 "notification": try notification.toJson(),
