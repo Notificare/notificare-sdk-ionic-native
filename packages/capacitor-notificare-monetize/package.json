@@ -1,6 +1,6 @@
 {
   "name": "capacitor-notificare-monetize",
-  "version": "3.6.0",
+  "version": "3.6.1",
   "description": "Notificare Monetize Capacitor plugin.",
   "author": "Notificare <info@notifica.re> (https://notificare.com)",
   "license": "MIT",
@@ -49,15 +49,15 @@
     "docs:replace-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; cp ../../README.md ../../CHANGELOG.md ../../MIGRATION.md ."
   },
   "peerDependencies": {
-    "@capacitor/core": "^3.0.0",
-    "capacitor-notificare": "3.6.0"
+    "@capacitor/core": "3 - 5",
+    "capacitor-notificare": "3.6.1"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.0",
     "@capacitor/core": "^3.0.0",
     "@capacitor/docgen": "^0.0.18",
     "@capacitor/ios": "^3.0.0",
-    "capacitor-notificare": "3.6.0",
+    "capacitor-notificare": "3.6.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.32.0",
     "typescript": "^4.5.4"
