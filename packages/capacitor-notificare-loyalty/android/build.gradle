@@ -54,7 +54,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
 
-    def notificare_version = '3.6.1'
+    def notificare_version = '3.7.0'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-loyalty:$notificare_version"
 }
