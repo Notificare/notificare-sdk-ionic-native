@@ -13,6 +13,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 're.notifica.push.ui.capacitor'
+    }
+
     compileSdkVersion 33
     defaultConfig {
         minSdkVersion 23
