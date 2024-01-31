@@ -1,7 +1,6 @@
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Notificare } from 'capacitor-notificare';
-import { NotificareGeo } from 'capacitor-notificare-geo';
 import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificarePushUI } from 'capacitor-notificare-push-ui';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
@@ -55,16 +54,6 @@ export const App: FC = () => {
 
   useEffect(function setupListeners() {
     const subscriptions = [
-      Notificare.onReady(async () => {
-        if (await NotificarePush.hasRemoteNotificationsEnabled()) {
-          await NotificarePush.enableRemoteNotifications();
-        }
-
-        if (await NotificareGeo.hasLocationServicesEnabled()) {
-          await NotificareGeo.enableLocationUpdates();
-        }
-      }),
-
       NotificarePush.onNotificationOpened(async (notification) => {
         await NotificarePushUI.presentNotification(notification);
       }),
