@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Upcoming release
+## 3.7.0
 
 **Important notice:** Re-enabling remote notifications and location services is no longer required.
 You can safely remove the following piece of code as the SDK will automatically handle it for you during the launch flow.
