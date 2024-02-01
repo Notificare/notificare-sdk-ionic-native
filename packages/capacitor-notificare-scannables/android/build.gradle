@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
     }
 }
 
@@ -13,10 +13,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    if (project.android.hasProperty("namespace")) {
+        namespace 're.notifica.scannables.capacitor'
+    }
+
+    compileSdkVersion 34
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 34
     }
     buildTypes {
         release {
@@ -55,7 +59,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
 
-    def notificare_version = '3.6.1'
+    def notificare_version = '3.7.1'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-scannables:$notificare_version"
     implementation "re.notifica:notificare-scannables-gms:$notificare_version"
