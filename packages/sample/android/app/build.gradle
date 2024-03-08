@@ -7,6 +7,7 @@ def properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
+    namespace "re.notifica.sample.app"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "re.notifica.sample.app"
