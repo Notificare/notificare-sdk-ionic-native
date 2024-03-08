@@ -4,6 +4,7 @@ import { registerPlugin } from '@capacitor/core';
 import type { NotificareApplication } from './models/notificare-application';
 import type { NotificareDevice } from './models/notificare-device';
 import type { NotificareDoNotDisturb } from './models/notificare-do-not-disturb';
+import type { NotificareDynamicLink } from './models/notificare-dynamic-link';
 import type { NotificareNotification } from './models/notificare-notification';
 
 export const _Notificare = registerPlugin<NotificarePlugin>('NotificarePlugin', {
@@ -28,6 +29,8 @@ export interface NotificarePlugin {
   fetchApplication(): Promise<{ result: NotificareApplication }>;
 
   fetchNotification(options: { id: string }): Promise<{ result: NotificareNotification }>;
+
+  fetchDynamicLink(options: { url: string }): Promise<{ result: NotificareDynamicLink }>;
 
   //
   // Device module
