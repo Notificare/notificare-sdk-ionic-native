@@ -2,6 +2,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
 
 import type { NotificareApplication } from './models/notificare-application';
 import type { NotificareDevice } from './models/notificare-device';
+import type { NotificareDynamicLink } from './models/notificare-dynamic-link';
 import type { NotificareNotification } from './models/notificare-notification';
 import { NotificareDeviceModule } from './notificare-device-module';
 import { NotificareEventsModule } from './notificare-events-module';
@@ -57,6 +58,11 @@ export class Notificare {
 
   public static async fetchNotification(id: string): Promise<NotificareNotification> {
     const { result } = await _Notificare.fetchNotification({ id });
+    return result;
+  }
+
+  public static async fetchDynamicLink(url: string): Promise<NotificareDynamicLink> {
+    const { result } = await _Notificare.fetchDynamicLink({ url });
     return result;
   }
 
