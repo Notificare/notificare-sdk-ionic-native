@@ -1,6 +1,7 @@
 package re.notifica.capacitor
 
 import android.content.Intent
+import android.net.Uri
 import com.getcapacitor.*
 import com.getcapacitor.annotation.CapacitorPlugin
 import org.json.JSONObject
@@ -103,6 +104,30 @@ public class NotificarePlugin : Plugin() {
 
         Notificare.fetchNotification(id, object : NotificareCallback<NotificareNotification> {
             override fun onSuccess(result: NotificareNotification) {
+                call.resolve(
+                    JSObject().apply {
+                        put("result", result.toJson())
+                    }
+                )
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
+    }
+
+    @PluginMethod
+    public fun fetchDynamicLink(call: PluginCall) {
+        val url = call.getString("url") ?: run {
+            call.reject("Missing 'url' parameter.")
+            return
+        }
+
+        val uri = Uri.parse(url)
+
+        Notificare.fetchDynamicLink(uri, object : NotificareCallback<NotificareDynamicLink> {
+            override fun onSuccess(result: NotificareDynamicLink) {
                 call.resolve(
                     JSObject().apply {
                         put("result", result.toJson())

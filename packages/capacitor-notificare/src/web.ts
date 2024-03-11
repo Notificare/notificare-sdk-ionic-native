@@ -3,6 +3,7 @@ import { WebPlugin } from '@capacitor/core';
 import type { NotificareApplication } from './models/notificare-application';
 import type { NotificareDevice } from './models/notificare-device';
 import type { NotificareDoNotDisturb } from './models/notificare-do-not-disturb';
+import type { NotificareDynamicLink } from './models/notificare-dynamic-link';
 import type { NotificareNotification } from './models/notificare-notification';
 import type { NotificarePlugin } from './plugin';
 
@@ -37,6 +38,11 @@ export class NotificarePluginWeb extends WebPlugin implements NotificarePlugin {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetchNotification(_options: { id: string }): Promise<{ result: NotificareNotification }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  fetchDynamicLink(_options: { url: string }): Promise<{ result: NotificareDynamicLink }> {
     throw this.unimplemented('Not implemented on web.');
   }
 

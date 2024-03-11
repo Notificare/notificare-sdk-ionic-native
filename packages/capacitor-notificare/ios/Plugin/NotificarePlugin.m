@@ -11,6 +11,7 @@ CAP_PLUGIN(NotificarePlugin, "NotificarePlugin",
            CAP_PLUGIN_METHOD(getApplication, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchApplication, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchNotification, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(fetchDynamicLink, CAPPluginReturnPromise);
            // Device module
            CAP_PLUGIN_METHOD(getCurrentDevice, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(getPreferredLanguage, CAPPluginReturnPromise);
