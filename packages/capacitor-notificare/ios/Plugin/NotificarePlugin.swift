@@ -150,6 +150,25 @@ public class NotificarePlugin: CAPPlugin {
         }
     }
 
+    @objc func canEvaluateDeferredLink(_ call: CAPPluginCall) {
+        call.resolve([
+            "result": Notificare.shared.canEvaluateDeferredLink
+        ])
+    }
+
+    @objc func evaluateDeferredLink(_ call: CAPPluginCall) {
+        Notificare.shared.evaluateDeferredLink { result in
+            switch result {
+            case let .success(evaluated):
+                call.resolve([
+                    "result": evaluated
+                ])
+            case let .failure(error):
+                call.reject(error.localizedDescription)
+            }
+        }
+    }
+
     // MARK: - Notificare device module
 
     @objc func getCurrentDevice(_ call: CAPPluginCall) {

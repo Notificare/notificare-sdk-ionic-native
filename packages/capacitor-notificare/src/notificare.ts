@@ -66,6 +66,16 @@ export class Notificare {
     return result;
   }
 
+  public static async canEvaluateDeferredLink(): Promise<boolean> {
+    const { result } = await _Notificare.canEvaluateDeferredLink();
+    return result;
+  }
+
+  public static async evaluateDeferredLink(): Promise<boolean> {
+    const { result } = await _Notificare.evaluateDeferredLink();
+    return result;
+  }
+
   //
   // Events
   //
