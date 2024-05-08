@@ -141,6 +141,40 @@ public class NotificarePlugin : Plugin() {
         })
     }
 
+    @PluginMethod
+    public fun canEvaluateDeferredLink(call: PluginCall) {
+        Notificare.canEvaluateDeferredLink(object : NotificareCallback<Boolean> {
+            override fun onSuccess(result: Boolean) {
+                call.resolve(
+                    JSObject().apply {
+                        put("result", result)
+                    }
+                )
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
+    }
+
+    @PluginMethod
+    public fun evaluateDeferredLink(call: PluginCall) {
+        Notificare.evaluateDeferredLink(object : NotificareCallback<Boolean> {
+            override fun onSuccess(result: Boolean) {
+                call.resolve(
+                    JSObject().apply {
+                        put("result", result)
+                    }
+                )
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
+    }
+
     // endregion
 
     // region Notificare device module

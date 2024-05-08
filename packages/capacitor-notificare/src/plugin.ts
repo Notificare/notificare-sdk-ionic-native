@@ -32,6 +32,10 @@ export interface NotificarePlugin {
 
   fetchDynamicLink(options: { url: string }): Promise<{ result: NotificareDynamicLink }>;
 
+  canEvaluateDeferredLink(): Promise<{ result: boolean }>;
+
+  evaluateDeferredLink(): Promise<{ result: boolean }>;
+
   //
   // Device module
   //
