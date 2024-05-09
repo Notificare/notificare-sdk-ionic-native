@@ -54,6 +54,10 @@ export const App: FC = () => {
 
   useEffect(function setupListeners() {
     const subscriptions = [
+      Notificare.onReady(async () => {
+        await handleDeferredLink();
+      }),
+
       NotificarePush.onNotificationOpened(async (notification) => {
         await NotificarePushUI.presentNotification(notification);
       }),
@@ -71,6 +75,20 @@ export const App: FC = () => {
 
     return () => subscriptions.forEach((s) => s.remove());
   }, []);
+
+  async function handleDeferredLink() {
+    try {
+      if (!(await Notificare.canEvaluateDeferredLink())) {
+        return;
+      }
+
+      const evaluated = await Notificare.evaluateDeferredLink();
+      console.log(`Did evaluate deferred link: ${evaluated}`);
+    } catch (e) {
+      console.log('=== Error evaluating deferred link ===');
+      console.log(JSON.stringify(e));
+    }
+  }
 
   return (
     <IonApp>
