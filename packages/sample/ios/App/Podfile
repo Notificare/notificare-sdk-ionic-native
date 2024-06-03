@@ -21,7 +21,6 @@ def capacitor_pods
   pod 'CapacitorNotificareInAppMessaging', :path => '../../../capacitor-notificare-in-app-messaging'
   pod 'CapacitorNotificareInbox', :path => '../../../capacitor-notificare-inbox'
   pod 'CapacitorNotificareLoyalty', :path => '../../../capacitor-notificare-loyalty'
-  pod 'CapacitorNotificareMonetize', :path => '../../../capacitor-notificare-monetize'
   pod 'CapacitorNotificarePush', :path => '../../../capacitor-notificare-push'
   pod 'CapacitorNotificarePushUi', :path => '../../../capacitor-notificare-push-ui'
   pod 'CapacitorNotificareScannables', :path => '../../../capacitor-notificare-scannables'

@@ -31,10 +31,6 @@ PODS:
     - Capacitor
     - Notificare/NotificareKit (= 3.9.0)
     - Notificare/NotificareLoyaltyKit (= 3.9.0)
-  - CapacitorNotificareMonetize (3.9.0):
-    - Capacitor
-    - Notificare/NotificareKit (= 3.9.0)
-    - Notificare/NotificareMonetizeKit (= 3.9.0)
   - CapacitorNotificarePush (3.9.0):
     - Capacitor
     - Notificare/NotificareKit (= 3.9.0)
@@ -59,7 +55,6 @@ PODS:
   - Notificare/NotificareInboxKit (3.9.0)
   - Notificare/NotificareKit (3.9.0)
   - Notificare/NotificareLoyaltyKit (3.9.0)
-  - Notificare/NotificareMonetizeKit (3.9.0)
   - Notificare/NotificareNotificationServiceExtensionKit (3.9.0)
   - Notificare/NotificarePushKit (3.9.0)
   - Notificare/NotificarePushUIKit (3.9.0)
@@ -78,7 +73,6 @@ DEPENDENCIES:
   - CapacitorNotificareInAppMessaging (from `../../../capacitor-notificare-in-app-messaging`)
   - CapacitorNotificareInbox (from `../../../capacitor-notificare-inbox`)
   - CapacitorNotificareLoyalty (from `../../../capacitor-notificare-loyalty`)
-  - CapacitorNotificareMonetize (from `../../../capacitor-notificare-monetize`)
   - CapacitorNotificarePush (from `../../../capacitor-notificare-push`)
   - CapacitorNotificarePushUi (from `../../../capacitor-notificare-push-ui`)
   - CapacitorNotificareScannables (from `../../../capacitor-notificare-scannables`)
@@ -113,8 +107,6 @@ EXTERNAL SOURCES:
     :path: "../../../capacitor-notificare-inbox"
   CapacitorNotificareLoyalty:
     :path: "../../../capacitor-notificare-loyalty"
-  CapacitorNotificareMonetize:
-    :path: "../../../capacitor-notificare-monetize"
   CapacitorNotificarePush:
     :path: "../../../capacitor-notificare-push"
   CapacitorNotificarePushUi:
@@ -138,7 +130,6 @@ SPEC CHECKSUMS:
   CapacitorNotificareInAppMessaging: b24aa7f9fb88c315bf4f24f225a29158303cde6e
   CapacitorNotificareInbox: 063b612cb0b377b9bf41d5e1442ab42db2f1ffc2
   CapacitorNotificareLoyalty: 5e0f91d746f91cc06c835b7081691a290aced79a
-  CapacitorNotificareMonetize: a4e42d69b2c14a8fe2cf98b558e4e039db7b02df
   CapacitorNotificarePush: cb6216c4cbe27ab4170d683ab3f214bf64a91a5c
   CapacitorNotificarePushUi: a6f6e75fc79b14a82fcfe2498d902b5d1f884bf7
   CapacitorNotificareScannables: 795aabfeeb9bf600e8851e54af92e2fa66768dc7
@@ -146,6 +137,6 @@ SPEC CHECKSUMS:
   CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
   Notificare: fded090a688e6ba2f8c7cd62ddeb1691ad9b539d
 
-PODFILE CHECKSUM: 3dfb45d80a8bfd850de7efe54482c7a55a3a3dd6
+PODFILE CHECKSUM: 09c05f95e747736a0ed4938cbec9a1723133c6d3
 
 COCOAPODS: 1.15.2
