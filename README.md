@@ -35,8 +35,6 @@ Table of contents
 
 **Loyalty**: Harness the power of digital cards that live beyond your app and are always in your customer’s pocket.
 
-**Monetize**: Quickly support in-app purchases in both the App Store and Google Play.
-
 **Assets**: Add powerful contextual marketing features to your apps. Show the right content to the right users at the right time or location. Maximise the content you're already creating without increasing development costs.
 
 **Scannables**: Unlock new content by scanning NFC tags or QR codes that integrate seamlessly in your mobile applications.
@@ -63,7 +61,6 @@ yarn add capacitor-notificare-geo
 yarn add capacitor-notificare-in-app-messaging
 yarn add capacitor-notificare-inbox
 yarn add capacitor-notificare-loyalty
-yarn add capacitor-notificare-monetize
 yarn add capacitor-notificare-push
 yarn add capacitor-notificare-push-ui
 yarn add capacitor-notificare-scannables
