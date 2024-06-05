@@ -17,9 +17,6 @@ import { DeviceView } from './pages/device/device-view';
 import { CustomEventView } from './pages/events/custom-event-view';
 import { HomeView } from './pages/home/home-view';
 import { InboxView } from './pages/inbox/inbox-view';
-import { MonetizeView } from './pages/monetize/monetize-view';
-import { MonetizeProductsView } from './pages/monetize/views/monetize-products-view';
-import { MonetizePurchasesView } from './pages/monetize/views/monetize-purchases-view';
 import { ScannablesView } from './pages/scannables/scannables-view';
 import { TagsView } from './pages/tags/tags-view';
 
@@ -127,18 +124,6 @@ export const App: FC = () => {
 
               <Route exact path="/assets">
                 <AssetsView />
-              </Route>
-
-              <Route exact path="/monetize">
-                <MonetizeView />
-              </Route>
-
-              <Route exact path="/monetize/products">
-                <MonetizeProductsView />
-              </Route>
-
-              <Route exact path="/monetize/purchases">
-                <MonetizePurchasesView />
               </Route>
 
               <Route exact path="/events">
