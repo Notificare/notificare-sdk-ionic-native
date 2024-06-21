@@ -234,14 +234,12 @@ public class NotificarePlugin: CAPPlugin {
         let userId = call.getString("userId")
         let userName = call.getString("userName")
 
-        onMainThread {
-            Notificare.shared.device().updateUser(userId: userId, userName: userName) { result in
-                switch result {
-                case .success:
-                    call.resolve()
-                case let .failure(error):
-                    call.reject(error.localizedDescription)
-                }
+        Notificare.shared.device().updateUser(userId: userId, userName: userName) { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
             }
         }
     }
