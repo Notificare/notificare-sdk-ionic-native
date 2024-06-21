@@ -63,16 +63,24 @@ public class NotificarePlugin: CAPPlugin {
     }
 
     @objc func launch(_ call: CAPPluginCall) {
-        onMainThread {
-            Notificare.shared.launch()
-            call.resolve()
+        Notificare.shared.launch { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
+            }
         }
     }
 
     @objc func unlaunch(_ call: CAPPluginCall) {
-        onMainThread {
-            Notificare.shared.unlaunch()
-            call.resolve()
+        Notificare.shared.unlaunch { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
+            }
         }
     }
 
@@ -212,6 +220,22 @@ public class NotificarePlugin: CAPPlugin {
 
         onMainThread {
             Notificare.shared.device().register(userId: userId, userName: userName) { result in
+                switch result {
+                case .success:
+                    call.resolve()
+                case let .failure(error):
+                    call.reject(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    @objc func updateUser(_ call: CAPPluginCall) {
+        let userId = call.getString("userId")
+        let userName = call.getString("userName")
+
+        onMainThread {
+            Notificare.shared.device().updateUser(userId: userId, userName: userName) { result in
                 switch result {
                 case .success:
                     call.resolve()

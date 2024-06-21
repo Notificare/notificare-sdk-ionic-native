@@ -46,7 +46,12 @@ export interface NotificarePlugin {
 
   updatePreferredLanguage(options: { language: string | null }): Promise<void>;
 
+  /**
+   * @deprecated Use updateUser() instead.
+   */
   register(options: { userId: string | null; userName: string | null }): Promise<void>;
+
+  updateUser(options: { userId: string | null; userName: string | null }): Promise<void>;
 
   fetchTags(): Promise<{ result: string[] }>;
 
