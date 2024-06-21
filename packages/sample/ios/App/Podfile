@@ -1,5 +1,8 @@
 require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
+source 'https://cdn.cocoapods.org/'
+source 'git@github.com:Notificare/notificare-cocoapods-specs.git'
+
 platform :ios, '13.0'
 use_frameworks!
 
@@ -33,5 +36,5 @@ target 'App' do
 end
 
 target 'NotificationServiceExtension' do
-  pod 'Notificare/NotificareNotificationServiceExtensionKit', '3.9.0'
+  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.0.0-canary.1'
 end

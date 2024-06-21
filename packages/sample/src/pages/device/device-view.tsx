@@ -37,14 +37,8 @@ export const DeviceView: FC = () => {
       const currentDeviceData: Record<string, string> = {};
       currentDeviceData.ID = currentDevice.id;
       currentDeviceData['User Name'] = currentDevice.userName ?? '-';
-      currentDeviceData.Registered = currentDevice.lastRegistered;
       currentDeviceData.DnD = currentDevice.dnd != null ? `${currentDevice.dnd.start} : ${currentDevice.dnd.end}` : '-';
-      currentDeviceData.Region = currentDevice.region;
-      currentDeviceData.Language = currentDevice.language;
       currentDeviceData['Preferred Language'] = preferredLanguage ?? '-';
-      currentDeviceData.Transport = currentDevice.transport;
-      currentDeviceData['OS Version'] = currentDevice.osVersion;
-      currentDeviceData['SDK Version'] = currentDevice.sdkVersion;
 
       setDeviceData(currentDeviceData);
       setUserData(userDataResult);
@@ -68,45 +62,45 @@ export const DeviceView: FC = () => {
     [loadDeviceData]
   );
 
-  async function registerDeviceWithUser() {
+  async function updateUser() {
     try {
-      await Notificare.device().register('helder@notifica.re', 'Helder Pinhal');
-      console.log('=== Registered device with user successfully ===');
+      await Notificare.device().updateUser('Notificarista@notifica.re', 'Notificarista');
+      console.log('=== Updated user as Notificarista successfully ===');
 
       addToastInfoMessage({
-        message: 'Registered device with user successfully.',
+        message: 'Updated user as Notificarista successfully.',
         type: 'success',
       });
 
       await loadDeviceData();
     } catch (e) {
-      console.log('=== Error registering device with user ===');
+      console.log('=== Error updating user as Notificarista ===');
       console.log(JSON.stringify(e));
 
       addToastInfoMessage({
-        message: 'Error registering device with user.',
+        message: 'Error updating user as Notificarista',
         type: 'error',
       });
     }
   }
 
-  async function registerDeviceAsAnonymous() {
+  async function updateUserAsAnonymous() {
     try {
-      await Notificare.device().register(null, null);
-      console.log('=== Registered device as anonymous successfully ===');
+      await Notificare.device().updateUser(null, null);
+      console.log('=== Updated user as anonymous successfully ===');
 
       addToastInfoMessage({
-        message: 'Registered device as anonymous successfully.',
+        message: 'Updated user as anonymous successfully.',
         type: 'success',
       });
 
       await loadDeviceData();
     } catch (e) {
-      console.log('=== Error registering device as anonymous ===');
+      console.log('=== Error updating user as anonymous ===');
       console.log(JSON.stringify(e));
 
       addToastInfoMessage({
-        message: 'Error registering device as anonymous.',
+        message: 'Error updating user as anonymous.',
         type: 'error',
       });
     }
@@ -159,8 +153,8 @@ export const DeviceView: FC = () => {
   async function updateUserData() {
     try {
       await Notificare.device().updateUserData({
-        firstName: 'Helder',
-        lastName: 'Pinhal',
+        firstName: 'FirstNameExample',
+        lastName: 'LastNameExample',
       });
       console.log('=== Updated user data successfully ===');
 
@@ -241,12 +235,12 @@ export const DeviceView: FC = () => {
           </div>
 
           <IonCard className="ion-card-margin">
-            <IonItem className="sample-button" detail={false} lines="full" button onClick={registerDeviceWithUser}>
-              <IonLabel>Register with User</IonLabel>
+            <IonItem className="sample-button" detail={false} lines="full" button onClick={updateUser}>
+              <IonLabel>Update User</IonLabel>
             </IonItem>
 
-            <IonItem className="sample-button" detail={false} lines="none" button onClick={registerDeviceAsAnonymous}>
-              <IonLabel>Register as Anonymous</IonLabel>
+            <IonItem className="sample-button" detail={false} lines="none" button onClick={updateUserAsAnonymous}>
+              <IonLabel>Update User as Anonymous</IonLabel>
             </IonItem>
           </IonCard>
 
