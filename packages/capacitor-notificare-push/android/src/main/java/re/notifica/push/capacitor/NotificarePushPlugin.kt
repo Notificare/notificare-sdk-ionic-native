@@ -22,6 +22,7 @@ import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import re.notifica.Notificare
+import re.notifica.NotificareCallback
 import re.notifica.internal.NotificareLogger
 import re.notifica.push.ktx.push
 
@@ -113,6 +114,24 @@ public class NotificarePushPlugin : Plugin() {
     }
 
     @PluginMethod
+    public fun getTransport(call: PluginCall) {
+        call.resolve(
+            JSObject().apply {
+                put("result", Notificare.push().transport?.rawValue)
+            }
+        )
+    }
+
+    @PluginMethod
+    public fun getSubscriptionId(call: PluginCall) {
+        call.resolve(
+            JSObject().apply {
+                put("result", Notificare.push().subscriptionId)
+            }
+        )
+    }
+
+    @PluginMethod
     public fun allowedUI(call: PluginCall) {
         call.resolve(
             JSObject().apply {
@@ -123,14 +142,28 @@ public class NotificarePushPlugin : Plugin() {
 
     @PluginMethod
     public fun enableRemoteNotifications(call: PluginCall) {
-        Notificare.push().enableRemoteNotifications()
-        call.resolve()
+        Notificare.push().enableRemoteNotifications(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
     public fun disableRemoteNotifications(call: PluginCall) {
-        Notificare.push().disableRemoteNotifications()
-        call.resolve()
+        Notificare.push().disableRemoteNotifications(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
