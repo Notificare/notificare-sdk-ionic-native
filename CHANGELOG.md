@@ -2,7 +2,6 @@
 
 ## Upcoming release
 
-- Migrate to Turbo Modules with support for both the old and new architectures
 - Device identifiers become long-lived
 
 #### Breaking changes
