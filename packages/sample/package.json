@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "ionic:sync": "ionic cap sync",
-    "ionic:android": "ionic cap run android -l --external --target=Pixel_6_API_33",
+    "ionic:android": "ionic cap run android -l --external --target=Pixel_6_API_34",
     "ionic:android:studio": "ionic cap open android",
     "ionic:ios": "ionic cap run ios -l --external --target=00008110-000144E60EA0401E",
     "ionic:ios:xcode": "ionic cap open ios",

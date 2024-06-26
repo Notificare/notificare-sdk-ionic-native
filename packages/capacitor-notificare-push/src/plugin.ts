@@ -2,6 +2,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
 import { registerPlugin } from '@capacitor/core';
 
 import type { PushPermissionStatus } from './enums';
+import type { NotificareTransport } from './models/notificare-transport';
 import type { PushPermissionRationale } from './notificare-push';
 
 export const NativePlugin = registerPlugin<NotificarePushPlugin>('NotificarePushPlugin', {
@@ -20,6 +21,10 @@ export interface NotificarePushPlugin {
   setPresentationOptions(options: { options: string[] }): Promise<void>;
 
   hasRemoteNotificationsEnabled(): Promise<{ result: boolean }>;
+
+  getTransport(): Promise<{ result: NotificareTransport | null }>;
+
+  getSubscriptionId(): Promise<{ result: string | null }>;
 
   allowedUI(): Promise<{ result: boolean }>;
 

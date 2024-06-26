@@ -86,9 +86,10 @@ export const RemoteNotificationsCardView: FC = () => {
 
     if (!enabled) {
       try {
+        console.log('=== Disabling remote notifications ===');
         await NotificarePush.disableRemoteNotifications();
-        console.log('=== Disabled remote notifications successfully ===');
 
+        console.log('=== Disabling remote notifications finished ===');
         addToastInfoMessage({
           message: 'Disabled remote notifications successfully.',
           type: 'success',
@@ -108,9 +109,10 @@ export const RemoteNotificationsCardView: FC = () => {
 
     try {
       if (await ensureNotificationsPermission()) {
+        console.log('=== Enabling remote notifications ===');
         await NotificarePush.enableRemoteNotifications();
-        console.log('=== Enabled remote notifications successfully ===');
 
+        console.log('=== Enabling remote notifications finished ===');
         addToastInfoMessage({
           message: 'Enabled remote notifications successfully.',
           type: 'success',
@@ -150,15 +152,17 @@ export const RemoteNotificationsCardView: FC = () => {
     try {
       const allowedUi = await NotificarePush.allowedUI();
       const hasRemoteNotificationsEnabled = await NotificarePush.hasRemoteNotificationsEnabled();
-      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled}`;
+      const transport = await NotificarePush.getTransport();
+      const subscriptionId = await NotificarePush.getSubscriptionId();
+      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled} <br> transport: ${transport} <br> subscriptionId: ${subscriptionId}`;
 
       setCurrentAlertDialog({ title: 'Notifications Status', message: infoMessage });
     } catch (e) {
-      console.log('=== Error getting allowedUi / hasRemoteNotificationsEnabled ===');
+      console.log('=== Error getting allowedUi / hasRemoteNotificationsEnabled / transport / subscriptionId ===');
       console.log(JSON.stringify(e));
 
       addToastInfoMessage({
-        message: 'Error getting allowedUi / hasRemoteNotificationsEnabled.',
+        message: 'Error getting allowedUi / hasRemoteNotificationsEnabled / transport / subscriptionId.',
         type: 'error',
       });
     }
@@ -171,6 +175,7 @@ export const RemoteNotificationsCardView: FC = () => {
   function onTagsClicked() {
     history.push('/tags');
   }
+
   return (
     <div className="margin-top">
       <div className="section-title-row">

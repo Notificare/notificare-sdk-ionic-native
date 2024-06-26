@@ -59,14 +59,28 @@ public class NotificarePlugin : Plugin() {
 
     @PluginMethod
     public fun launch(call: PluginCall) {
-        Notificare.launch()
-        call.resolve()
+        Notificare.launch(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
     public fun unlaunch(call: PluginCall) {
-        Notificare.unlaunch()
-        call.resolve()
+        Notificare.unlaunch(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
@@ -218,6 +232,22 @@ public class NotificarePlugin : Plugin() {
         val userName = call.getString("userName")
 
         Notificare.device().register(userId, userName, object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
+    }
+
+    @PluginMethod
+    public fun updateUser(call: PluginCall) {
+        val userId = call.getString("userId")
+        val userName = call.getString("userName")
+
+        Notificare.device().updateUser(userId, userName, object : NotificareCallback<Unit> {
             override fun onSuccess(result: Unit) {
                 call.resolve()
             }

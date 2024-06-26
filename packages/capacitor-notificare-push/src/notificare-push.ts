@@ -4,6 +4,7 @@ import type { NotificareNotification, NotificareNotificationAction } from 'capac
 import type { PushPermissionStatus } from './enums';
 import type { NotificareNotificationDeliveryMechanism } from './models/notificare-notification-delivery-mechanism';
 import type { NotificareSystemNotification } from './models/notificare-system-notification';
+import type { NotificareTransport } from './models/notificare-transport';
 import { NativePlugin } from './plugin';
 
 export class NotificarePush {
@@ -25,6 +26,16 @@ export class NotificarePush {
 
   public static async hasRemoteNotificationsEnabled(): Promise<boolean> {
     const { result } = await NativePlugin.hasRemoteNotificationsEnabled();
+    return result;
+  }
+
+  public static async getTransport(): Promise<NotificareTransport | null> {
+    const { result } = await NativePlugin.getTransport();
+    return result;
+  }
+
+  public static async getSubscriptionId(): Promise<string | null> {
+    const { result } = await NativePlugin.getSubscriptionId();
     return result;
   }
 

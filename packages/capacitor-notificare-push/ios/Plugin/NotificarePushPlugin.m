@@ -8,6 +8,8 @@ CAP_PLUGIN(NotificarePushPlugin, "NotificarePushPlugin",
            CAP_PLUGIN_METHOD(setCategoryOptions, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(setPresentationOptions, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(hasRemoteNotificationsEnabled, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getTransport, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getSubscriptionId, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(allowedUI, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(enableRemoteNotifications, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(disableRemoteNotifications, CAPPluginReturnPromise);
