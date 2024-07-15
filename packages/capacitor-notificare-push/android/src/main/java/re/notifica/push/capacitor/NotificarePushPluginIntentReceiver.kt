@@ -16,13 +16,6 @@ internal class NotificarePushPluginIntentReceiver : NotificarePushIntentReceiver
         notification: NotificareNotification,
         deliveryMechanism: NotificareNotificationDeliveryMechanism
     ) {
-        // Continue emitting the legacy event to preserve backwards compatibility.
-        try {
-            EventBroker.dispatchEvent("notification_received", notification.toJson())
-        } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_received event.", e)
-        }
-
         try {
             val data = JSObject()
             data.put("notification", notification.toJson())
