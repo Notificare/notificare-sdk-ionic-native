@@ -257,14 +257,6 @@ public class NotificarePushPlugin: CAPPlugin {
 }
 
 extension NotificarePushPlugin: NotificarePushDelegate {
-    public func notificare(_ notificarePush: NotificarePush, didReceiveNotification notification: NotificareNotification) {
-        do {
-            EventBroker.instance.dispatchEvent("notification_received", data: try notification.toJson())
-        } catch {
-            NotificareLogger.error("Failed to emit the notification_received event.", error: error)
-        }
-    }
-
     public func notificare(_ notificarePush: NotificarePush, didReceiveNotification notification: NotificareNotification, deliveryMechanism: NotificareNotificationDeliveryMechanism) {
         do {
             let data: [String: Any] = [

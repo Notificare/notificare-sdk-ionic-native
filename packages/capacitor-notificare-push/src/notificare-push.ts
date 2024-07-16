@@ -83,15 +83,6 @@ export class NotificarePush {
   // Events
   //
 
-  /**
-   * @deprecated Listen to onNotificationInfoReceived(notification, deliveryMechanism) instead.
-   */
-  public static onNotificationReceived(
-    callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_received', callback);
-  }
-
   public static onNotificationInfoReceived(
     callback: (data: {
       notification: NotificareNotification;
