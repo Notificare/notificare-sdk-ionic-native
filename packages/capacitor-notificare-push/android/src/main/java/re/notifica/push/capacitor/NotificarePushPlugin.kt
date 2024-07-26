@@ -42,6 +42,12 @@ public class NotificarePushPlugin : Plugin() {
         })
     }
 
+    private val subscriptionIdObserver = Observer<String?> { subscriptionId ->
+        EventBroker.dispatchEvent("subscription_id_changed", JSObject().apply {
+            put("subscriptionId", subscriptionId)
+        })
+    }
+
     override fun load() {
         EventBroker.setup(this::notifyListeners)
         Notificare.push().intentReceiver = NotificarePushPluginIntentReceiver::class.java
@@ -49,6 +55,9 @@ public class NotificarePushPlugin : Plugin() {
         onMainThread {
             Notificare.push().observableAllowedUI.removeObserver(allowedUIObserver)
             Notificare.push().observableAllowedUI.observeForever(allowedUIObserver)
+
+            Notificare.push().observableSubscriptionId.removeObserver(subscriptionIdObserver)
+            Notificare.push().observableSubscriptionId.observeForever(subscriptionIdObserver)
         }
 
         val intent = activity?.intent
