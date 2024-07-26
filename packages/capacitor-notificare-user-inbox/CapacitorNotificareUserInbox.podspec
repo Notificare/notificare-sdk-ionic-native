@@ -1,7 +1,7 @@
 require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
-notificare_version = '4.0.0-canary.1'
+notificare_version = '4.0.0-beta.1'
 
 Pod::Spec.new do |s|
   s.name = 'CapacitorNotificareUserInbox'
