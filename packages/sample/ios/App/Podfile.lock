@@ -10,56 +10,56 @@ PODS:
     - Capacitor
   - CapacitorNotificare (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
   - CapacitorNotificareAssets (3.9.0):
     - Capacitor
-    - Notificare/NotificareAssetsKit (= 4.0.0-canary.1)
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
+    - Notificare/NotificareAssetsKit (= 4.0.0-beta.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
   - CapacitorNotificareGeo (3.9.0):
     - Capacitor
-    - Notificare/NotificareGeoKit (= 4.0.0-canary.1)
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
+    - Notificare/NotificareGeoKit (= 4.0.0-beta.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
   - CapacitorNotificareInAppMessaging (3.9.0):
     - Capacitor
-    - Notificare/NotificareInAppMessagingKit (= 4.0.0-canary.1)
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
+    - Notificare/NotificareInAppMessagingKit (= 4.0.0-beta.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
   - CapacitorNotificareInbox (3.9.0):
     - Capacitor
-    - Notificare/NotificareInboxKit (= 4.0.0-canary.1)
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
+    - Notificare/NotificareInboxKit (= 4.0.0-beta.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
   - CapacitorNotificareLoyalty (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
-    - Notificare/NotificareLoyaltyKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
+    - Notificare/NotificareLoyaltyKit (= 4.0.0-beta.1)
   - CapacitorNotificarePush (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
-    - Notificare/NotificarePushKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
+    - Notificare/NotificarePushKit (= 4.0.0-beta.1)
   - CapacitorNotificarePushUi (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
-    - Notificare/NotificarePushUIKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
+    - Notificare/NotificarePushUIKit (= 4.0.0-beta.1)
   - CapacitorNotificareScannables (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
-    - Notificare/NotificareScannablesKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
+    - Notificare/NotificareScannablesKit (= 4.0.0-beta.1)
   - CapacitorNotificareUserInbox (3.9.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.0.0-canary.1)
-    - Notificare/NotificareUserInboxKit (= 4.0.0-canary.1)
+    - Notificare/NotificareKit (= 4.0.0-beta.1)
+    - Notificare/NotificareUserInboxKit (= 4.0.0-beta.1)
   - CapacitorStatusBar (5.0.7):
     - Capacitor
-  - Notificare/NotificareAssetsKit (4.0.0-canary.1)
-  - Notificare/NotificareGeoKit (4.0.0-canary.1)
-  - Notificare/NotificareInAppMessagingKit (4.0.0-canary.1)
-  - Notificare/NotificareInboxKit (4.0.0-canary.1)
-  - Notificare/NotificareKit (4.0.0-canary.1)
-  - Notificare/NotificareLoyaltyKit (4.0.0-canary.1)
-  - Notificare/NotificareNotificationServiceExtensionKit (4.0.0-canary.1)
-  - Notificare/NotificarePushKit (4.0.0-canary.1)
-  - Notificare/NotificarePushUIKit (4.0.0-canary.1)
-  - Notificare/NotificareScannablesKit (4.0.0-canary.1)
-  - Notificare/NotificareUserInboxKit (4.0.0-canary.1)
+  - Notificare/NotificareAssetsKit (4.0.0-beta.1)
+  - Notificare/NotificareGeoKit (4.0.0-beta.1)
+  - Notificare/NotificareInAppMessagingKit (4.0.0-beta.1)
+  - Notificare/NotificareInboxKit (4.0.0-beta.1)
+  - Notificare/NotificareKit (4.0.0-beta.1)
+  - Notificare/NotificareLoyaltyKit (4.0.0-beta.1)
+  - Notificare/NotificareNotificationServiceExtensionKit (4.0.0-beta.1)
+  - Notificare/NotificarePushKit (4.0.0-beta.1)
+  - Notificare/NotificarePushUIKit (4.0.0-beta.1)
+  - Notificare/NotificareScannablesKit (4.0.0-beta.1)
+  - Notificare/NotificareUserInboxKit (4.0.0-beta.1)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -78,10 +78,10 @@ DEPENDENCIES:
   - CapacitorNotificareScannables (from `../../../capacitor-notificare-scannables`)
   - CapacitorNotificareUserInbox (from `../../../capacitor-notificare-user-inbox`)
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - Notificare/NotificareNotificationServiceExtensionKit (= 4.0.0-canary.1)
+  - Notificare/NotificareNotificationServiceExtensionKit (= 4.0.0-beta.1)
 
 SPEC REPOS:
-  "git@github.com:Notificare/notificare-cocoapods-specs.git":
+  trunk:
     - Notificare
 
 EXTERNAL SOURCES:
@@ -124,19 +124,19 @@ SPEC CHECKSUMS:
   CapacitorCordova: 70b13b8fddb6f35d8adcfe06cb5045c07f35f6de
   CapacitorHaptics: 7c7c206f0c96a628fed073830c96d28c4b2e772e
   CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c
-  CapacitorNotificare: d5f7ece4c16916e206f8956b9b094a30468cbd13
-  CapacitorNotificareAssets: 21636b17028a51703819c69c9d585290b1c5c175
-  CapacitorNotificareGeo: da6cd88cc9b1cb2aae2f1960467f4d0204064a58
-  CapacitorNotificareInAppMessaging: e681bf7904d7685480b7074edbb5152f5e8f7efb
-  CapacitorNotificareInbox: df52be28d4a9f6fe6302b662f960e48c327abf2d
-  CapacitorNotificareLoyalty: 9da96930f317a2a235a9005f608ee45c733ac765
-  CapacitorNotificarePush: f981196d787ea6840286ad940341f7bf6c85237e
-  CapacitorNotificarePushUi: 089d4dcf2edf6d0373579ccccf2a96abb2b763c7
-  CapacitorNotificareScannables: 485a86745da3880d4d6b460f1cc70a6573f8a614
-  CapacitorNotificareUserInbox: 1b8d4292dd466b327ac2bb87d57c63d18444712d
+  CapacitorNotificare: bc661dd0af1fecf801d5279e659fb3d030b18566
+  CapacitorNotificareAssets: cc3524535a2852cb5334ee073bf24a99efd9d7f7
+  CapacitorNotificareGeo: 1dfb0be826413c4549bf0a1ae22857c17886d62e
+  CapacitorNotificareInAppMessaging: 67139b121f565c28183ef15b2d1c90d5a24e7b7b
+  CapacitorNotificareInbox: 3a6dd0dbe775dae4031f3f5f24290253e0a54488
+  CapacitorNotificareLoyalty: 5dd2781a8ae381f04719f188107c125d275bce82
+  CapacitorNotificarePush: 954ad4d7f1ba4007ac726bcfe770c7879dd6c41f
+  CapacitorNotificarePushUi: dd9e1b14aaf9310570eeb82ab7a44d4a4f36939a
+  CapacitorNotificareScannables: 6be37be17b15e88560aa5387ce6fd7736e12ce5f
+  CapacitorNotificareUserInbox: 0e55e336c95570583cdb1c7a6dc13c56d513bbc4
   CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
-  Notificare: 1017c9d6a1d4b41bc5427d05e6bfcf8f79e61d1f
+  Notificare: c4a47add9f26ea872616ee136c56e926b90a931d
 
-PODFILE CHECKSUM: 9f68455ef768ebcb71e5bbe4b9282475d7495ff6
+PODFILE CHECKSUM: 57eed90f11ec56be5fc2b7c7508a94efdf701aa8
 
 COCOAPODS: 1.15.2

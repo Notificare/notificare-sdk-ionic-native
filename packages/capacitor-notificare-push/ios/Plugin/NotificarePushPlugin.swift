@@ -348,6 +348,16 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         EventBroker.instance.dispatchEvent("notification_settings_changed", data: ["granted": granted])
     }
 
+    public func notificare(_ notificarePush: any NotificarePush, didChangeSubscriptionId subscriptionId: String?) {
+        var data: [String: Any] = [:]
+
+        if let subscriptionId = subscriptionId {
+            data["subscriptionId"] = subscriptionId
+        }
+
+        EventBroker.instance.dispatchEvent("subscription_id_changed", data: data)
+    }
+
     public func notificare(_ notificarePush: NotificarePush, shouldOpenSettings notification: NotificareNotification?) {
         do {
             EventBroker.instance.dispatchEvent("should_open_notification_settings", data: try notification?.toJson())

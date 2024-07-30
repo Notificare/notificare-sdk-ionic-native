@@ -134,6 +134,12 @@ export class NotificarePush {
     return NativePlugin.addListener('notification_settings_changed', ({ granted }) => callback(granted));
   }
 
+  public static onSubscriptionIdChanged(
+    callback: (subscriptionId: string | undefined) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle {
+    return NativePlugin.addListener('subscription_id_changed', ({ subscriptionId }) => callback(subscriptionId));
+  }
+
   public static onShouldOpenNotificationSettings(
     callback: (notification: NotificareNotification | null) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
