@@ -3139,6 +3139,56 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001450.tgz#022225b91200589196b814b51b1bbe45144cf74f"
   integrity sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew==
 
+capacitor-notificare-assets@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-assets/-/capacitor-notificare-assets-3.10.0.tgz#9ec6355c2364c2bd5a55c8d8b886fdd4f3dcc31d"
+  integrity sha512-ECblnu/SaN+wQ5W3yyTGnyHJhvqayULKCbJ/4W+9PBFUOZ0dc/G8W1NoHK2Ai2b6S25vtuVO6S83hmsBRbuHeQ==
+
+capacitor-notificare-geo@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-geo/-/capacitor-notificare-geo-3.10.0.tgz#ec10138a1a11923d77b2a8e44455347b4171ad26"
+  integrity sha512-zT22pzRmqijDPOYnWqBTQUJU0eyg8f011jNX9XpkC0+3QEGeTYLmYKHkRyEFYCWvdR5OyWAd65g4cJwkdTS7EQ==
+
+capacitor-notificare-in-app-messaging@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-in-app-messaging/-/capacitor-notificare-in-app-messaging-3.10.0.tgz#539ca7a63d2d52c45cfaeab32f0119e79954c126"
+  integrity sha512-GE4vn4XvZU1thM3mFbWMgiVv7/6quBh1HO8e5Nw3hmhlmN9dlhOsQyrTWj7/siouifmH3MkkcalWKgCnmvza5Q==
+
+capacitor-notificare-inbox@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-inbox/-/capacitor-notificare-inbox-3.10.0.tgz#e6ca92d41a9c99ad7f15165f4b70e92d6dfbc10d"
+  integrity sha512-VIYIXsy6/jVit8/V4oIzVJHEf9ZaCs0CrQTC15n+lWx91F0XG8HfhzX4KkV9LMTFip41wJ876LI8bcBHP47zkA==
+
+capacitor-notificare-loyalty@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-loyalty/-/capacitor-notificare-loyalty-3.10.0.tgz#33030f4ee51d0bfb88f9e94ce0ae70aff27478bb"
+  integrity sha512-uRNHpB4b3TEHHcqEdQnGrZKWQvIyaPFyvPdIeg0QydPGY7EZt2b+HjQsKafcLIw4GyRUCebCNoNxnnqmyt45Zg==
+
+capacitor-notificare-push-ui@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-push-ui/-/capacitor-notificare-push-ui-3.10.0.tgz#673c29cac04a4e176a15df2932577e81a54164e4"
+  integrity sha512-2APvbi2N+a7ODYSsb7ywqFEb4oqGe+yrs5GmHQOCmFQBwLflZeFfAnbLgBbnuGuzluYIxWmfVOwiSv5tiRpbyA==
+
+capacitor-notificare-push@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-push/-/capacitor-notificare-push-3.10.0.tgz#2108e251577c786b8886ab579701842ff596e4a3"
+  integrity sha512-ytlox5g/0+TTZgy1W/BwlyY3BaMgSw7+XB/G5M0S9Ltv6kHEwqSiovnE13bTtPoBUDiMmcbR9UdJL1fzlJPQGA==
+
+capacitor-notificare-scannables@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-scannables/-/capacitor-notificare-scannables-3.10.0.tgz#f92b9334b4bd39338774814baca685dafbc1bba5"
+  integrity sha512-1KlaHUsUWmdd5ncaqBs9nfK7nAuI1r1kW6hOJBmEgpUMKXUouC68nP2OVPcd/HhJsBq+mBNMLvGqCWfs6Zrazw==
+
+capacitor-notificare-user-inbox@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare-user-inbox/-/capacitor-notificare-user-inbox-3.10.0.tgz#514fc9ad6fc5d185e734fe4a07dfe647e7d59ed3"
+  integrity sha512-t0PXJCU40mWdKC9TxKFlv22CEblEUcHM4SId2ANzIFwwq/1dRCyd+w360KLzQ8lBJWNAi1t+XGcMkDyB/igU9w==
+
+capacitor-notificare@^3.5.3:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/capacitor-notificare/-/capacitor-notificare-3.10.0.tgz#e0ebc2a152f0f505a9608118fe292da02a7c9c19"
+  integrity sha512-0L5cQFkuA6takOSAezq7A/OhcKRzAjTKehBMpIhn8efn/jcLIkoyAzE281MuQr5pwuvPpcJLY7O1CUDB7f3Tqw==
+
 case-sensitive-paths-webpack-plugin@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.4.0.tgz#db64066c6422eed2e08cc14b986ca43796dbc6d4"
