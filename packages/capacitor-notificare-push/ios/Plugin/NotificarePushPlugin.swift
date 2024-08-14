@@ -151,13 +151,17 @@ public class NotificarePushPlugin: CAPPlugin {
         call.resolve(response)
     }
 
-    @objc func getSubscriptionId(_ call: CAPPluginCall) {
-        var response: PluginCallResultData = [:]
-        if let subscriptionId = Notificare.shared.push().subscriptionId {
-            response["result"] = subscriptionId
-        }
+    @objc func getSubscription(_ call: CAPPluginCall) {
+        do {
+            var response: PluginCallResultData = [:]
+            if let subscription = Notificare.shared.push().subscription {
+                response["result"] = try subscription.toJson()
+            }
 
-        call.resolve(response)
+            call.resolve(response)
+        } catch {
+            call.reject(error.localizedDescription)
+        }
     }
 
     @objc func allowedUI(_ call: CAPPluginCall) {
@@ -348,14 +352,12 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         EventBroker.instance.dispatchEvent("notification_settings_changed", data: ["granted": granted])
     }
 
-    public func notificare(_ notificarePush: any NotificarePush, didChangeSubscriptionId subscriptionId: String?) {
-        var data: [String: Any] = [:]
-
-        if let subscriptionId = subscriptionId {
-            data["subscriptionId"] = subscriptionId
+    public func notificare(_ notificarePush: any NotificarePush, didChangeSubscription subscription: NotificarePushSubscription?) {
+        do {
+            EventBroker.instance.dispatchEvent("subscription_changed", data: try subscription?.toJson())
+        } catch {
+            NotificareLogger.error("Failed to emit the subscription_changed event.", error: error)
         }
-
-        EventBroker.instance.dispatchEvent("subscription_id_changed", data: data)
     }
 
     public func notificare(_ notificarePush: NotificarePush, shouldOpenSettings notification: NotificareNotification?) {

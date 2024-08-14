@@ -3,6 +3,7 @@ import type { NotificareNotification, NotificareNotificationAction } from 'capac
 
 import type { PushPermissionStatus } from './enums';
 import type { NotificareNotificationDeliveryMechanism } from './models/notificare-notification-delivery-mechanism';
+import type { NotificarePushSubscription } from './models/notificare-push-subscription';
 import type { NotificareSystemNotification } from './models/notificare-system-notification';
 import type { NotificareTransport } from './models/notificare-transport';
 import { NativePlugin } from './plugin';
@@ -34,8 +35,8 @@ export class NotificarePush {
     return result;
   }
 
-  public static async getSubscriptionId(): Promise<string | null> {
-    const { result } = await NativePlugin.getSubscriptionId();
+  public static async getSubscription(): Promise<NotificarePushSubscription | null> {
+    const { result } = await NativePlugin.getSubscription();
     return result;
   }
 
@@ -134,10 +135,10 @@ export class NotificarePush {
     return NativePlugin.addListener('notification_settings_changed', ({ granted }) => callback(granted));
   }
 
-  public static onSubscriptionIdChanged(
-    callback: (subscriptionId: string | undefined) => void
+  public static onSubscriptionChanged(
+    callback: (subscription: NotificarePushSubscription | undefined) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('subscription_id_changed', ({ subscriptionId }) => callback(subscriptionId));
+    return NativePlugin.addListener('subscription_changed', callback);
   }
 
   public static onShouldOpenNotificationSettings(
