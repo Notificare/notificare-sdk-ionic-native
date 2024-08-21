@@ -25,6 +25,7 @@ import re.notifica.Notificare
 import re.notifica.NotificareCallback
 import re.notifica.internal.NotificareLogger
 import re.notifica.push.ktx.push
+import re.notifica.push.models.NotificarePushSubscription
 
 @CapacitorPlugin(name = "NotificarePushPlugin")
 public class NotificarePushPlugin : Plugin() {
@@ -42,10 +43,12 @@ public class NotificarePushPlugin : Plugin() {
         })
     }
 
-    private val subscriptionIdObserver = Observer<String?> { subscriptionId ->
-        EventBroker.dispatchEvent("subscription_id_changed", JSObject().apply {
-            put("subscriptionId", subscriptionId)
-        })
+    private val subscriptionObserver = Observer<NotificarePushSubscription?> { subscription ->
+        try {
+            EventBroker.dispatchEvent("subscription_changed", subscription?.toJson())
+        } catch (e: Exception) {
+            NotificareLogger.error("Failed to emit the subscription_changed event.", e)
+        }
     }
 
     override fun load() {
@@ -56,8 +59,8 @@ public class NotificarePushPlugin : Plugin() {
             Notificare.push().observableAllowedUI.removeObserver(allowedUIObserver)
             Notificare.push().observableAllowedUI.observeForever(allowedUIObserver)
 
-            Notificare.push().observableSubscriptionId.removeObserver(subscriptionIdObserver)
-            Notificare.push().observableSubscriptionId.observeForever(subscriptionIdObserver)
+            Notificare.push().observableSubscription.removeObserver(subscriptionObserver)
+            Notificare.push().observableSubscription.observeForever(subscriptionObserver)
         }
 
         val intent = activity?.intent
@@ -132,12 +135,16 @@ public class NotificarePushPlugin : Plugin() {
     }
 
     @PluginMethod
-    public fun getSubscriptionId(call: PluginCall) {
-        call.resolve(
-            JSObject().apply {
-                put("result", Notificare.push().subscriptionId)
-            }
-        )
+    public fun getSubscription(call: PluginCall) {
+        try {
+            call.resolve(
+                JSObject().apply {
+                    put("result", Notificare.push().subscription?.toJson())
+                }
+            )
+        } catch (e: Exception) {
+            call.reject(e.localizedMessage)
+        }
     }
 
     @PluginMethod

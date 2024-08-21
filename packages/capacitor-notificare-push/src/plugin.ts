@@ -2,6 +2,7 @@ import type { PluginListenerHandle } from '@capacitor/core';
 import { registerPlugin } from '@capacitor/core';
 
 import type { PushPermissionStatus } from './enums';
+import type { NotificarePushSubscription } from './models/notificare-push-subscription';
 import type { NotificareTransport } from './models/notificare-transport';
 import type { PushPermissionRationale } from './notificare-push';
 
@@ -24,7 +25,7 @@ export interface NotificarePushPlugin {
 
   getTransport(): Promise<{ result: NotificareTransport | null }>;
 
-  getSubscriptionId(): Promise<{ result: string | null }>;
+  getSubscription(): Promise<{ result: NotificarePushSubscription | null }>;
 
   allowedUI(): Promise<{ result: boolean }>;
 
