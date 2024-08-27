@@ -21,33 +21,33 @@ export class NotificareInAppMessaging {
   // Events
   //
 
-  public static onMessagePresented(
+  public static async onMessagePresented(
     callback: (message: NotificareInAppMessage) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('message_presented', ({ message }) => callback(message));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('message_presented', ({ message }) => callback(message));
   }
 
-  public static onMessageFinishedPresenting(
+  public static async onMessageFinishedPresenting(
     callback: (message: NotificareInAppMessage) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('message_finished_presenting', ({ message }) => callback(message));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('message_finished_presenting', ({ message }) => callback(message));
   }
 
-  public static onMessageFailedToPresent(
+  public static async onMessageFailedToPresent(
     callback: (message: NotificareInAppMessage) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('message_failed_to_present', ({ message }) => callback(message));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('message_failed_to_present', ({ message }) => callback(message));
   }
 
-  public static onActionExecuted(
+  public static async onActionExecuted(
     callback: (data: { message: NotificareInAppMessage; action: NotificareInAppMessageAction }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_executed', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_executed', callback);
   }
 
-  public static onActionFailedToExecute(
+  public static async onActionFailedToExecute(
     callback: (data: { message: NotificareInAppMessage; action: NotificareInAppMessageAction; error?: string }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_failed_to_execute', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_failed_to_execute', callback);
   }
 }

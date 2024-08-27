@@ -23,71 +23,71 @@ export class NotificarePushUI {
   // Events
   //
 
-  static onNotificationWillPresent(
+  static async onNotificationWillPresent(
     callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_will_present', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_will_present', callback);
   }
 
-  static onNotificationPresented(
+  static async onNotificationPresented(
     callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_presented', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_presented', callback);
   }
 
-  static onNotificationFinishedPresenting(
+  static async onNotificationFinishedPresenting(
     callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_finished_presenting', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_finished_presenting', callback);
   }
 
-  static onNotificationFailedToPresent(
+  static async onNotificationFailedToPresent(
     callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_failed_to_present', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_failed_to_present', callback);
   }
 
-  static onNotificationUrlClicked(
+  static async onNotificationUrlClicked(
     callback: (data: { notification: NotificareNotification; url: string }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_url_clicked', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_url_clicked', callback);
   }
 
-  static onActionWillExecute(
+  static async onActionWillExecute(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_will_execute', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_will_execute', callback);
   }
 
-  static onActionExecuted(
+  static async onActionExecuted(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_executed', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_executed', callback);
   }
 
-  static onActionNotExecuted(
+  static async onActionNotExecuted(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_not_executed', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_not_executed', callback);
   }
 
-  static onActionFailedToExecute(
+  static async onActionFailedToExecute(
     callback: (data: {
       notification: NotificareNotification;
       action: NotificareNotificationAction;
       error?: string;
     }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('action_failed_to_execute', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('action_failed_to_execute', callback);
   }
 
-  static onCustomActionReceived(
+  static async onCustomActionReceived(
     callback: (data: {
       notification: NotificareNotification;
       action: NotificareNotificationAction;
       url: string;
     }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('custom_action_received', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('custom_action_received', callback);
   }
 }

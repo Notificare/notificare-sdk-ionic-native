@@ -84,73 +84,75 @@ export class NotificarePush {
   // Events
   //
 
-  public static onNotificationInfoReceived(
+  public static async onNotificationInfoReceived(
     callback: (data: {
       notification: NotificareNotification;
       deliveryMechanism: NotificareNotificationDeliveryMechanism;
     }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_info_received', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_info_received', callback);
   }
 
-  public static onSystemNotificationReceived(
+  public static async onSystemNotificationReceived(
     callback: (notification: NotificareSystemNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('system_notification_received', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('system_notification_received', callback);
   }
 
-  public static onUnknownNotificationReceived(
+  public static async onUnknownNotificationReceived(
     callback: (notification: Record<string, any>) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('unknown_notification_received', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('unknown_notification_received', callback);
   }
 
-  public static onNotificationOpened(
+  public static async onNotificationOpened(
     callback: (notification: NotificareNotification) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_opened', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_opened', callback);
   }
 
-  public static onUnknownNotificationOpened(
+  public static async onUnknownNotificationOpened(
     callback: (notification: Record<string, any>) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('unknown_notification_opened', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('unknown_notification_opened', callback);
   }
 
-  public static onNotificationActionOpened(
+  public static async onNotificationActionOpened(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_action_opened', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_action_opened', callback);
   }
 
-  public static onUnknownNotificationActionOpened(
+  public static async onUnknownNotificationActionOpened(
     callback: (data: { notification: Record<string, any>; action: string; responseText?: string }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('unknown_notification_action_opened', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('unknown_notification_action_opened', callback);
   }
 
-  public static onNotificationSettingsChanged(
+  public static async onNotificationSettingsChanged(
     callback: (granted: boolean) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('notification_settings_changed', ({ granted }) => callback(granted));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('notification_settings_changed', ({ granted }) => callback(granted));
   }
 
-  public static onSubscriptionChanged(
+  public static async onSubscriptionChanged(
     callback: (subscription: NotificarePushSubscription | undefined) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('subscription_changed', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('subscription_changed', callback);
   }
 
-  public static onShouldOpenNotificationSettings(
+  public static async onShouldOpenNotificationSettings(
     callback: (notification: NotificareNotification | null) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('should_open_notification_settings', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('should_open_notification_settings', callback);
   }
 
-  public static onFailedToRegisterForRemoteNotifications(
+  public static async onFailedToRegisterForRemoteNotifications(
     callback: (error: string) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('failed_to_register_for_remote_notifications', ({ error }) => callback(error));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('failed_to_register_for_remote_notifications', ({ error }) =>
+      callback(error)
+    );
   }
 }
 
