@@ -50,7 +50,7 @@ export const App: FC = () => {
   }, []);
 
   useEffect(function setupListeners() {
-    const subscriptions = [
+    const listeners = [
       Notificare.onReady(async () => {
         await handleDeferredLink();
       }),
@@ -70,7 +70,9 @@ export const App: FC = () => {
       }),
     ];
 
-    return () => subscriptions.forEach((s) => s.remove());
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   async function handleDeferredLink() {

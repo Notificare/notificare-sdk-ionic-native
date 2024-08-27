@@ -16,13 +16,11 @@ export const HomeView: FC = () => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(function setupNotificareStatusListeners() {
-    const subscriptions = [
-      Notificare.onReady(() => setIsReady(true)),
+    const listeners = [Notificare.onReady(() => setIsReady(true)), Notificare.onUnlaunched(() => setIsReady(false))];
 
-      Notificare.onUnlaunched(() => setIsReady(false)),
-    ];
-
-    return () => subscriptions.forEach((s) => s.remove());
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   return (

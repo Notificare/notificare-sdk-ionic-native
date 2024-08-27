@@ -34,18 +34,16 @@ export const RemoteNotificationsCardView: FC = () => {
     }
   }, [addToastInfoMessage]);
 
-  useEffect(
-    function setupListeners() {
-      const subscriptions = [
-        NotificareInbox.onBadgeUpdated(setBadge),
+  useEffect(function setupListeners() {
+    const listeners = [
+      NotificareInbox.onBadgeUpdated(setBadge),
+      NotificarePush.onNotificationSettingsChanged(async () => await checkNotificationsStatus()),
+    ];
 
-        NotificarePush.onNotificationSettingsChanged(async () => await checkNotificationsStatus()),
-      ];
-
-      return () => subscriptions.forEach((s) => s.remove());
-    },
-    [checkNotificationsStatus]
-  );
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
+  }, []);
 
   useEffect(
     function checkInitialStatus() {
@@ -153,8 +151,8 @@ export const RemoteNotificationsCardView: FC = () => {
       const allowedUi = await NotificarePush.allowedUI();
       const hasRemoteNotificationsEnabled = await NotificarePush.hasRemoteNotificationsEnabled();
       const transport = await NotificarePush.getTransport();
-      const subscription = await NotificarePush.getSubscription();
-      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled} <br> transport: ${transport} <br> token: ${subscription?.token}`;
+      // const subscription = await NotificarePush.getSubscription();
+      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled} <br> transport: ${transport} <br>`;
 
       setCurrentAlertDialog({ title: 'Notifications Status', message: infoMessage });
     } catch (e) {

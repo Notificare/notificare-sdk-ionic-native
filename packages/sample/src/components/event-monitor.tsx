@@ -13,7 +13,7 @@ export function EventMonitor(): null {
   const { addToastInfoMessage } = useToastContext();
 
   useEffect(function setupListeners() {
-    const subscriptions = [
+    const listeners = [
       //
       // Notificare events
       //
@@ -238,7 +238,9 @@ export function EventMonitor(): null {
       }),
     ];
 
-    return () => subscriptions.forEach((s) => s.remove());
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   return null;
