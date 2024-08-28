@@ -151,8 +151,8 @@ export const RemoteNotificationsCardView: FC = () => {
       const allowedUi = await NotificarePush.allowedUI();
       const hasRemoteNotificationsEnabled = await NotificarePush.hasRemoteNotificationsEnabled();
       const transport = await NotificarePush.getTransport();
-      // const subscription = await NotificarePush.getSubscription();
-      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled} <br> transport: ${transport} <br>`;
+      const subscription = await NotificarePush.getSubscription();
+      const infoMessage = `allowedUi: ${allowedUi} <br> enabled: ${hasRemoteNotificationsEnabled} <br> transport: ${transport} <br> token: ${subscription?.token}`;
 
       setCurrentAlertDialog({ title: 'Notifications Status', message: infoMessage });
     } catch (e) {
