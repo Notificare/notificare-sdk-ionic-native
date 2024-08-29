@@ -85,8 +85,5 @@ export interface NotificarePlugin {
   // Event bridge
   //
 
-  addListener(
-    eventName: string,
-    listenerFunc: (data: any) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  addListener(eventName: string, listenerFunc: (data: any) => void): Promise<PluginListenerHandle>;
 }

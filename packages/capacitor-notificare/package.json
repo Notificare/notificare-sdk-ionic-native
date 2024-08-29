@@ -49,7 +49,7 @@
     "docs:replace-symbolic-links": "rm README.md CHANGELOG.md MIGRATION.md; cp ../../README.md ../../CHANGELOG.md ../../MIGRATION.md ."
   },
   "peerDependencies": {
-    "@capacitor/core": "3 - 5"
+    "@capacitor/core": "3 - 6"
   },
   "devDependencies": {
     "@capacitor/android": "^3.0.0",

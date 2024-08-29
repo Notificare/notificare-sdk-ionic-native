@@ -34,18 +34,16 @@ export const RemoteNotificationsCardView: FC = () => {
     }
   }, [addToastInfoMessage]);
 
-  useEffect(
-    function setupListeners() {
-      const subscriptions = [
-        NotificareInbox.onBadgeUpdated(setBadge),
+  useEffect(function setupListeners() {
+    const listeners = [
+      NotificareInbox.onBadgeUpdated(setBadge),
+      NotificarePush.onNotificationSettingsChanged(async () => await checkNotificationsStatus()),
+    ];
 
-        NotificarePush.onNotificationSettingsChanged(async () => await checkNotificationsStatus()),
-      ];
-
-      return () => subscriptions.forEach((s) => s.remove());
-    },
-    [checkNotificationsStatus]
-  );
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
+  }, []);
 
   useEffect(
     function checkInitialStatus() {

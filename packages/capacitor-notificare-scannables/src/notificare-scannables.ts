@@ -34,15 +34,15 @@ export class NotificareScannables {
   // Events
   //
 
-  public static onScannableDetected(
+  public static async onScannableDetected(
     callback: (scannable: NotificareScannable) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('scannable_detected', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('scannable_detected', callback);
   }
 
-  public static onScannableSessionFailed(
+  public static async onScannableSessionFailed(
     callback: (error: string | null) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('scannable_session_failed', ({ error }) => callback(error));
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('scannable_session_failed', ({ error }) => callback(error));
   }
 }
