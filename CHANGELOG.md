@@ -4,6 +4,10 @@
 
 - Changed the `subscriptionId` properties to a more robust data model
 
+#### Breaking changes
+
+- All event listeners has been changed to only return a Promise. Resulting in `Promise<PluginListenerHandle>` instead of `Promise<PluginListenerHandle> & PluginListenerHandle`
+
 ## 4.0.0-beta.1
 
 - Device identifiers become long-lived
