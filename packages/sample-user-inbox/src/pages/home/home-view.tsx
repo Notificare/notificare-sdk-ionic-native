@@ -239,13 +239,13 @@ export const HomeView: FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Sample</IonTitle>
+          <IonTitle>Sample User Inbox</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Sample</IonTitle>
+            <IonTitle size="large">Sample User Inbox</IonTitle>
           </IonToolbar>
         </IonHeader>
 

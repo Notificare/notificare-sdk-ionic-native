@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 're.notifica.sample.user.inbox.app.dev',
-  appName: 'sample',
+  appName: 'sample-user-inbox',
   webDir: 'build',
   bundledWebRuntime: false,
 };
