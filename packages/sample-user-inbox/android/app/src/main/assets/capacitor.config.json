@@ -1,0 +1,6 @@
+{
+	"appId": "re.notifica.sample.user.inbox.app.dev",
+	"appName": "sample",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
