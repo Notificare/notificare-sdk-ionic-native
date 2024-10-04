@@ -60,4 +60,5 @@ dependencies {
 
     def notificare_version = '4.0.0'
     api "re.notifica:notificare:$notificare_version"
+    implementation "re.notifica:notificare-utilities:$notificare_version"
 }
