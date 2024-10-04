@@ -16,5 +16,6 @@ Pod::Spec.new do |s|
   s.dependency 'Capacitor'
   s.dependency 'Notificare/NotificareKit', notificare_version
   s.dependency 'Notificare/NotificareGeoKit', notificare_version
+  s.dependency 'Notificare/NotificareUtilitiesKit', notificare_version
   s.swift_version = '5.1'
 end
