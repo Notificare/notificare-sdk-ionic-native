@@ -12,6 +12,8 @@ public class NotificareScannablesPlugin: CAPPlugin {
     }
     
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.scannables().delegate = self
     }
@@ -82,7 +84,7 @@ extension NotificareScannablesPlugin: NotificareScannablesDelegate {
         do {
             EventBroker.instance.dispatchEvent("scannable_detected", data: try scannable.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the scannable_detected event.", error: error)
+            logger.error("Failed to emit the scannable_detected event.", error: error)
         }
     }
     
@@ -90,5 +92,30 @@ extension NotificareScannablesPlugin: NotificareScannablesDelegate {
         EventBroker.instance.dispatchEvent("scannable_session_failed", data: [
             "error": error.localizedDescription
         ])
+    }
+}
+
+extension NotificareScannablesPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }
