@@ -7,7 +7,6 @@ import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import re.notifica.Notificare
 import re.notifica.NotificareCallback
-import re.notifica.internal.NotificareLogger
 import re.notifica.scannables.NotificareScannables
 import re.notifica.scannables.ktx.scannables
 import re.notifica.scannables.models.NotificareScannable
@@ -16,6 +15,8 @@ import re.notifica.scannables.models.toJson
 @CapacitorPlugin(name = "NotificareScannablesPlugin")
 public class NotificareScannablesPlugin : Plugin(), NotificareScannables.ScannableSessionListener {
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
 
         Notificare.scannables().removeListener(this)
@@ -94,7 +95,7 @@ public class NotificareScannablesPlugin : Plugin(), NotificareScannables.Scannab
         try {
             EventBroker.dispatchEvent("scannable_detected", scannable.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the scannable_detected event.", e)
+            logger.error("Failed to emit the scannable_detected event.", e)
         }
     }
 
@@ -104,7 +105,7 @@ public class NotificareScannablesPlugin : Plugin(), NotificareScannables.Scannab
                 put("error", error.localizedMessage)
             })
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the scannable_session_failed event.", e)
+            logger.error("Failed to emit the scannable_session_failed event.", e)
         }
     }
 

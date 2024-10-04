@@ -1,6 +1,5 @@
 import Foundation
 import Capacitor
-import NotificareKit
 
 internal typealias NotifyListenersFunction = (_ eventName: String, _ data: [String: Any]?) -> Void
 
@@ -16,7 +15,7 @@ internal class EventBroker {
         self.notifyListenersFunction = notifyListenersFunction
         
         if !queue.isEmpty {
-            NotificareLogger.debug("Processing event queue with ${eventQueue.size} items.")
+            logger.debug("Processing event queue with ${eventQueue.size} items.")
             queue.forEach { dispatchEvent($0.name, data: $0.data)}
             queue.removeAll()
         }

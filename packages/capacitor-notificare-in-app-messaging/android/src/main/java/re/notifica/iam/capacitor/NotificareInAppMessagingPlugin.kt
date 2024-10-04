@@ -11,12 +11,13 @@ import re.notifica.Notificare
 import re.notifica.iam.NotificareInAppMessaging
 import re.notifica.iam.ktx.inAppMessaging
 import re.notifica.iam.models.NotificareInAppMessage
-import re.notifica.internal.NotificareLogger
 
 @CapacitorPlugin(name = "NotificareInAppMessagingPlugin")
 public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging.MessageLifecycleListener {
 
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
 
         Notificare.inAppMessaging().removeLifecycleListener(this)
@@ -66,7 +67,7 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
 
             EventBroker.dispatchEvent("message_presented", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the message_presented event.", e)
+            logger.error("Failed to emit the message_presented event.", e)
         }
     }
 
@@ -78,7 +79,7 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
 
             EventBroker.dispatchEvent("message_finished_presenting", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the message_finished_presenting event.", e)
+            logger.error("Failed to emit the message_finished_presenting event.", e)
         }
     }
 
@@ -90,7 +91,7 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
 
             EventBroker.dispatchEvent("message_failed_to_present", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the message_failed_to_present event.", e)
+            logger.error("Failed to emit the message_failed_to_present event.", e)
         }
     }
 
@@ -103,7 +104,7 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
 
             EventBroker.dispatchEvent("action_executed", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the action_executed event.", e)
+            logger.error("Failed to emit the action_executed event.", e)
         }
     }
 
@@ -124,7 +125,7 @@ public class NotificareInAppMessagingPlugin : Plugin(), NotificareInAppMessaging
 
             EventBroker.dispatchEvent("action_failed_to_execute", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the action_failed_to_execute event.", e)
+            logger.error("Failed to emit the action_failed_to_execute event.", e)
         }
     }
 
