@@ -8,6 +8,7 @@ def capacitor_pods
 
   pod 'Notificare/NotificareKit', '4.0.0'
   pod 'Notificare/NotificareInboxKit', '4.0.0'
+  pod 'Notificare/NotificareUtilitiesKit', '4.0.0'
 end
 
 target 'Plugin' do

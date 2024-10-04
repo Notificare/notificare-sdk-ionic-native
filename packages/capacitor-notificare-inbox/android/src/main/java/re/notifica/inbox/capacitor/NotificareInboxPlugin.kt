@@ -11,7 +11,6 @@ import re.notifica.inbox.ktx.inbox
 import re.notifica.inbox.models.NotificareInboxItem
 import re.notifica.inbox.models.fromJson
 import re.notifica.inbox.models.toJson
-import re.notifica.internal.NotificareLogger
 import re.notifica.models.NotificareNotification
 import java.util.*
 
@@ -26,7 +25,7 @@ public class NotificareInboxPlugin : Plugin() {
 
             EventBroker.dispatchEvent("inbox_updated", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the inbox_updated event.", e)
+            logger.error("Failed to emit the inbox_updated event.", e)
         }
     }
 
@@ -39,6 +38,8 @@ public class NotificareInboxPlugin : Plugin() {
     }
 
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
 
         onMainThread {
