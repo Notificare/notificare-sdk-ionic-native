@@ -1,5 +1,8 @@
 require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
+source 'https://cdn.cocoapods.org/'
+source 'git@github.com:Notificare/notificare-cocoapods-specs.git'
+
 platform :ios, '13.0'
 use_frameworks!
 
@@ -21,7 +24,6 @@ def capacitor_pods
   pod 'CapacitorNotificareInAppMessaging', :path => '../../../capacitor-notificare-in-app-messaging'
   pod 'CapacitorNotificareInbox', :path => '../../../capacitor-notificare-inbox'
   pod 'CapacitorNotificareLoyalty', :path => '../../../capacitor-notificare-loyalty'
-  pod 'CapacitorNotificareMonetize', :path => '../../../capacitor-notificare-monetize'
   pod 'CapacitorNotificarePush', :path => '../../../capacitor-notificare-push'
   pod 'CapacitorNotificarePushUi', :path => '../../../capacitor-notificare-push-ui'
   pod 'CapacitorNotificareScannables', :path => '../../../capacitor-notificare-scannables'
@@ -34,5 +36,5 @@ target 'App' do
 end
 
 target 'NotificationServiceExtension' do
-  pod 'Notificare/NotificareNotificationServiceExtensionKit', '3.10.0'
+  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.0.0'
 end

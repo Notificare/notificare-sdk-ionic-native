@@ -2,7 +2,6 @@ import { Notificare } from 'capacitor-notificare';
 import { NotificareGeo } from 'capacitor-notificare-geo';
 import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { NotificareInbox } from 'capacitor-notificare-inbox';
-import { NotificareMonetize } from 'capacitor-notificare-monetize';
 import { NotificarePush } from 'capacitor-notificare-push';
 import { NotificarePushUI } from 'capacitor-notificare-push-ui';
 import { NotificareScannables } from 'capacitor-notificare-scannables';
@@ -14,7 +13,7 @@ export function EventMonitor(): null {
   const { addToastInfoMessage } = useToastContext();
 
   useEffect(function setupListeners() {
-    const subscriptions = [
+    const listeners = [
       //
       // Notificare events
       //
@@ -91,6 +90,10 @@ export function EventMonitor(): null {
       NotificarePush.onNotificationSettingsChanged((granted) => {
         console.log('=== NOTIFICATION SETTINGS CHANGED ===');
         console.log(JSON.stringify(granted, null, 2));
+      }),
+      NotificarePush.onSubscriptionChanged((subscription) => {
+        console.log('=== SUBSCRIPTION CHANGED ===');
+        console.log(JSON.stringify(subscription, null, 2));
       }),
       NotificarePush.onShouldOpenNotificationSettings((notification) => {
         console.log('=== SHOULD OPEN NOTIFICATION SETTINGS ===');
@@ -210,41 +213,6 @@ export function EventMonitor(): null {
       }),
 
       //
-      // Notificare Monetize
-      //
-
-      NotificareMonetize.onBillingSetupFinished(() => {
-        console.log('=== BILLING SETUP FINISHED ===');
-      }),
-      NotificareMonetize.onBillingSetupFailed(({ code, message }) => {
-        console.log('=== BILLING SETUP FAILED ===');
-        console.log(JSON.stringify({ code, message }, null, 2));
-      }),
-      NotificareMonetize.onProductsUpdated((products) => {
-        console.log('=== PRODUCTS UPDATED ===');
-        console.log(JSON.stringify(products, null, 2));
-      }),
-      NotificareMonetize.onPurchasesUpdated((purchases) => {
-        console.log('=== PURCHASES UPDATED ===');
-        console.log(JSON.stringify(purchases, null, 2));
-      }),
-      NotificareMonetize.onPurchaseFinished((purchase) => {
-        console.log('=== PURCHASE FINISHED ===');
-        console.log(JSON.stringify(purchase, null, 2));
-      }),
-      NotificareMonetize.onPurchaseRestored((purchase) => {
-        console.log('=== PURCHASE RESTORED ===');
-        console.log(JSON.stringify(purchase, null, 2));
-      }),
-      NotificareMonetize.onPurchaseCanceled(() => {
-        console.log('=== PURCHASE CANCELED ===');
-      }),
-      NotificareMonetize.onPurchaseFailed(({ code, message, errorMessage }) => {
-        console.log('=== PURCHASE FAILED ===');
-        console.log(JSON.stringify({ code, message, errorMessage }, null, 2));
-      }),
-
-      //
       // Notificare In-App Messaging
       //
 
@@ -270,7 +238,9 @@ export function EventMonitor(): null {
       }),
     ];
 
-    return () => subscriptions.forEach((s) => s.remove());
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   return null;

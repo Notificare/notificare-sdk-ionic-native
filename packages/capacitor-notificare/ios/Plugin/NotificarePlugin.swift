@@ -6,6 +6,8 @@ import NotificareKit
 public class NotificarePlugin: CAPPlugin {
 
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.delegate = self
 
@@ -20,7 +22,7 @@ public class NotificarePlugin: CAPPlugin {
 
     @objc func handleUrlOpened(notification: NSNotification) {
         guard let object = notification.object as? [String: Any?], let url = object["url"] as? URL else {
-            NotificareLogger.warning("Unprocessable url_opened event.")
+            logger.warning("Unprocessable url_opened event.")
             return
         }
 
@@ -37,7 +39,7 @@ public class NotificarePlugin: CAPPlugin {
 
     @objc func handleUniversalLink(notification: NSNotification) {
         guard let object = notification.object as? [String: Any?], let url = object["url"] as? URL else {
-            NotificareLogger.warning("Unprocessable universal_link event.")
+            logger.warning("Unprocessable universal_link event.")
             return
         }
 
@@ -63,16 +65,24 @@ public class NotificarePlugin: CAPPlugin {
     }
 
     @objc func launch(_ call: CAPPluginCall) {
-        onMainThread {
-            Notificare.shared.launch()
-            call.resolve()
+        Notificare.shared.launch { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
+            }
         }
     }
 
     @objc func unlaunch(_ call: CAPPluginCall) {
-        onMainThread {
-            Notificare.shared.unlaunch()
-            call.resolve()
+        Notificare.shared.unlaunch { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
+            }
         }
     }
 
@@ -218,6 +228,20 @@ public class NotificarePlugin: CAPPlugin {
                 case let .failure(error):
                     call.reject(error.localizedDescription)
                 }
+            }
+        }
+    }
+
+    @objc func updateUser(_ call: CAPPluginCall) {
+        let userId = call.getString("userId")
+        let userName = call.getString("userName")
+
+        Notificare.shared.device().updateUser(userId: userId, userName: userName) { result in
+            switch result {
+            case .success:
+                call.resolve()
+            case let .failure(error):
+                call.reject(error.localizedDescription)
             }
         }
     }
@@ -422,7 +446,7 @@ extension NotificarePlugin: NotificareDelegate {
         do {
             EventBroker.instance.dispatchEvent("ready", data: try application.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the ready event.", error: error)
+            logger.error("Failed to emit the ready event.", error: error)
         }
     }
 
@@ -434,8 +458,33 @@ extension NotificarePlugin: NotificareDelegate {
         do {
             EventBroker.instance.dispatchEvent("device_registered", data: try device.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the device_registered event.", error: error)
+            logger.error("Failed to emit the device_registered event.", error: error)
         }
+    }
+}
+
+extension NotificarePlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }
 

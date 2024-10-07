@@ -75,52 +75,40 @@ export class NotificareGeo {
   // Events
   //
 
-  public static onLocationUpdated(
+  public static async onLocationUpdated(
     callback: (location: NotificareLocation) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('location_updated', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('location_updated', callback);
   }
 
-  public static onRegionEntered(
-    callback: (region: NotificareRegion) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('region_entered', callback);
+  public static async onRegionEntered(callback: (region: NotificareRegion) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('region_entered', callback);
   }
 
-  public static onRegionExited(
-    callback: (region: NotificareRegion) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('region_exited', callback);
+  public static async onRegionExited(callback: (region: NotificareRegion) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('region_exited', callback);
   }
 
-  public static onBeaconEntered(
-    callback: (beacon: NotificareBeacon) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('beacon_entered', callback);
+  public static async onBeaconEntered(callback: (beacon: NotificareBeacon) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('beacon_entered', callback);
   }
 
-  public static onBeaconExited(
-    callback: (beacon: NotificareBeacon) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('beacon_exited', callback);
+  public static async onBeaconExited(callback: (beacon: NotificareBeacon) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('beacon_exited', callback);
   }
 
-  public static onBeaconsRanged(
+  public static async onBeaconsRanged(
     callback: (data: { region: NotificareRegion; beacons: NotificareBeacon[] }) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('beacons_ranged', callback);
+  ): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('beacons_ranged', callback);
   }
 
-  public static onVisit(
-    callback: (visit: NotificareVisit) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('visit', callback);
+  public static async onVisit(callback: (visit: NotificareVisit) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('visit', callback);
   }
 
-  public static onHeadingUpdated(
-    callback: (heading: NotificareHeading) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('heading_updated', callback);
+  public static async onHeadingUpdated(callback: (heading: NotificareHeading) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('heading_updated', callback);
   }
 }
 

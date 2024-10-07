@@ -2,5 +2,21 @@
 	"appId": "re.notifica.sample.app",
 	"appName": "sample",
 	"webDir": "build",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"packageClassList": [
+		"AppPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"StatusBarPlugin",
+		"NotificarePlugin",
+		"NotificareAssetsPlugin",
+		"NotificareGeoPlugin",
+		"NotificareInAppMessagingPlugin",
+		"NotificareInboxPlugin",
+		"NotificareLoyaltyPlugin",
+		"NotificarePushPlugin",
+		"NotificarePushUIPlugin",
+		"NotificareScannablesPlugin",
+		"NotificareUserInboxPlugin"
+	]
 }

@@ -19,6 +19,7 @@ CAP_PLUGIN(NotificarePlugin, "NotificarePlugin",
            CAP_PLUGIN_METHOD(getPreferredLanguage, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(updatePreferredLanguage, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(register, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(updateUser, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(fetchTags, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(addTag, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(addTags, CAPPluginReturnPromise);

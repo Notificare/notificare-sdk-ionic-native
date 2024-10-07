@@ -21,8 +21,11 @@ export const Beacons: FC = () => {
   const [data, setData] = useState<{ region: NotificareRegion; beacons: NotificareBeacon[] }>();
 
   useEffect(function setupListeners() {
-    const subscriptions = [NotificareGeo.onBeaconsRanged(setData)];
-    return () => subscriptions.forEach((s) => s.remove());
+    const listeners = [NotificareGeo.onBeaconsRanged(setData)];
+
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   return (

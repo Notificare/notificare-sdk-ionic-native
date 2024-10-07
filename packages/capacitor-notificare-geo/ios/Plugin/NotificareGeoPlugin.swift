@@ -21,6 +21,8 @@ public class NotificareGeoPlugin: CAPPlugin {
     }
     
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.geo().delegate = self
         
@@ -221,7 +223,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("location_updated", data: try location.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the location_updated event.", error: error)
+            logger.error("Failed to emit the location_updated event.", error: error)
         }
     }
     
@@ -229,7 +231,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("region_entered", data: try region.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the region_entered event.", error: error)
+            logger.error("Failed to emit the region_entered event.", error: error)
         }
     }
     
@@ -237,7 +239,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("region_exited", data: try region.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the region_exited event.", error: error)
+            logger.error("Failed to emit the region_exited event.", error: error)
         }
     }
     
@@ -245,7 +247,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("beacon_entered", data: try beacon.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the beacon_entered event.", error: error)
+            logger.error("Failed to emit the beacon_entered event.", error: error)
         }
     }
     
@@ -253,7 +255,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("beacon_exited", data: try beacon.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the beacon_exited event.", error: error)
+            logger.error("Failed to emit the beacon_exited event.", error: error)
         }
     }
     
@@ -266,7 +268,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
             
             EventBroker.instance.dispatchEvent("beacons_ranged", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the beacons_ranged event.", error: error)
+            logger.error("Failed to emit the beacons_ranged event.", error: error)
         }
     }
     
@@ -274,7 +276,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("visit", data: try visit.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the visit event.", error: error)
+            logger.error("Failed to emit the visit event.", error: error)
         }
     }
     
@@ -282,7 +284,7 @@ extension NotificareGeoPlugin: NotificareGeoDelegate {
         do {
             EventBroker.instance.dispatchEvent("heading_updated", data: try heading.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the heading_updated event.", error: error)
+            logger.error("Failed to emit the heading_updated event.", error: error)
         }
     }
 }
@@ -336,5 +338,30 @@ extension NotificareGeoPlugin {
         case granted = "granted"
         case restricted = "restricted"
         case permanentlyDenied = "permanently_denied"
+    }
+}
+
+extension NotificareGeoPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }

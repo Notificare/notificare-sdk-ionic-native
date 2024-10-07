@@ -22,8 +22,9 @@ import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import re.notifica.Notificare
-import re.notifica.internal.NotificareLogger
+import re.notifica.NotificareCallback
 import re.notifica.push.ktx.push
+import re.notifica.push.models.NotificarePushSubscription
 
 @CapacitorPlugin(name = "NotificarePushPlugin")
 public class NotificarePushPlugin : Plugin() {
@@ -41,13 +42,26 @@ public class NotificarePushPlugin : Plugin() {
         })
     }
 
+    private val subscriptionObserver = Observer<NotificarePushSubscription?> { subscription ->
+        try {
+            EventBroker.dispatchEvent("subscription_changed", subscription?.toJson())
+        } catch (e: Exception) {
+            logger.error("Failed to emit the subscription_changed event.", e)
+        }
+    }
+
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
         Notificare.push().intentReceiver = NotificarePushPluginIntentReceiver::class.java
 
         onMainThread {
             Notificare.push().observableAllowedUI.removeObserver(allowedUIObserver)
             Notificare.push().observableAllowedUI.observeForever(allowedUIObserver)
+
+            Notificare.push().observableSubscription.removeObserver(subscriptionObserver)
+            Notificare.push().observableSubscription.observeForever(subscriptionObserver)
         }
 
         val intent = activity?.intent
@@ -113,6 +127,28 @@ public class NotificarePushPlugin : Plugin() {
     }
 
     @PluginMethod
+    public fun getTransport(call: PluginCall) {
+        call.resolve(
+            JSObject().apply {
+                put("result", Notificare.push().transport?.rawValue)
+            }
+        )
+    }
+
+    @PluginMethod
+    public fun getSubscription(call: PluginCall) {
+        try {
+            call.resolve(
+                JSObject().apply {
+                    put("result", Notificare.push().subscription?.toJson())
+                }
+            )
+        } catch (e: Exception) {
+            call.reject(e.localizedMessage)
+        }
+    }
+
+    @PluginMethod
     public fun allowedUI(call: PluginCall) {
         call.resolve(
             JSObject().apply {
@@ -123,14 +159,28 @@ public class NotificarePushPlugin : Plugin() {
 
     @PluginMethod
     public fun enableRemoteNotifications(call: PluginCall) {
-        Notificare.push().enableRemoteNotifications()
-        call.resolve()
+        Notificare.push().enableRemoteNotifications(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
     public fun disableRemoteNotifications(call: PluginCall) {
-        Notificare.push().disableRemoteNotifications()
-        call.resolve()
+        Notificare.push().disableRemoteNotifications(object : NotificareCallback<Unit> {
+            override fun onSuccess(result: Unit) {
+                call.resolve()
+            }
+
+            override fun onFailure(e: Exception) {
+                call.reject(e.localizedMessage)
+            }
+        })
     }
 
     @PluginMethod
@@ -175,7 +225,7 @@ public class NotificarePushPlugin : Plugin() {
         }
 
         val activity = activity ?: run {
-            NotificareLogger.warning("Unable to acquire a reference to the current activity.")
+            logger.warning("Unable to acquire a reference to the current activity.")
             call.reject("Unable to acquire a reference to the current activity.")
             return
         }
@@ -185,7 +235,7 @@ public class NotificarePushPlugin : Plugin() {
         val buttonText = rationale.getString("buttonText") ?: context.getString(android.R.string.ok)
 
         try {
-            NotificareLogger.debug("Presenting permission rationale to open app settings.")
+            logger.debug("Presenting permission rationale to open app settings.")
 
             activity.runOnUiThread {
                 AlertDialog.Builder(activity)
@@ -217,7 +267,7 @@ public class NotificarePushPlugin : Plugin() {
         }
 
         if (hasOnGoingPermissionRequest) {
-            NotificareLogger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
+            logger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
             call.reject("A request for permissions is already running, please wait for it to finish before doing another request.")
             return
         }
