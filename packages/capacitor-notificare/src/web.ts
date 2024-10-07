@@ -78,6 +78,11 @@ export class NotificarePluginWeb extends WebPlugin implements NotificarePlugin {
     throw this.unimplemented('Not implemented on web.');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateUser(_options: { userId: string | null; userName: string | null }): Promise<void> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
   fetchTags(): Promise<{ result: string[] }> {
     throw this.unimplemented('Not implemented on web.');
   }

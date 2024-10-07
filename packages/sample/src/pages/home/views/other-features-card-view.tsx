@@ -15,10 +15,6 @@ export const OtherFeaturesCardView: FC = () => {
     history.push('/assets');
   }
 
-  function onMonetizeClicked() {
-    history.push('/monetize');
-  }
-
   function onCustomEventClicked() {
     history.push('/events');
   }
@@ -42,14 +38,6 @@ export const OtherFeaturesCardView: FC = () => {
           <IonIcon icon={folderOutline} size="small" />
 
           <IonLabel className="label-with-icon">Assets</IonLabel>
-        </IonItem>
-
-        <div className="divider-horizontal-margin" />
-
-        <IonItem detail={true} lines="none" button onClick={onMonetizeClicked}>
-          <IonIcon icon={bagHandleOutline} size="small" />
-
-          <IonLabel className="label-with-icon">Monetize</IonLabel>
         </IonItem>
 
         <div className="divider-horizontal-margin" />

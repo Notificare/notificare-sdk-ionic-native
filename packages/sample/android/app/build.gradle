@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 're.notifica.gradle.notificare-services'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.huawei.agconnect'
 
 def properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     namespace "re.notifica.sample.app"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "re.notifica.sample.app"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -61,7 +60,6 @@ repositories {
 
     maven { url 'https://maven.notifica.re/releases' }
     maven { url 'https://maven.notifica.re/prereleases' }
-    maven { url 'https://developer.huawei.com/repo' }
 }
 
 dependencies {

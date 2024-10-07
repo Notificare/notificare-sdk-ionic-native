@@ -19,7 +19,6 @@ dependencies {
     implementation project(':capacitor-notificare-in-app-messaging')
     implementation project(':capacitor-notificare-inbox')
     implementation project(':capacitor-notificare-loyalty')
-    implementation project(':capacitor-notificare-monetize')
     implementation project(':capacitor-notificare-push')
     implementation project(':capacitor-notificare-push-ui')
     implementation project(':capacitor-notificare-scannables')

@@ -7,7 +7,6 @@ import com.getcapacitor.PluginCall
 import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import re.notifica.Notificare
-import re.notifica.internal.NotificareLogger
 import re.notifica.models.NotificareNotification
 import re.notifica.push.ui.NotificarePushUI
 import re.notifica.push.ui.ktx.pushUI
@@ -15,6 +14,8 @@ import re.notifica.push.ui.ktx.pushUI
 @CapacitorPlugin(name = "NotificarePushUIPlugin")
 public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLifecycleListener {
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         // Make sure the listener isn't added in duplicate.
         Notificare.pushUI().removeLifecycleListener(this)
 
@@ -88,7 +89,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
         try {
             EventBroker.dispatchEvent("notification_will_present", notification.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_will_present event.", e)
+            logger.error("Failed to emit the notification_will_present event.", e)
         }
     }
 
@@ -96,7 +97,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
         try {
             EventBroker.dispatchEvent("notification_presented", notification.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_presented event.", e)
+            logger.error("Failed to emit the notification_presented event.", e)
         }
     }
 
@@ -104,7 +105,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
         try {
             EventBroker.dispatchEvent("notification_finished_presenting", notification.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_finished_presenting event.", e)
+            logger.error("Failed to emit the notification_finished_presenting event.", e)
         }
     }
 
@@ -112,7 +113,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
         try {
             EventBroker.dispatchEvent("notification_failed_to_present", notification.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_failed_to_present event.", e)
+            logger.error("Failed to emit the notification_failed_to_present event.", e)
         }
     }
 
@@ -124,7 +125,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
 
             EventBroker.dispatchEvent("notification_url_clicked", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the notification_url_clicked event.", e)
+            logger.error("Failed to emit the notification_url_clicked event.", e)
         }
     }
 
@@ -136,7 +137,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
 
             EventBroker.dispatchEvent("action_will_execute", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the action_will_execute event.", e)
+            logger.error("Failed to emit the action_will_execute event.", e)
         }
     }
 
@@ -148,7 +149,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
 
             EventBroker.dispatchEvent("action_executed", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the action_executed event.", e)
+            logger.error("Failed to emit the action_executed event.", e)
         }
     }
 
@@ -165,7 +166,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
 
             EventBroker.dispatchEvent("action_failed_to_execute", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the action_failed_to_execute event.", e)
+            logger.error("Failed to emit the action_failed_to_execute event.", e)
         }
     }
 
@@ -182,7 +183,7 @@ public class NotificarePushUIPlugin : Plugin(), NotificarePushUI.NotificationLif
 
             EventBroker.dispatchEvent("custom_action_received", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the custom_action_received event.", e)
+            logger.error("Failed to emit the custom_action_received event.", e)
         }
     }
 

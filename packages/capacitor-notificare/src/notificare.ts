@@ -80,23 +80,19 @@ export class Notificare {
   // Events
   //
 
-  public static onReady(
-    callback: (application: NotificareApplication) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return _Notificare.addListener('ready', callback);
+  public static async onReady(callback: (application: NotificareApplication) => void): Promise<PluginListenerHandle> {
+    return await _Notificare.addListener('ready', callback);
   }
 
-  public static onUnlaunched(callback: () => void): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return _Notificare.addListener('unlaunched', callback);
+  public static async onUnlaunched(callback: () => void): Promise<PluginListenerHandle> {
+    return await _Notificare.addListener('unlaunched', callback);
   }
 
-  public static onDeviceRegistered(
-    callback: (device: NotificareDevice) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return _Notificare.addListener('device_registered', callback);
+  public static async onDeviceRegistered(callback: (device: NotificareDevice) => void): Promise<PluginListenerHandle> {
+    return await _Notificare.addListener('device_registered', callback);
   }
 
-  public static onUrlOpened(callback: (url: string) => void): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return _Notificare.addListener('url_opened', ({ url }) => callback(url));
+  public static async onUrlOpened(callback: (url: string) => void): Promise<PluginListenerHandle> {
+    return await _Notificare.addListener('url_opened', ({ url }) => callback(url));
   }
 }

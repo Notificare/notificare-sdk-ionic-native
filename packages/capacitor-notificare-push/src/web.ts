@@ -1,6 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 
 import type { PushPermissionStatus } from './enums';
+import type { NotificarePushSubscription } from './models/notificare-push-subscription';
+import type { NotificareTransport } from './models/notificare-transport';
 import type { PushPermissionRationale } from './notificare-push';
 import type { NotificarePushPlugin } from './plugin';
 
@@ -22,6 +24,16 @@ export class NotificarePushPluginWeb extends WebPlugin implements NotificarePush
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   hasRemoteNotificationsEnabled(): Promise<{ result: boolean }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getTransport(): Promise<{ result: NotificareTransport | null }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getSubscription(): Promise<{ result: NotificarePushSubscription | null }> {
     throw this.unimplemented('Not implemented on web.');
   }
 

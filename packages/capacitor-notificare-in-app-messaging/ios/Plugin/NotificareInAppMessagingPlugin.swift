@@ -6,6 +6,8 @@ import NotificareInAppMessagingKit
 @objc(NotificareInAppMessagingPlugin)
 public class NotificareInAppMessagingPlugin: CAPPlugin {
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.inAppMessaging().delegate = self
     }
@@ -39,7 +41,7 @@ extension NotificareInAppMessagingPlugin: NotificareInAppMessagingDelegate {
 
             EventBroker.instance.dispatchEvent("message_presented", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the message_presented event.", error: error)
+            logger.error("Failed to emit the message_presented event.", error: error)
         }
     }
 
@@ -51,7 +53,7 @@ extension NotificareInAppMessagingPlugin: NotificareInAppMessagingDelegate {
 
             EventBroker.instance.dispatchEvent("message_finished_presenting", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the message_finished_presenting event.", error: error)
+            logger.error("Failed to emit the message_finished_presenting event.", error: error)
         }
     }
 
@@ -63,7 +65,7 @@ extension NotificareInAppMessagingPlugin: NotificareInAppMessagingDelegate {
 
             EventBroker.instance.dispatchEvent("message_failed_to_present", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the message_failed_to_present event.", error: error)
+            logger.error("Failed to emit the message_failed_to_present event.", error: error)
         }
     }
 
@@ -76,7 +78,7 @@ extension NotificareInAppMessagingPlugin: NotificareInAppMessagingDelegate {
 
             EventBroker.instance.dispatchEvent("action_executed", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the action_executed event.", error: error)
+            logger.error("Failed to emit the action_executed event.", error: error)
         }
     }
 
@@ -93,7 +95,32 @@ extension NotificareInAppMessagingPlugin: NotificareInAppMessagingDelegate {
 
             EventBroker.instance.dispatchEvent("action_failed_to_execute", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the action_failed_to_execute event.", error: error)
+            logger.error("Failed to emit the action_failed_to_execute event.", error: error)
         }
+    }
+}
+
+extension NotificareInAppMessagingPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }

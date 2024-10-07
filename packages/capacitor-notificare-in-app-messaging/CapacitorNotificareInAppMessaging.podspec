@@ -1,7 +1,7 @@
 require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
-notificare_version = '3.10.0'
+notificare_version = '4.0.0'
 
 Pod::Spec.new do |s|
   s.name = 'CapacitorNotificareInAppMessaging'
@@ -16,5 +16,6 @@ Pod::Spec.new do |s|
   s.dependency 'Capacitor'
   s.dependency 'Notificare/NotificareKit', notificare_version
   s.dependency 'Notificare/NotificareInAppMessagingKit', notificare_version
+  s.dependency 'Notificare/NotificareUtilitiesKit', notificare_version
   s.swift_version = '5.1'
 end

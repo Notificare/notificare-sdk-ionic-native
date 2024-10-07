@@ -52,8 +52,11 @@ export const InboxView: FC = () => {
   );
 
   useEffect(function setupListeners() {
-    const subscriptions = [NotificareInbox.onInboxUpdated(setItems)];
-    return () => subscriptions.forEach((s) => s.remove());
+    const listeners = [NotificareInbox.onInboxUpdated(setItems)];
+
+    return () => {
+      Promise.all(listeners).then((subscriptions) => subscriptions.forEach((s) => s.remove()));
+    };
   }, []);
 
   async function open(item: NotificareInboxItem) {

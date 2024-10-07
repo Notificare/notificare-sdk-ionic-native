@@ -48,15 +48,11 @@ export class NotificareInbox {
   // Events
   //
 
-  public static onInboxUpdated(
-    callback: (items: NotificareInboxItem[]) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('inbox_updated', ({ items }) => callback(items));
+  public static async onInboxUpdated(callback: (items: NotificareInboxItem[]) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('inbox_updated', ({ items }) => callback(items));
   }
 
-  public static onBadgeUpdated(
-    callback: (badge: number) => void
-  ): Promise<PluginListenerHandle> & PluginListenerHandle {
-    return NativePlugin.addListener('badge_updated', ({ badge }) => callback(badge));
+  public static async onBadgeUpdated(callback: (badge: number) => void): Promise<PluginListenerHandle> {
+    return await NativePlugin.addListener('badge_updated', ({ badge }) => callback(badge));
   }
 }
