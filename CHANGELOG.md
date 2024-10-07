@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Upcoming release
+## 4.0.0
 
 - Device identifiers become long-lived
 - Add support for customisable hosts
@@ -8,6 +8,7 @@
 - `launch()`, `unlaunch()`, `enableRemoteNotifications()` and `disableRemoteNotifications()` functions now complete after all the work is done
 
 #### Breaking changes
+
 - Drops support for the monetize module
 - Drops support for Huawei Mobile Services
 - `NotificareDevice.id` attribute no longer contains the push token. Use `NotificarePush.getSubscription()` instead
@@ -395,4 +396,4 @@ Notificare.onReady(async (application) => {
 
 ## 3.0.0
 
-Please check our [migration guide](./MIGRATION.md) before adopting the v3.x generation.
+Please check our [migration guide](./MIGRATION-3.0.md) before adopting the v3.x generation.
