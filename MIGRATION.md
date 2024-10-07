@@ -26,7 +26,7 @@ In previous versions, the `onDeviceRegistered` event triggered when enabling or 
 
 If you need to track changes when a device switches between a temporary and a push-enabled state (or vice versa), you can listen to the `onSubscriptionChanged` property, as demonstrated in the example above.
 
-### Event Listeners
+### Event listeners
 
 All event listeners have been updated to return a Promise, which aligns with the changes required for Capacitor 6. Resulting in `Promise<PluginListenerHandle>` instead of `Promise<PluginListenerHandle> & PluginListenerHandle`.
 
