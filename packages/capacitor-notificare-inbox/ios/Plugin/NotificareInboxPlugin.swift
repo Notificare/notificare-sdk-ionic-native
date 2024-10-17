@@ -6,6 +6,8 @@ import NotificareInboxKit
 @objc(NotificareInboxPlugin)
 public class NotificareInboxPlugin: CAPPlugin {
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.inbox().delegate = self
     }
@@ -142,7 +144,7 @@ extension NotificareInboxPlugin: NotificareInboxDelegate {
                 "items": try items.map { try $0.toJson() }
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the inbox_updated event.", error: error)
+            logger.error("Failed to emit the inbox_updated event.", error: error)
         }
     }
     
@@ -150,5 +152,30 @@ extension NotificareInboxPlugin: NotificareInboxDelegate {
         EventBroker.instance.dispatchEvent("badge_updated", data: [
             "badge": badge
         ])
+    }
+}
+
+extension NotificareInboxPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }

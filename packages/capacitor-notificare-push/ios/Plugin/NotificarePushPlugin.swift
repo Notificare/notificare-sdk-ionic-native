@@ -8,6 +8,8 @@ public class NotificarePushPlugin: CAPPlugin {
     private let notificationCenter = UNUserNotificationCenter.current()
 
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.push().delegate = self
     }
@@ -270,7 +272,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
 
             EventBroker.instance.dispatchEvent("notification_info_received", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the notification_info_received event.", error: error)
+            logger.error("Failed to emit the notification_info_received event.", error: error)
         }
     }
 
@@ -278,7 +280,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         do {
             EventBroker.instance.dispatchEvent("system_notification_received", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the system_notification_received event.", error: error)
+            logger.error("Failed to emit the system_notification_received event.", error: error)
         }
     }
 
@@ -298,7 +300,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         do {
             EventBroker.instance.dispatchEvent("notification_opened", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the notification_opened event.", error: error)
+            logger.error("Failed to emit the notification_opened event.", error: error)
         }
     }
 
@@ -323,7 +325,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
 
             EventBroker.instance.dispatchEvent("notification_action_opened", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the notification_action_opened event.", error: error)
+            logger.error("Failed to emit the notification_action_opened event.", error: error)
         }
     }
 
@@ -356,7 +358,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         do {
             EventBroker.instance.dispatchEvent("subscription_changed", data: try subscription?.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the subscription_changed event.", error: error)
+            logger.error("Failed to emit the subscription_changed event.", error: error)
         }
     }
 
@@ -364,7 +366,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
         do {
             EventBroker.instance.dispatchEvent("should_open_notification_settings", data: try notification?.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the should_open_notification_settings event.", error: error)
+            logger.error("Failed to emit the should_open_notification_settings event.", error: error)
         }
     }
 
@@ -381,3 +383,27 @@ extension NotificarePushPlugin {
     }
 }
 
+extension NotificarePushPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
+    }
+}

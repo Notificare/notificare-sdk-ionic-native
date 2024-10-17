@@ -14,6 +14,8 @@ import re.notifica.models.*
 @CapacitorPlugin(name = "NotificarePlugin")
 public class NotificarePlugin : Plugin() {
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
         Notificare.intentReceiver = NotificarePluginIntentReceiver::class.java
 

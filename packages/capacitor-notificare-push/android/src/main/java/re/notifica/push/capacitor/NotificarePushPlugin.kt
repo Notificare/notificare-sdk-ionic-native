@@ -23,7 +23,6 @@ import com.getcapacitor.PluginMethod
 import com.getcapacitor.annotation.CapacitorPlugin
 import re.notifica.Notificare
 import re.notifica.NotificareCallback
-import re.notifica.internal.NotificareLogger
 import re.notifica.push.ktx.push
 import re.notifica.push.models.NotificarePushSubscription
 
@@ -47,11 +46,13 @@ public class NotificarePushPlugin : Plugin() {
         try {
             EventBroker.dispatchEvent("subscription_changed", subscription?.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the subscription_changed event.", e)
+            logger.error("Failed to emit the subscription_changed event.", e)
         }
     }
 
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
         Notificare.push().intentReceiver = NotificarePushPluginIntentReceiver::class.java
 
@@ -224,7 +225,7 @@ public class NotificarePushPlugin : Plugin() {
         }
 
         val activity = activity ?: run {
-            NotificareLogger.warning("Unable to acquire a reference to the current activity.")
+            logger.warning("Unable to acquire a reference to the current activity.")
             call.reject("Unable to acquire a reference to the current activity.")
             return
         }
@@ -234,7 +235,7 @@ public class NotificarePushPlugin : Plugin() {
         val buttonText = rationale.getString("buttonText") ?: context.getString(android.R.string.ok)
 
         try {
-            NotificareLogger.debug("Presenting permission rationale to open app settings.")
+            logger.debug("Presenting permission rationale to open app settings.")
 
             activity.runOnUiThread {
                 AlertDialog.Builder(activity)
@@ -266,7 +267,7 @@ public class NotificarePushPlugin : Plugin() {
         }
 
         if (hasOnGoingPermissionRequest) {
-            NotificareLogger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
+            logger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
             call.reject("A request for permissions is already running, please wait for it to finish before doing another request.")
             return
         }

@@ -12,6 +12,8 @@ public class NotificarePushUIPlugin: CAPPlugin {
     }
     
     public override func load() {
+        addApplicationLaunchListener()
+
         EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
         Notificare.shared.pushUI().delegate = self
     }
@@ -114,7 +116,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
         do {
             EventBroker.instance.dispatchEvent("notification_will_present", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the notification_will_present event.", error: error)
+            logger.error("Failed to emit the notification_will_present event.", error: error)
         }
     }
     
@@ -122,7 +124,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
         do {
             EventBroker.instance.dispatchEvent("notification_presented", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the notification_presented event.", error: error)
+            logger.error("Failed to emit the notification_presented event.", error: error)
         }
     }
     
@@ -130,7 +132,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
         do {
             EventBroker.instance.dispatchEvent("notification_finished_presenting", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the notification_finished_presenting event.", error: error)
+            logger.error("Failed to emit the notification_finished_presenting event.", error: error)
         }
     }
     
@@ -138,7 +140,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
         do {
             EventBroker.instance.dispatchEvent("notification_failed_to_present", data: try notification.toJson())
         } catch {
-            NotificareLogger.error("Failed to emit the notification_failed_to_present event.", error: error)
+            logger.error("Failed to emit the notification_failed_to_present event.", error: error)
         }
     }
     
@@ -149,7 +151,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
                 "url": url.absoluteString,
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the notification_url_clicked event.", error: error)
+            logger.error("Failed to emit the notification_url_clicked event.", error: error)
         }
     }
     
@@ -160,7 +162,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
                 "action": try action.toJson(),
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the action_will_execute event.", error: error)
+            logger.error("Failed to emit the action_will_execute event.", error: error)
         }
     }
     
@@ -171,7 +173,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
                 "action": try action.toJson(),
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the action_executed event.", error: error)
+            logger.error("Failed to emit the action_executed event.", error: error)
         }
     }
     
@@ -182,7 +184,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
                 "action": try action.toJson(),
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the action_not_executed event.", error: error)
+            logger.error("Failed to emit the action_not_executed event.", error: error)
         }
     }
     
@@ -199,7 +201,7 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
             
             EventBroker.instance.dispatchEvent("action_failed_to_execute", data: data)
         } catch {
-            NotificareLogger.error("Failed to emit the action_failed_to_execute event.", error: error)
+            logger.error("Failed to emit the action_failed_to_execute event.", error: error)
         }
     }
     
@@ -211,8 +213,33 @@ extension NotificarePushUIPlugin: NotificarePushUIDelegate {
                 "url": url.absoluteString,
             ])
         } catch {
-            NotificareLogger.error("Failed to emit the custom_action_received event.", error: error)
+            logger.error("Failed to emit the custom_action_received event.", error: error)
         }
+    }
+}
+
+extension NotificarePushUIPlugin {
+    private func addApplicationLaunchListener() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didFinishLaunching),
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    private func removeApplicationLaunchListener() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didFinishLaunchingNotification,
+            object: nil
+        )
+    }
+
+    @objc private func didFinishLaunching() {
+        removeApplicationLaunchListener()
+
+        logger.hasDebugLoggingEnabled = Notificare.shared.options?.debugLoggingEnabled ?? false
     }
 }
 

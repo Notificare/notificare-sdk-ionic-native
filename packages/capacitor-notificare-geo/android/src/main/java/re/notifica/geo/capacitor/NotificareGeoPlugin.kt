@@ -22,7 +22,6 @@ import re.notifica.geo.models.NotificareBeacon
 import re.notifica.geo.models.NotificareLocation
 import re.notifica.geo.models.NotificareRegion
 import re.notifica.geo.models.toJson
-import re.notifica.internal.NotificareLogger
 
 @CapacitorPlugin(name = "NotificareGeoPlugin")
 public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
@@ -38,6 +37,8 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
     private lateinit var permissionsLauncher: ActivityResultLauncher<Array<String>>
 
     override fun load() {
+        logger.hasDebugLoggingEnabled = Notificare.options?.debugLoggingEnabled ?: false
+
         EventBroker.setup(this::notifyListeners)
 
         Notificare.geo().removeListener(this)
@@ -159,7 +160,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
             }
 
         val activity = activity ?: run {
-            NotificareLogger.warning("Unable to acquire a reference to the current activity.")
+            logger.warning("Unable to acquire a reference to the current activity.")
             call.reject("Unable to acquire a reference to the current activity.")
             return
         }
@@ -167,7 +168,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         val manifestPermissions = getManifestPermissions(context, permission)
 
         if (manifestPermissions.isEmpty()) {
-            NotificareLogger.warning("No permissions found in the manifest for $permission")
+            logger.warning("No permissions found in the manifest for $permission")
             call.resolve(JSObject().put("result", false))
             return
         }
@@ -197,7 +198,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         }
 
         val activity = activity ?: run {
-            NotificareLogger.warning("Unable to acquire a reference to the current activity.")
+            logger.warning("Unable to acquire a reference to the current activity.")
             call.reject("Unable to acquire a reference to the current activity.")
             return
         }
@@ -207,7 +208,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         val buttonText = rationale.getString("buttonText") ?: context.getString(android.R.string.ok)
 
         try {
-            NotificareLogger.debug("Presenting permission rationale for '$permission'.")
+            logger.debug("Presenting permission rationale for '$permission'.")
 
             activity.runOnUiThread {
                 AlertDialog.Builder(activity)
@@ -239,7 +240,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
             }
 
         if (hasOnGoingPermissionRequest) {
-            NotificareLogger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
+            logger.warning("A request for permissions is already running, please wait for it to finish before doing another request.")
             call.reject("A request for permissions is already running, please wait for it to finish before doing another request.")
             return
         }
@@ -253,7 +254,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         val manifestPermissions = getManifestPermissions(context, permission)
 
         if (manifestPermissions.isEmpty()) {
-            NotificareLogger.warning("No permissions found in the manifest for $permission")
+            logger.warning("No permissions found in the manifest for $permission")
             call.resolve(JSObject().put("result", PermissionStatus.DENIED.rawValue))
             return
         }
@@ -289,7 +290,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             EventBroker.dispatchEvent("location_updated", location.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the location_updated event.", e)
+            logger.error("Failed to emit the location_updated event.", e)
         }
     }
 
@@ -297,7 +298,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             EventBroker.dispatchEvent("region_entered", region.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the region_entered event.", e)
+            logger.error("Failed to emit the region_entered event.", e)
         }
     }
 
@@ -305,7 +306,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             EventBroker.dispatchEvent("region_exited", region.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the region_exited event.", e)
+            logger.error("Failed to emit the region_exited event.", e)
         }
     }
 
@@ -313,7 +314,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             EventBroker.dispatchEvent("beacon_entered", beacon.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the beacon_entered event.", e)
+            logger.error("Failed to emit the beacon_entered event.", e)
         }
     }
 
@@ -321,7 +322,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         try {
             EventBroker.dispatchEvent("beacon_exited", beacon.toJson())
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the beacon_exited event.", e)
+            logger.error("Failed to emit the beacon_exited event.", e)
         }
     }
 
@@ -335,7 +336,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
 
             EventBroker.dispatchEvent("beacons_ranged", data)
         } catch (e: Exception) {
-            NotificareLogger.error("Failed to emit the beacons_ranged event.", e)
+            logger.error("Failed to emit the beacons_ranged event.", e)
         }
     }
 
@@ -354,7 +355,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
 
         // If no permissions were found there's an issue and the permission is not set in the Android Manifest.
         if (manifestPermissions.isEmpty()) {
-            NotificareLogger.warning("No permissions found in the manifest for $permission")
+            logger.warning("No permissions found in the manifest for $permission")
             return PermissionStatus.DENIED
         }
 
@@ -431,7 +432,7 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
         val manifestPermissions = getManifestPermissions(context, PermissionGroup.BLUETOOTH)
 
         if (manifestPermissions.isEmpty()) {
-            NotificareLogger.warning("Bluetooth permission missing in the manifest.")
+            logger.warning("Bluetooth permission missing in the manifest.")
             return PermissionStatus.DENIED
         }
 

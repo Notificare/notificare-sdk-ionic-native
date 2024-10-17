@@ -2,7 +2,6 @@ package re.notifica.scannables.capacitor
 
 import com.getcapacitor.JSObject
 import org.json.JSONObject
-import re.notifica.internal.NotificareLogger
 
 internal typealias NotifyListenersFunction = (name: String, data: JSObject?) -> Unit
 
@@ -14,7 +13,7 @@ internal object EventBroker {
         this.notifyListenersFunction = notifyListenersFunction
 
         if (eventQueue.isNotEmpty()) {
-            NotificareLogger.debug("Processing event queue with ${eventQueue.size} items.")
+            logger.debug("Processing event queue with ${eventQueue.size} items.")
             eventQueue.forEach { notifyListenersFunction(it.name, it.data) }
             eventQueue.clear()
         }
