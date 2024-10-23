@@ -1,0 +1,7 @@
+{
+  "name": "sample-user-inbox",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
