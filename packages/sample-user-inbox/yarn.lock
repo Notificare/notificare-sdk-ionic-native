@@ -1311,7 +1311,7 @@
     ionicons "^7.2.2"
     tslib "^2.1.0"
 
-"@ionic/react-router@8":
+"@ionic/react-router@^8.0.0":
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-8.4.0.tgz#0c0521e081fa80ab7364f50e4dece2994345eed3"
   integrity sha512-JmBiSlQtOb0yeOFa0O0iQ77koX7jcCkTfyMCWkOsSqXySU5yGuhnfOFNy6O7cbZ1J4lmCeNBqA29hRV7tmnPyg==
@@ -1319,7 +1319,7 @@
     "@ionic/react" "8.4.0"
     tslib "*"
 
-"@ionic/react@8", "@ionic/react@8.4.0":
+"@ionic/react@8.4.0", "@ionic/react@^8.0.0":
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/@ionic/react/-/react-8.4.0.tgz#a2176a6582a4b21dbea9d3f2cd30c5f82f5eba27"
   integrity sha512-wCtixCwf673Qnes1uGxmRoyUP4FnGtEyUVwtkcfj9IBrPUbw641Ws8J4jRjQ2rOO1WkWkSCeHKnd+KYCqyulZg==
