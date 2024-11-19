@@ -50,7 +50,9 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
-setupIonicReact();
+setupIonicReact({
+  innerHTMLTemplatesEnabled: true,
+});
 
 export const App: FC = () => {
   useEffect(function launch() {
