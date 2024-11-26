@@ -74,7 +74,7 @@ export const HomeView: FC = () => {
 
   useEffect(function setupListeners() {
     const listeners = [
-      Notificare.onReady(async (_) => {
+      Notificare.onReady(async () => {
         setIsReady(true);
       }),
 
@@ -82,11 +82,11 @@ export const HomeView: FC = () => {
         setIsReady(false);
       }),
 
-      NotificarePush.onNotificationOpened(async (_) => {
+      NotificarePush.onNotificationOpened(async () => {
         await refreshBadge();
       }),
 
-      NotificarePush.onNotificationInfoReceived(async (_) => {
+      NotificarePush.onNotificationInfoReceived(async () => {
         await refreshBadge();
       }),
     ];
@@ -188,6 +188,7 @@ export const HomeView: FC = () => {
 
       await logout({
         logoutParams: {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           returnTo: `re.notifica.sample.user.inbox.app.dev://${domain!}/capacitor/re.notifica.sample.user.inbox.app.dev/callback`,
         },
         async openUrl(url) {
@@ -209,7 +210,7 @@ export const HomeView: FC = () => {
     }
   }
 
-  async function continueLogoutFlow() {
+  function continueLogoutFlow() {
     console.log('=== Logout flow continue ===');
 
     try {

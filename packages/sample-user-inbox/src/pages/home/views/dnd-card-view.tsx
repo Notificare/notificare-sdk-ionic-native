@@ -1,4 +1,4 @@
-import { IonCard, IonIcon, IonItem, IonLabel, IonToggle } from '@ionic/react';
+import { IonCard, IonIcon, IonItem, IonToggle } from '@ionic/react';
 import { Notificare } from 'capacitor-notificare';
 import { banOutline } from 'ionicons/icons';
 import type { FC } from 'react';
@@ -91,9 +91,13 @@ export const DnDNotificationsCardView: FC = () => {
       <IonItem detail={false} lines="none">
         <IonIcon icon={banOutline} size="small" />
 
-        <IonLabel className="label-with-icon">Do Not Disturb</IonLabel>
-
-        <IonToggle slot="end" checked={hasDndEnabled} onIonChange={(e) => updateDndStatus(e.detail.checked)} />
+        <IonToggle
+          className="label-with-icon"
+          checked={hasDndEnabled}
+          onIonChange={(e) => updateDndStatus(e.detail.checked)}
+        >
+          Do Not Disturb
+        </IonToggle>
       </IonItem>
     </IonCard>
   );

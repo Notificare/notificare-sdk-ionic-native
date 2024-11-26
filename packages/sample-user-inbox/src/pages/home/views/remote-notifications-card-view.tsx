@@ -40,7 +40,7 @@ export const RemoteNotificationsCardView: FC<RemoteNotificationsCardViewProps> =
   useEffect(
     function setupListeners() {
       const listeners = [
-        NotificarePush.onNotificationSettingsChanged(async (_) => {
+        NotificarePush.onNotificationSettingsChanged(async () => {
           await checkNotificationsStatus();
         }),
       ];
@@ -170,13 +170,13 @@ export const RemoteNotificationsCardView: FC<RemoteNotificationsCardViewProps> =
         <IonItem detail={false} lines="none">
           <IonIcon icon={notificationsOutline} size="small" />
 
-          <IonLabel className="label-with-icon">Notifications</IonLabel>
-
           <IonToggle
-            slot="end"
+            className="label-with-icon"
             checked={hasNotificationsEnabled}
             onIonChange={(e) => updateNotificationsStatus(e.detail.checked)}
-          />
+          >
+            Notifications
+          </IonToggle>
         </IonItem>
 
         <div className="divider-horizontal-margin" />

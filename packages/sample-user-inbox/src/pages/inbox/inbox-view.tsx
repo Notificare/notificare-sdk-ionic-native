@@ -75,11 +75,11 @@ export const InboxView: FC = () => {
   useEffect(
     function setupListeners() {
       const listeners = [
-        NotificarePush.onNotificationOpened(async (_) => {
+        NotificarePush.onNotificationOpened(async () => {
           await refreshInbox();
         }),
 
-        NotificarePush.onNotificationInfoReceived(async (_) => {
+        NotificarePush.onNotificationInfoReceived(async () => {
           await refreshInbox();
         }),
       ];
