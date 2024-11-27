@@ -17,6 +17,8 @@ export class NotificarePush {
    * Defines the authorization options used when requesting push notification
    * permissions.
    *
+   * **Note**: This method is only supported on iOS.
+   *
    * @param options The authorization options to be set.
    */
   public static async setAuthorizationOptions(options: string[]): Promise<void> {
@@ -25,6 +27,8 @@ export class NotificarePush {
 
   /**
    * Defines the notification category options for custom notification actions.
+   *
+   * **Note**: This method is only supported on iOS.
    *
    * @param options The category options to be set
    */
@@ -35,6 +39,8 @@ export class NotificarePush {
   /**
    * Defines the presentation options for displaying notifications while the app
    * is in the foreground.
+   *
+   * **Note**: This method is only supported on iOS.
    *
    * @param options The presentation options to be set.
    */
@@ -129,7 +135,7 @@ export class NotificarePush {
   }
 
   /**
-   * Determines if the app should display a rationale for requesting the specified permission.
+   * Determines if the app should display a rationale for requesting the push permission.
    *
    * @returns `true` if a rationale should be shown, or `false` otherwise.
    */
@@ -139,7 +145,7 @@ export class NotificarePush {
   }
 
   /**
-   * Presents a rationale to the user for requesting a specific permission.
+   * Presents a rationale to the user for requesting push permission.
    *
    * This method displays a custom rationale message to the user, explaining why the app requires
    * push permission. The rationale should be presented prior to initiating the permission
@@ -321,7 +327,7 @@ export class NotificarePush {
    *  push notifications.
    *
    * @param callback A callback that will be invoked with the result of the
-   * onFailedToRegisterForRemoteNotifications event. IT will provide the error
+   * onFailedToRegisterForRemoteNotifications event. It will provide the error
    * that caused the registration to fail.
    */
   public static async onFailedToRegisterForRemoteNotifications(
