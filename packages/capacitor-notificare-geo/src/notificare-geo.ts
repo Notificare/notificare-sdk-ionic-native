@@ -13,30 +13,77 @@ export class NotificareGeo {
   // Methods
   //
 
+  /**
+   * Indicates whether location services are enabled.
+   *
+   * @returns `true` if the location services are enabled by the application,
+   * and `false` otherwise.
+   */
   public static async hasLocationServicesEnabled(): Promise<boolean> {
     const { result } = await NativePlugin.hasLocationServicesEnabled();
     return result;
   }
 
+  /**
+   * Indicates whether Bluetooth is enabled.
+   *
+   * @returns `true` if Bluetooth is enabled and available for beacon detection
+   * and ranging, and `false` otherwise.
+   */
   public static async hasBluetoothEnabled(): Promise<boolean> {
     const { result } = await NativePlugin.hasBluetoothEnabled();
     return result;
   }
 
+  /**
+   * Provides a list of regions currently being monitored.
+   *
+   * @returns a list of {@link NotificareRegion} objects representing the
+   * geographical regions being actively monitored for entry and exit events.
+   */
   public static async getMonitoredRegions(): Promise<NotificareRegion[]> {
     const { result } = await NativePlugin.getMonitoredRegions();
     return result;
   }
 
+  /**
+   * Provides a list of regions the user has entered.
+   *
+   * @returns a list of {@link NotificareRegion} objects representing the regions
+   * that the user has entered and not yet exited.
+   */
   public static async getEnteredRegions(): Promise<NotificareRegion[]> {
     const { result } = await NativePlugin.getEnteredRegions();
     return result;
   }
 
+  /**
+   * Enables location updates, activating location tracking, region monitoring,
+   * and beacon detection.
+   *
+   * **Note**: This function requires explicit location permissions from the user.
+   * Starting with Android 10 (API level 29), background location access requires
+   * the ACCESS_BACKGROUND_LOCATION permission. For beacon detection, Bluetooth
+   * permissions are also necessary. Ensure all permissions are requested before
+   * invoking this method.
+   *
+   * The behavior varies based on granted permissions:
+   * - **Permission denied**: Clears the device's location information.
+   * - **When In Use permission granted**: Tracks location only while the
+   * app is in use.
+   * - **Always permission granted**: Enables geofencing capabilities.
+   * - **Always + Bluetooth permissions granted**: Enables geofencing
+   * and beacon detection.
+   */
   public static async enableLocationUpdates(): Promise<void> {
     await NativePlugin.enableLocationUpdates();
   }
 
+  /**
+   * Disables location updates.
+   *
+   * This method stops receiving location updates, monitoring regions, and detecting nearby beacons.
+   */
   public static async disableLocationUpdates(): Promise<void> {
     await NativePlugin.disableLocationUpdates();
   }
@@ -45,16 +92,40 @@ export class NotificareGeo {
   // Permission utilities
   //
 
+  /**
+   * Checks the current status of a specific permission.
+   *
+   * @param permission The {@link PermissionGroup} to check the status for.
+   *
+   * @returns A {@link PermissionStatus} enum containing the given permission status.
+   */
   public static async checkPermissionStatus(permission: PermissionGroup): Promise<PermissionStatus> {
     const { result } = await NativePlugin.checkPermissionStatus({ permission });
     return result;
   }
 
+  /**
+   * Determines if the app should display a rationale for requesting the specified permission.
+   *
+   * @param permission The {@link PermissionGroup} to evaluate if a permission rationale is needed.
+   *
+   * @returns `true` if a rationale should be shown, or `false` otherwise.
+   */
   public static async shouldShowPermissionRationale(permission: PermissionGroup): Promise<boolean> {
     const { result } = await NativePlugin.shouldShowPermissionRationale({ permission });
     return result;
   }
 
+  /**
+   * Presents a rationale to the user for requesting a specific permission.
+   *
+   * This method displays a custom rationale message to the user, explaining why the app requires
+   * the specified permission. The rationale should be presented prior to initiating the permission
+   * request if a rationale is deemed necessary.
+   *
+   * @param permission - The {@link PermissionGroup} being requested.
+   * @param rationale - The {@link PermissionRationale} details, including the title and message to present to the user.
+   */
   public static async presentPermissionRationale(
     permission: PermissionGroup,
     rationale: PermissionRationale
@@ -62,11 +133,25 @@ export class NotificareGeo {
     await NativePlugin.presentPermissionRationale({ permission, rationale });
   }
 
+  /**
+   * Requests a specific permission from the user.
+   *
+   * This method prompts the user to grant or deny the specified permission. The returned status
+   * indicates the result of the user's decision, which can be one of several states such as
+   * "granted", "denied", "restricted", or "permanently_denied".
+   *
+   * @param permission - The {@link PermissionGroup} being requested.
+   *
+   * @returns A {@link PermissionStatus} enum containing the requested permission status.
+   */
   public static async requestPermission(permission: PermissionGroup): Promise<PermissionStatus> {
     const { result } = await NativePlugin.requestPermission({ permission });
     return result;
   }
 
+  /**
+   *  Opens the application's settings page.
+   */
   public static async openAppSettings(): Promise<void> {
     await NativePlugin.openAppSettings();
   }
@@ -75,38 +160,101 @@ export class NotificareGeo {
   // Events
   //
 
+  /**
+   * Called when a new location update is received.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onLocationUpdated event. It will provide the updated {@link NotificareLocation}
+   * object representing the user's new location.
+   */
   public static async onLocationUpdated(
     callback: (location: NotificareLocation) => void
   ): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('location_updated', callback);
   }
 
+  /**
+   * Called when the user enters a monitored region.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onRegionEntered event. It will provide the {@link NotificareRegion}
+   * representing the region the user has entered.
+   */
   public static async onRegionEntered(callback: (region: NotificareRegion) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('region_entered', callback);
   }
 
+  /**
+   * Called when the user exits a monitored region.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onRegionExited event. It will provide the {@link NotificareRegion}
+   * representing the region the user has exited.
+   */
   public static async onRegionExited(callback: (region: NotificareRegion) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('region_exited', callback);
   }
 
+  /**
+   * Called when the user enters the proximity of a beacon.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onBeaconEntered event. It will provide the {@link NotificareBeacon}
+   * representing the beacon the user has entered the proximity of.
+   */
   public static async onBeaconEntered(callback: (beacon: NotificareBeacon) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('beacon_entered', callback);
   }
 
+  /**
+   * Called when the user exits the proximity of a beacon.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onBeaconExited event. It will provide the {@link NotificareBeacon}
+   * representing the beacon the user has exited the proximity of.
+   */
   public static async onBeaconExited(callback: (beacon: NotificareBeacon) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('beacon_exited', callback);
   }
 
+  /**
+   * Called when beacons are ranged in a monitored region.
+   *
+   * This method provides the list of beacons currently detected within the given
+   * region.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onBeaconsRanged event. It will provide a list of {@link NotificareBeacon}
+   * that were detected and the {@link NotificareRegion} where they were detected.
+   */
   public static async onBeaconsRanged(
     callback: (data: { region: NotificareRegion; beacons: NotificareBeacon[] }) => void
   ): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('beacons_ranged', callback);
   }
 
+  /**
+   * Called when the device registers a location visit.
+   *
+   * **Note**: This method is only supported on iOS.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onVisit event. It will provide a {@link NotificareVisit} object representing
+   * the details of the visit.
+   */
   public static async onVisit(callback: (visit: NotificareVisit) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('visit', callback);
   }
 
+  /**
+   * Called when there is an update to the device’s heading.
+   *
+   * **Note**: This method is only supported on iOS.
+   *
+   * @param callback A callback that will be invoked with the result of the
+   * onHeadingUpdated event. It will provide a {@link NotificareHeading} object
+   * containing the details of the updated heading.
+   */
   public static async onHeadingUpdated(callback: (heading: NotificareHeading) => void): Promise<PluginListenerHandle> {
     return await NativePlugin.addListener('heading_updated', callback);
   }
