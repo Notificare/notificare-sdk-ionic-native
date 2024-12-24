@@ -1,5 +1,5 @@
 import { IonCard, IonIcon, IonItem, IonLabel, IonText } from '@ionic/react';
-import { bagHandleOutline, bulbOutline, folderOutline, qrCodeOutline } from 'ionicons/icons';
+import { bulbOutline, folderOutline, qrCodeOutline } from 'ionicons/icons';
 import type { FC } from 'react';
 import '../../../styles/index.css';
 import { useHistory } from 'react-router';

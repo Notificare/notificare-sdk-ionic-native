@@ -1,0 +1,38 @@
+[
+	{
+		"pkg": "@capacitor/app",
+		"classpath": "com.capacitorjs.plugins.app.AppPlugin"
+	},
+	{
+		"pkg": "@capacitor/browser",
+		"classpath": "com.capacitorjs.plugins.browser.BrowserPlugin"
+	},
+	{
+		"pkg": "@capacitor/haptics",
+		"classpath": "com.capacitorjs.plugins.haptics.HapticsPlugin"
+	},
+	{
+		"pkg": "@capacitor/keyboard",
+		"classpath": "com.capacitorjs.plugins.keyboard.KeyboardPlugin"
+	},
+	{
+		"pkg": "@capacitor/status-bar",
+		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
+	},
+	{
+		"pkg": "capacitor-notificare",
+		"classpath": "re.notifica.capacitor.NotificarePlugin"
+	},
+	{
+		"pkg": "capacitor-notificare-push",
+		"classpath": "re.notifica.push.capacitor.NotificarePushPlugin"
+	},
+	{
+		"pkg": "capacitor-notificare-push-ui",
+		"classpath": "re.notifica.push.ui.capacitor.NotificarePushUIPlugin"
+	},
+	{
+		"pkg": "capacitor-notificare-user-inbox",
+		"classpath": "re.notifica.inbox.user.capacitor.NotificareUserInboxPlugin"
+	}
+]

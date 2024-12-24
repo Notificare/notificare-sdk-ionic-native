@@ -1,6 +1,6 @@
 {
   "name": "capacitor-notificare",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Notificare Capacitor plugin.",
   "author": "Notificare <info@notifica.re> (https://notificare.com)",
   "license": "MIT",
@@ -57,7 +57,7 @@
     "@capacitor/docgen": "^0.0.18",
     "@capacitor/ios": "^3.0.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.0",
+    "rollup": "^2.79.2",
     "typescript": "^4.5.4"
   },
   "capacitor": {

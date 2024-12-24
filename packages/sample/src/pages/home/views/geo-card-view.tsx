@@ -222,13 +222,13 @@ export const GeoCardView: FC = () => {
         <IonItem detail={false} lines="none">
           <IonIcon icon={locationOutline} size="small" />
 
-          <IonLabel className="label-with-icon">Location</IonLabel>
-
           <IonToggle
-            slot="end"
+            className="label-with-icon"
             checked={hasLocationEnabled}
             onIonChange={(e) => updateLocationStatus(e.detail.checked)}
-          />
+          >
+            Location
+          </IonToggle>
         </IonItem>
 
         <div className="divider-horizontal-margin" />

@@ -188,13 +188,13 @@ export const RemoteNotificationsCardView: FC = () => {
         <IonItem detail={false} lines="none">
           <IonIcon icon={notificationsOutline} size="small" />
 
-          <IonLabel className="label-with-icon">Notifications</IonLabel>
-
           <IonToggle
-            slot="end"
+            className="label-with-icon"
             checked={hasNotificationsEnabled}
             onIonChange={(e) => updateNotificationsStatus(e.detail.checked)}
-          />
+          >
+            Notifications
+          </IonToggle>
         </IonItem>
 
         <div className="divider-horizontal-margin" />

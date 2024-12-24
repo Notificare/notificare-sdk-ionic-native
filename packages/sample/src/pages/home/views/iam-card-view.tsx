@@ -1,4 +1,4 @@
-import { IonCard, IonIcon, IonItem, IonLabel, IonText, IonToggle } from '@ionic/react';
+import { IonCard, IonIcon, IonItem, IonText, IonToggle } from '@ionic/react';
 import { NotificareInAppMessaging } from 'capacitor-notificare-in-app-messaging';
 import { chatboxEllipsesOutline, cloudOfflineOutline } from 'ionicons/icons';
 import type { FC } from 'react';
@@ -44,9 +44,13 @@ export const InAppMessagingCardView: FC = () => {
         <IonItem detail={false} lines="none">
           <IonIcon icon={chatboxEllipsesOutline} size="small" />
 
-          <IonLabel className="label-with-icon">Evaluate Context</IonLabel>
-
-          <IonToggle slot="end" checked={evaluateContext} onIonChange={(e) => setEvaluateContext(e.detail.checked)} />
+          <IonToggle
+            className="label-with-icon"
+            checked={evaluateContext}
+            onIonChange={(e) => setEvaluateContext(e.detail.checked)}
+          >
+            Evaluate Context
+          </IonToggle>
         </IonItem>
 
         <div className="divider-horizontal-margin"></div>
@@ -54,13 +58,13 @@ export const InAppMessagingCardView: FC = () => {
         <IonItem detail={false} lines="none">
           <IonIcon icon={cloudOfflineOutline} size="small" />
 
-          <IonLabel className="label-with-icon">Suppressed</IonLabel>
-
           <IonToggle
-            slot="end"
+            className="label-with-icon"
             checked={suppressed}
             onIonChange={(e) => updateSuppressMessagesStatus(e.detail.checked)}
-          />
+          >
+            Suppressed
+          </IonToggle>
         </IonItem>
       </IonCard>
     </div>
