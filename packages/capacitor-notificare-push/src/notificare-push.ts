@@ -19,7 +19,9 @@ export class NotificarePush {
    *
    * **Note**: This method is only supported on iOS.
    *
-   * @param options The authorization options to be set.
+   * @param {string[]} options - The authorization options to be set.
+   * @returns {Promise<void>} - A promise that resolves when the authorization
+   * options have been successfully set.
    */
   public static async setAuthorizationOptions(options: string[]): Promise<void> {
     await NativePlugin.setAuthorizationOptions({ options });
@@ -30,7 +32,9 @@ export class NotificarePush {
    *
    * **Note**: This method is only supported on iOS.
    *
-   * @param options The category options to be set
+   * @param {string[]} options - The category options to be set.
+   * @returns {Promise<void>} - A promise that resolves when the category options
+   * have been successfully set.
    */
   public static async setCategoryOptions(options: string[]): Promise<void> {
     await NativePlugin.setCategoryOptions({ options });
@@ -42,7 +46,9 @@ export class NotificarePush {
    *
    * **Note**: This method is only supported on iOS.
    *
-   * @param options The presentation options to be set.
+   * @param {string[]} options - The presentation options to be set.
+   * @returns {Promise<void>} - A promise that resolves when the presentation
+   * options have been successfully set.
    */
   public static async setPresentationOptions(options: string[]): Promise<void> {
     await NativePlugin.setPresentationOptions({ options });
@@ -51,8 +57,8 @@ export class NotificarePush {
   /**
    * Indicates whether remote notifications are enabled.
    *
-   * @returns `true` if remote notifications are enabled for the application, and
-   * `false` otherwise.
+   * @returns {Promise<boolean>} - A promise that resolves to `true` if remote
+   * notifications are enabled for the application, and `false` otherwise.
    */
   public static async hasRemoteNotificationsEnabled(): Promise<boolean> {
     const { result } = await NativePlugin.hasRemoteNotificationsEnabled();
@@ -62,7 +68,8 @@ export class NotificarePush {
   /**
    * Provides the current push transport information.
    *
-   * @returns The {@link NotificareTransport} assigned to the device.
+   * @returns {Promise<NotificareTransport | null>} - A promise that resolves to
+   * the {@link NotificareTransport} assigned to the device.
    */
   public static async getTransport(): Promise<NotificareTransport | null> {
     const { result } = await NativePlugin.getTransport();
@@ -72,7 +79,8 @@ export class NotificarePush {
   /**
    * Provides the current push subscription token.
    *
-   * @returns the {@link NotificarePushSubscription} object containing the
+   * @returns {Promise<NotificarePushSubscription | null>} - A promise that
+   * resolves to the {@link NotificarePushSubscription} object containing the
    * device's current push subscription token, or `null` if no token is available.
    */
   public static async getSubscription(): Promise<NotificarePushSubscription | null> {
@@ -88,8 +96,8 @@ export class NotificarePush {
    * from the notification service. It reflects whether the app can present
    * notifications as allowed by the system and user settings.
    *
-   * @return `true` if the device can receive remote notifications, `false`
-   * otherwise.
+   * @return {Promise<boolean>} - A promise that resolves to `true` if the device
+   * can receive remote notifications, `false` otherwise.
    */
   public static async allowedUI(): Promise<boolean> {
     const { result } = await NativePlugin.allowedUI();
@@ -105,6 +113,9 @@ export class NotificarePush {
    * **Note**: Starting with Android 13 (API level 33), this function requires
    * the developer to explicitly request the `POST_NOTIFICATIONS` permission from
    * the user.
+   *
+   * @returns {Promise<void>} - A promise that resolves when remote notifications
+   * have been successfully enabled.
    */
   public static async enableRemoteNotifications(): Promise<void> {
     await NativePlugin.enableRemoteNotifications();
@@ -115,6 +126,9 @@ export class NotificarePush {
    *
    * This function disables remote notifications for the application, preventing
    * push notifications from being received.
+   *
+   * @returns {Promise<void>} - A promise that resolves when remote notifications
+   * have been successfully disabled.
    */
   public static async disableRemoteNotifications(): Promise<void> {
     await NativePlugin.disableRemoteNotifications();
@@ -127,7 +141,8 @@ export class NotificarePush {
   /**
    * Checks the current status of the push permission.
    *
-   * @returns A {@link PushPermissionStatus} enum containing the given permission status.
+   * @returns {Promise<PushPermissionStatus>} - A promise that resolves to a
+   * {@link PushPermissionStatus} enum containing the given permission status.
    */
   public static async checkPermissionStatus(): Promise<PushPermissionStatus> {
     const { result } = await NativePlugin.checkPermissionStatus();
@@ -137,7 +152,8 @@ export class NotificarePush {
   /**
    * Determines if the app should display a rationale for requesting the push permission.
    *
-   * @returns `true` if a rationale should be shown, or `false` otherwise.
+   * @returns {Promise<boolean>} - A promise that resolves to `true` if a
+   * rationale should be shown, or `false` otherwise.
    */
   public static async shouldShowPermissionRationale(): Promise<boolean> {
     const { result } = await NativePlugin.shouldShowPermissionRationale();
@@ -151,8 +167,11 @@ export class NotificarePush {
    * push permission. The rationale should be presented prior to initiating the permission
    * request if a rationale is deemed necessary.
    *
-   * @param rationale - The {@link PushPermissionRationale} details, including the title and message to present to the
+   * @param {PushPermissionRationale} rationale - The {@link PushPermissionRationale} details,
+   * including the title and message to present to the
    * user.
+   * @returns {Promise<void>} - A promise that resolves when the rationale has
+   * been successfully presented to the user.
    */
   public static async presentPermissionRationale(rationale: PushPermissionRationale): Promise<void> {
     await NativePlugin.presentPermissionRationale({ rationale });
@@ -165,7 +184,8 @@ export class NotificarePush {
    * indicates the result of the user's decision, which can be one of several states such as
    * "granted", "denied" or "permanently_denied".
    *
-   * @returns A {@link PushPermissionStatus} enum containing the push permission status.
+   * @returns {Promise<PushPermissionStatus>} - A promise that resolves to a
+   * {@link PushPermissionStatus} enum containing the push permission status.
    */
   public static async requestPermission(): Promise<PushPermissionStatus> {
     const { result } = await NativePlugin.requestPermission();
@@ -173,7 +193,10 @@ export class NotificarePush {
   }
 
   /**
-   *  Opens the application's settings page.
+   * Opens the application's settings page.
+   *
+   * @returns {Promise<void>} - A promise that resolves when the application's
+   * settings page has been successfully opened.
    */
   public static async openAppSettings(): Promise<void> {
     await NativePlugin.openAppSettings();
@@ -186,10 +209,12 @@ export class NotificarePush {
   /**
    * Called when a push notification is received.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onNotificationInfoReceived event. It will provide the
    * {@link NotificareNotification} received and the
    * {@link NotificareNotificationDeliveryMechanism} used for its delivery.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onNotificationInfoReceived event.
    */
   public static async onNotificationInfoReceived(
     callback: (data: {
@@ -203,9 +228,11 @@ export class NotificarePush {
   /**
    * Called when a custom system notification is received.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onSystemNotificationReceived event. It will provide the
    * {@link NotificareSystemNotification} received.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onSystemNotificationReceived event.
    */
   public static async onSystemNotificationReceived(
     callback: (notification: NotificareSystemNotification) => void
@@ -216,9 +243,11 @@ export class NotificarePush {
   /**
    * Called when an unknown notification is received.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onUnknownNotificationReceived event. It will provide the unknown
    * notification received.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onUnknownNotificationReceived event.
    */
   public static async onUnknownNotificationReceived(
     callback: (notification: Record<string, any>) => void
@@ -229,9 +258,11 @@ export class NotificarePush {
   /**
    * Called when a push notification is opened by the user.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onNotificationOpened event. It will provide the
    * {@link NotificareNotification} that was opened.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onNotificationOpened event.
    */
   public static async onNotificationOpened(
     callback: (notification: NotificareNotification) => void
@@ -242,9 +273,11 @@ export class NotificarePush {
   /**
    * Called when an unknown notification is opened by the user.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onUnknownNotificationOpened event. It will provide the unknown notification
    * that was opened.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onUnknownNotificationOpened event.
    */
   public static async onUnknownNotificationOpened(
     callback: (notification: Record<string, any>) => void
@@ -255,10 +288,12 @@ export class NotificarePush {
   /**
    * Called when a push notification action is opened by the user.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onNotificationActionOpened event. It will provide the
    * {@link NotificareNotificationAction} opened by the user and the
    * {@link NotificareNotification} containing it.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onNotificationActionOpened event.
    */
   public static async onNotificationActionOpened(
     callback: (data: { notification: NotificareNotification; action: NotificareNotificationAction }) => void
@@ -269,10 +304,12 @@ export class NotificarePush {
   /**
    * Called when an unknown notification action is opened by the user.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onUnknownNotificationActionOpened event. It will provide the
    * action opened by the user and the unknown notification containing it. It
    * will also provide a response text, if it exists.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onUnknownNotificationActionOpened event.
    */
   public static async onUnknownNotificationActionOpened(
     callback: (data: { notification: Record<string, any>; action: string; responseText?: string }) => void
@@ -283,10 +320,12 @@ export class NotificarePush {
   /**
    * Called when the notification settings are changed.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onNotificationSettingsChanged event. It will provide a boolean indicating
    * whether the app is permitted to display notifications. `true` if
    * notifications are allowed, `false` if they are restricted by the user.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onNotificationSettingsChanged event.
    */
   public static async onNotificationSettingsChanged(
     callback: (granted: boolean) => void
@@ -297,10 +336,12 @@ export class NotificarePush {
   /**
    * Called when the device's push subscription changes.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onSubscriptionChanged event. It will provide the updated
    * {@link NotificarePushSubscription}, or `null`if the subscription token is
    * unavailable.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onSubscriptionChanged event.
    */
   public static async onSubscriptionChanged(
     callback: (subscription: NotificarePushSubscription | undefined) => void
@@ -311,10 +352,12 @@ export class NotificarePush {
   /**
    * Called when a notification prompts the app to open its settings screen.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onShouldOpenNotificationSettings event. It will provide the
    * {@link NotificareNotification} that prompted the app to open its settings
    * screen.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onShouldOpenNotificationSettings event.
    */
   public static async onShouldOpenNotificationSettings(
     callback: (notification: NotificareNotification | null) => void
@@ -326,9 +369,12 @@ export class NotificarePush {
    *  Called when the app encounters an error during the registration process for
    *  push notifications.
    *
-   * @param callback A callback that will be invoked with the result of the
+   * @param callback - A callback that will be invoked with the result of the
    * onFailedToRegisterForRemoteNotifications event. It will provide the error
    * that caused the registration to fail.
+   * @returns {Promise<PluginListenerHandle>} - A promise that resolves to a
+   * {@link PluginListenerHandle} for the onFailedToRegisterToRemoteNotifications
+   * event.
    */
   public static async onFailedToRegisterForRemoteNotifications(
     callback: (error: string) => void
