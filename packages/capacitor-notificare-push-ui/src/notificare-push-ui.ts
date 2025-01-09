@@ -16,8 +16,8 @@ export class NotificarePushUI {
    *
    * @param {NotificareNotification} notification - The {@link NotificareNotification}
    * to present.
-   * @returns {Promise<void>} - A promise that resolves when the notification
-   * has been successfully presented to the user.
+   * @returns {Promise<void>} - A promise that resolves when the presentation
+   * process is initiated.
    */
   public static async presentNotification(notification: NotificareNotification): Promise<void> {
     await NativePlugin.presentNotification({ notification });
@@ -34,8 +34,8 @@ export class NotificarePushUI {
    * to present.
    * @param {NotificareNotificationAction} action - The {@link NotificareNotificationAction}
    * to execute.
-   * @returns {Promise<void>} - A promise that resolves when the action has
-   * been successfully presented and executed.
+   * @returns {Promise<void>} - A promise that resolves when the presentation process
+   * is initiated.
    */
   public static async presentAction(
     notification: NotificareNotification,

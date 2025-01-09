@@ -19,7 +19,7 @@ export class NotificareUserInbox {
    * inbox response.
    * @return {Promise<NotificareUserInboxResponse>} - A promise that resolves to
    * a {@link NotificareUserInboxResponse} object parsed from the
-   * provided JSON string.
+   * provided JSON Record.
    */
   public static async parseResponseFromJson(json: Record<string, any>): Promise<NotificareUserInboxResponse> {
     const { result } = await NativePlugin.parseResponseFromJson({ json });

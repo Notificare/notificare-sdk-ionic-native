@@ -152,6 +152,9 @@ export class NotificarePush {
   /**
    * Determines if the app should display a rationale for requesting the push permission.
    *
+   * This method is Android focused and will therefore always resolve to `false`
+   * for iOS.
+   *
    * @returns {Promise<boolean>} - A promise that resolves to `true` if a
    * rationale should be shown, or `false` otherwise.
    */
@@ -163,6 +166,9 @@ export class NotificarePush {
   /**
    * Presents a rationale to the user for requesting push permission.
    *
+   * This method is Android focused, and should only be used after the {@link shouldShowPermissionRationale()}
+   * conditional method to ensure correct behaviour on both platforms.
+   *
    * This method displays a custom rationale message to the user, explaining why the app requires
    * push permission. The rationale should be presented prior to initiating the permission
    * request if a rationale is deemed necessary.
@@ -171,7 +177,7 @@ export class NotificarePush {
    * including the title and message to present to the
    * user.
    * @returns {Promise<void>} - A promise that resolves when the rationale has
-   * been successfully presented to the user.
+   * been successfully dismissed by the user.
    */
   public static async presentPermissionRationale(rationale: PushPermissionRationale): Promise<void> {
     await NativePlugin.presentPermissionRationale({ rationale });
