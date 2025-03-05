@@ -415,9 +415,11 @@ public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
                 return false
             }
 
-            for (r in info.requestedPermissions) {
-                if (r == permission) {
-                    return true
+            info.requestedPermissions?.let {
+                for (r in it) {
+                    if (r == permission) {
+                        return true
+                    }
                 }
             }
         } catch (ex: Exception) {
