@@ -21,7 +21,6 @@ import re.notifica.geo.ktx.geo
 import re.notifica.geo.models.NotificareBeacon
 import re.notifica.geo.models.NotificareLocation
 import re.notifica.geo.models.NotificareRegion
-import re.notifica.geo.models.toJson
 
 @CapacitorPlugin(name = "NotificareGeoPlugin")
 public class NotificareGeoPlugin : Plugin(), NotificareGeo.Listener {
