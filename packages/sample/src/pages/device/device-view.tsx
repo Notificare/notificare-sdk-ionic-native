@@ -175,6 +175,31 @@ export const DeviceView: FC = () => {
     }
   }
 
+  async function resetUserData() {
+    try {
+      await Notificare.device().updateUserData({
+        firstName: null,
+        lastName: 'LastNameExample',
+      });
+      console.log('=== Reset user data successfully ===');
+
+      addToastInfoMessage({
+        message: 'Reset user data successfully.',
+        type: 'success',
+      });
+
+      await loadDeviceData();
+    } catch (e) {
+      console.log('=== Error resetting user data ===');
+      console.log(JSON.stringify(e));
+
+      addToastInfoMessage({
+        message: 'Error resetting user data.',
+        type: 'error',
+      });
+    }
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -263,8 +288,12 @@ export const DeviceView: FC = () => {
           </div>
 
           <IonCard className="ion-card-margin">
-            <IonItem className="sample-button" detail={false} lines="none" button onClick={updateUserData}>
+            <IonItem className="sample-button" detail={false} lines="full" button onClick={updateUserData}>
               <IonLabel>Update user data</IonLabel>
+            </IonItem>
+
+            <IonItem className="sample-button" detail={false} lines="none" button onClick={resetUserData}>
+              <IonLabel>Reset user data</IonLabel>
             </IonItem>
           </IonCard>
         </section>
