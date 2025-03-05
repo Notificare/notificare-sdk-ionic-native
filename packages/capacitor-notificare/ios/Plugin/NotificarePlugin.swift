@@ -408,7 +408,7 @@ public class NotificarePlugin: CAPPlugin {
             return
         }
 
-        let userData = json.compactMapValues { $0 as? String }
+        let userData = json.mapValues { $0 as? String }
 
         Notificare.shared.device().updateUserData(userData) { result in
             switch result {

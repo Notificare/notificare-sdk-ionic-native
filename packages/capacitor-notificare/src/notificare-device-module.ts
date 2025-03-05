@@ -177,12 +177,12 @@ export class NotificareDeviceModule {
   /**
    * Updates the custom user data associated with the device.
    *
-   * @param {Record<string, string>} userData - The updated user data to associate
+   * @param {Record<string, string | null>} userData - The updated user data to associate
    * with the device.
    * @returns {Promise<void>} - A promise that resolves when the user data has
    * been successfully updated.
    */
-  public async updateUserData(userData: Record<string, string>): Promise<void> {
+  public async updateUserData(userData: Record<string, string | null>): Promise<void> {
     await _Notificare.updateUserData({ userData });
   }
 }
