@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## Upcoming Release
+
+- Allow unsetting user data fields
+
+#### Native changes
+
+##### iOS
+- Fix issue where the notification UI was not dismissed when some actions were executed
+- Fix callback with keyboard safe area insets
+
+##### Android
+- Warnings related to missing requirements for Beacons functionality only logged once during `enableLocationUpdates()` flow
+- Fix UI behaviour after screen rotation when presenting notifications
+- Fix crash when rotating the screen when presenting a `NotificareCallbackActionFragment`
+
 ## 4.0.1
 
 - Add documentation to public methods
