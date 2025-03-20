@@ -3,7 +3,7 @@ require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 source 'https://cdn.cocoapods.org/'
 source 'git@github.com:Notificare/notificare-cocoapods-specs.git'
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -36,5 +36,5 @@ target 'App' do
 end
 
 target 'NotificationServiceExtension' do
-  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.0.1'
+  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.1.0'
 end
