@@ -440,15 +440,13 @@ public class NotificarePlugin : Plugin() {
             return
         }
 
-        val userData: NotificareUserData = mutableMapOf<String, String>().apply {
+        val userData = mutableMapOf<String, String?>().apply {
             val iterator = json.keys()
             while (iterator.hasNext()) {
                 val key = iterator.next()
                 val value = json.getString(key)
 
-                if (value != null) {
-                    put(key, value)
-                }
+                put(key, value)
             }
         }
 
