@@ -69,7 +69,7 @@ yarn add capacitor-notificare-scannables
 ## Getting Started
 
 ### Integration
-Get started with our [📚 integration guides](https://docs.notifica.re/sdk/v3/ionic-native/setup) and [example projects](#examples).
+Get started with our [📚 integration guides](https://docs.notifica.re/sdk/v4/ionic-native/setup) and [example projects](#examples).
 
 
 ### Examples
