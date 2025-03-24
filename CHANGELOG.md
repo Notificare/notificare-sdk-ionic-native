@@ -3,6 +3,7 @@
 ## 4.1.0
 
 - Allow unsetting user data fields
+- Drop support for iOS 13
 
 #### Native changes
 
