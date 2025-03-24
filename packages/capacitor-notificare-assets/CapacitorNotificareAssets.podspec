@@ -1,7 +1,7 @@
 require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
-notificare_version = '4.0.1'
+notificare_version = '4.1.0'
 
 Pod::Spec.new do |s|
   s.name = 'CapacitorNotificareAssets'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author = package['author']
   s.source = { :git => package['repository']['url'], :tag => s.version.to_s }
   s.source_files = 'ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}'
-  s.ios.deployment_target  = '13.0'
+  s.ios.deployment_target  = '14.0'
   s.dependency 'Capacitor'
   s.dependency 'Notificare/NotificareKit', notificare_version
   s.dependency 'Notificare/NotificareAssetsKit', notificare_version

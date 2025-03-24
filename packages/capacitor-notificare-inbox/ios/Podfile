@@ -1,4 +1,4 @@
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 def capacitor_pods
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
@@ -6,9 +6,9 @@ def capacitor_pods
   pod 'Capacitor', :path => '../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../node_modules/@capacitor/ios'
 
-  pod 'Notificare/NotificareKit', '4.0.1'
-  pod 'Notificare/NotificareInboxKit', '4.0.1'
-  pod 'Notificare/NotificareUtilitiesKit', '4.0.1'
+  pod 'Notificare/NotificareKit', '4.1.0'
+  pod 'Notificare/NotificareInboxKit', '4.1.0'
+  pod 'Notificare/NotificareUtilitiesKit', '4.1.0'
 end
 
 target 'Plugin' do

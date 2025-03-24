@@ -17,10 +17,10 @@ android {
         namespace 're.notifica.scannables.capacitor'
     }
 
-    compileSdkVersion 34
+    compileSdkVersion 35
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion 35
     }
     buildTypes {
         release {
@@ -56,9 +56,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':capacitor-android')
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 
-    def notificare_version = '4.0.1'
+    def notificare_version = '4.1.0'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-scannables:$notificare_version"
     implementation "re.notifica:notificare-utilities:$notificare_version"
