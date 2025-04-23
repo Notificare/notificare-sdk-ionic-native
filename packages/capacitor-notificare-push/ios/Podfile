@@ -6,9 +6,9 @@ def capacitor_pods
   pod 'Capacitor', :path => '../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../node_modules/@capacitor/ios'
 
-  pod 'Notificare/NotificareKit', '4.1.0'
-  pod 'Notificare/NotificarePushKit', '4.1.0'
-  pod 'Notificare/NotificareUtilitiesKit', '4.1.0'
+  pod 'Notificare/NotificareKit', '4.2.0'
+  pod 'Notificare/NotificarePushKit', '4.2.0'
+  pod 'Notificare/NotificareUtilitiesKit', '4.2.0'
 end
 
 target 'Plugin' do
