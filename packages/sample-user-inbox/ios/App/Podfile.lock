@@ -10,36 +10,36 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (6.0.2):
     - Capacitor
-  - CapacitorNotificare (4.0.1):
+  - CapacitorNotificare (4.1.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.1.0)
-    - Notificare/NotificareUtilitiesKit (= 4.1.0)
-  - CapacitorNotificarePush (4.0.1):
+    - Notificare/NotificareKit (= 4.2.0)
+    - Notificare/NotificareUtilitiesKit (= 4.2.0)
+  - CapacitorNotificarePush (4.1.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.1.0)
-    - Notificare/NotificarePushKit (= 4.1.0)
-    - Notificare/NotificareUtilitiesKit (= 4.1.0)
-  - CapacitorNotificarePushUi (4.0.1):
+    - Notificare/NotificareKit (= 4.2.0)
+    - Notificare/NotificarePushKit (= 4.2.0)
+    - Notificare/NotificareUtilitiesKit (= 4.2.0)
+  - CapacitorNotificarePushUi (4.1.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.1.0)
-    - Notificare/NotificarePushUIKit (= 4.1.0)
-    - Notificare/NotificareUtilitiesKit (= 4.1.0)
-  - CapacitorNotificareUserInbox (4.0.1):
+    - Notificare/NotificareKit (= 4.2.0)
+    - Notificare/NotificarePushUIKit (= 4.2.0)
+    - Notificare/NotificareUtilitiesKit (= 4.2.0)
+  - CapacitorNotificareUserInbox (4.1.0):
     - Capacitor
-    - Notificare/NotificareKit (= 4.1.0)
-    - Notificare/NotificareUserInboxKit (= 4.1.0)
+    - Notificare/NotificareKit (= 4.2.0)
+    - Notificare/NotificareUserInboxKit (= 4.2.0)
   - CapacitorStatusBar (6.0.1):
     - Capacitor
-  - Notificare/NotificareKit (4.1.0):
+  - Notificare/NotificareKit (4.2.0):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareNotificationServiceExtensionKit (4.1.0)
-  - Notificare/NotificarePushKit (4.1.0):
+  - Notificare/NotificareNotificationServiceExtensionKit (4.2.0)
+  - Notificare/NotificarePushKit (4.2.0):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificarePushUIKit (4.1.0):
+  - Notificare/NotificarePushUIKit (4.2.0):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareUserInboxKit (4.1.0):
+  - Notificare/NotificareUserInboxKit (4.2.0):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareUtilitiesKit (4.1.0)
+  - Notificare/NotificareUtilitiesKit (4.2.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -53,7 +53,7 @@ DEPENDENCIES:
   - CapacitorNotificarePushUi (from `../../../capacitor-notificare-push-ui`)
   - CapacitorNotificareUserInbox (from `../../../capacitor-notificare-user-inbox`)
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - Notificare/NotificareNotificationServiceExtensionKit (= 4.1.0)
+  - Notificare/NotificareNotificationServiceExtensionKit (= 4.2.0)
 
 SPEC REPOS:
   trunk:
@@ -90,13 +90,13 @@ SPEC CHECKSUMS:
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
   CapacitorHaptics: 05d33e20e394b1977dfd2a00a2621e04098164c1
   CapacitorKeyboard: 5bf4458dd989b56a60ea15c92cbca5fbfae6e9f9
-  CapacitorNotificare: 2652153bfb982708624b134fec0ea3b8881c15df
-  CapacitorNotificarePush: 90af31370b051df74bd8587f22f2c9a106385727
-  CapacitorNotificarePushUi: 78942aee4720ece8db1a5042af752f7b38d8405d
-  CapacitorNotificareUserInbox: 54042f23d4e0a02e548da7366f88312e9f23eabd
+  CapacitorNotificare: d870222cd5b14f4059ea46448e634cc4a5a44179
+  CapacitorNotificarePush: ef84ae9dec016c9ba05d9c2c80ee80dbc1a92e53
+  CapacitorNotificarePushUi: 62ed0f63cca585b9f1b93a05f1ce8f49637ac8a5
+  CapacitorNotificareUserInbox: 0f976cbae2ec10d23a6133b163659a6e64fde97c
   CapacitorStatusBar: 9ed7f06318fd436917072a9bf60fda56d12c8bdb
-  Notificare: fd2f28924a769e174ad5aed3c72fce61b4869b5d
+  Notificare: f6858eddf2ec74f4dafd2e13101fa302f7908a28
 
-PODFILE CHECKSUM: 8cdd947a9a45953d9d157e2c95fab5488baeb4db
+PODFILE CHECKSUM: babab6c2306d2767f265e152d940a0594ddc14ec
 
 COCOAPODS: 1.16.2
