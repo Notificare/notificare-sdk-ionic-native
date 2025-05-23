@@ -1,7 +1,7 @@
 require 'json'
 
 package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
-notificare_version = '4.2.0'
+notificare_version = '4.2.1'
 
 Pod::Spec.new do |s|
   s.name = 'CapacitorNotificarePushUi'
