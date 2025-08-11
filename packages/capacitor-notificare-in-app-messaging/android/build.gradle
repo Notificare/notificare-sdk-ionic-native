@@ -17,7 +17,7 @@ android {
         namespace 're.notifica.iam.capacitor'
     }
 
-    compileSdkVersion 35
+    compileSdkVersion 36
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 35
