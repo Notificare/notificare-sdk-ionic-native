@@ -59,7 +59,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-core:2.8.7'
 
-    def notificare_version = '4.2.0'
+    def notificare_version = '4.2.1'
     api "re.notifica:notificare:$notificare_version"
     api "re.notifica:notificare-push:$notificare_version"
     implementation "re.notifica:notificare-utilities:$notificare_version"
