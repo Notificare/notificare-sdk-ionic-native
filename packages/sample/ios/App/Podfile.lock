@@ -1,9 +1,9 @@
 PODS:
-  - Capacitor (7.1.0):
+  - Capacitor (7.4.2):
     - CapacitorCordova
   - CapacitorApp (7.0.0):
     - Capacitor
-  - CapacitorCordova (7.1.0)
+  - CapacitorCordova (7.4.2)
   - CapacitorHaptics (7.0.0):
     - Capacitor
   - CapacitorKeyboard (7.0.0):
@@ -54,7 +54,7 @@ PODS:
     - Capacitor
     - Notificare/NotificareKit (= 4.2.2)
     - Notificare/NotificareUserInboxKit (= 4.2.2)
-  - CapacitorStatusBar (7.0.0):
+  - CapacitorStatusBar (7.0.2):
     - Capacitor
   - Notificare/NotificareAssetsKit (4.2.2):
     - Notificare/NotificareUtilitiesKit
@@ -137,9 +137,9 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  Capacitor: bceb785fb78f5e81e4a9e37843bc1c24bd9c7194
+  Capacitor: 9d9e481b79ffaeacaf7a85d6a11adec32bd33b59
   CapacitorApp: 9cb31064a6c6bb2b1438583733a7bf45557fc1da
-  CapacitorCordova: 866217f32c1d25b326c568a10ea3ed0c36b13e29
+  CapacitorCordova: 5e58d04631bc5094894ac106e2bf1da18a9e6151
   CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
   CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
   CapacitorNotificare: deaa55fff5e9480c0304b6cf92f9e02215c213f8
@@ -152,7 +152,7 @@ SPEC CHECKSUMS:
   CapacitorNotificarePushUi: 26b22e3d0d9cce9a9c540c75c29fc80550e73f3d
   CapacitorNotificareScannables: 30b5bd6da3b7bc70d9d9b29ba6e2d2f6abce2071
   CapacitorNotificareUserInbox: 1f03e6b1b9c708d9a2630146bd948691e6664b83
-  CapacitorStatusBar: a8c4c83ed2e973bdafb979e80e4b00d027832cb7
+  CapacitorStatusBar: e04d05e121d5a5979c29eb4249186a4e4a84cacb
   Notificare: 16be1792142667eb152894d09d868294e098e762
 
 PODFILE CHECKSUM: d91caaf79a70a7a052017ee45263353538fd7f06
