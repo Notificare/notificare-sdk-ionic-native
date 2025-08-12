@@ -30,9 +30,11 @@ public class NotificarePlugin : Plugin() {
 
         val url = intent.data?.toString()
         if (url != null) {
-            EventBroker.dispatchEvent("url_opened", JSObject().apply {
-                put("url", url)
-            })
+            EventBroker.dispatchEvent(
+                "url_opened",
+                JSObject().apply { put("url", url) },
+                true
+            )
         }
     }
 
