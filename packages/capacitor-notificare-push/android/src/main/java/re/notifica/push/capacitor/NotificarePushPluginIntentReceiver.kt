@@ -44,7 +44,7 @@ internal class NotificarePushPluginIntentReceiver : NotificarePushIntentReceiver
 
     override fun onNotificationOpened(context: Context, notification: NotificareNotification) {
         try {
-            EventBroker.dispatchEvent("notification_opened", notification.toJson())
+            EventBroker.dispatchEvent("notification_opened", notification.toJson(), true)
         } catch (e: Exception) {
             logger.error("Failed to emit the notification_opened event.", e)
         }
@@ -60,7 +60,7 @@ internal class NotificarePushPluginIntentReceiver : NotificarePushIntentReceiver
             data.put("notification", notification.toJson())
             data.put("action", action.toJson())
 
-            EventBroker.dispatchEvent("notification_action_opened", data)
+            EventBroker.dispatchEvent("notification_action_opened", data, true)
         } catch (e: Exception) {
             logger.error("Failed to emit the notification_action_opened event.", e)
         }
