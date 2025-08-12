@@ -2,7 +2,9 @@
 	"appId": "re.notifica.sample.app",
 	"appName": "sample",
 	"webDir": "build",
-	"bundledWebRuntime": false,
+	"android": {
+		"adjustMarginsForEdgeToEdge": "force"
+	},
 	"packageClassList": [
 		"AppPlugin",
 		"HapticsPlugin",
