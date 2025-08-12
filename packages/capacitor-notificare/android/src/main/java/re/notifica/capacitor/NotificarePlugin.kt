@@ -18,9 +18,6 @@ public class NotificarePlugin : Plugin() {
 
         EventBroker.setup(this::notifyListeners)
         Notificare.intentReceiver = NotificarePluginIntentReceiver::class.java
-
-        val intent = activity?.intent
-        if (intent != null) handleOnNewIntent(intent)
     }
 
     override fun handleOnNewIntent(intent: Intent) {
