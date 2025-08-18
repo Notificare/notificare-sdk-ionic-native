@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Upcoming Release
+
+- Events `onUrlOpened`, `onNotificationOpened`, `onNotificationActionOpened`, `onUnknownNotificationOpened` and `onUnknownNotificationActionOpened` are now retained until consumed
+
+#### Native changes
+
+##### Android
+
+- Update dependencies
+
 ## 4.2.2
 
 #### Native changes

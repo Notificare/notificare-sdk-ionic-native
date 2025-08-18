@@ -4,7 +4,9 @@ const config: CapacitorConfig = {
   appId: 're.notifica.sample.app',
   appName: 'sample',
   webDir: 'build',
-  bundledWebRuntime: false,
+  android: {
+    adjustMarginsForEdgeToEdge: 'force',
+  },
 };
 
 export default config;

@@ -17,7 +17,7 @@ android {
         namespace 're.notifica.capacitor'
     }
 
-    compileSdkVersion 35
+    compileSdkVersion 36
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 35
@@ -58,7 +58,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.7.0'
 
-    def notificare_version = '4.2.0'
+    def notificare_version = '4.2.1'
     api "re.notifica:notificare:$notificare_version"
     implementation "re.notifica:notificare-utilities:$notificare_version"
 }
