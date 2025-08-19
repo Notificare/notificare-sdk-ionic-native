@@ -10,7 +10,7 @@ public class NotificarePushPlugin: CAPPlugin {
     public override func load() {
         addApplicationLaunchListener()
 
-        EventBroker.instance.setup { self.notifyListeners($0, data: $1) }
+        EventBroker.instance.setup { self.notifyListeners($0, data: $1, retainUntilConsumed: $2) }
         Notificare.shared.push().delegate = self
     }
 
@@ -298,7 +298,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
 
     public func notificare(_ notificarePush: NotificarePush, didOpenNotification notification: NotificareNotification) {
         do {
-            EventBroker.instance.dispatchEvent("notification_opened", data: try notification.toJson())
+            EventBroker.instance.dispatchEvent("notification_opened", data: try notification.toJson(), retainUntilConsumed: true)
         } catch {
             logger.error("Failed to emit the notification_opened event.", error: error)
         }
@@ -313,7 +313,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
             return (key, $0.value)
         })
 
-        EventBroker.instance.dispatchEvent("unknown_notification_opened", data: data)
+        EventBroker.instance.dispatchEvent("unknown_notification_opened", data: data, retainUntilConsumed: true)
     }
 
     public func notificare(_ notificarePush: NotificarePush, didOpenAction action: NotificareNotification.Action, for notification: NotificareNotification) {
@@ -323,7 +323,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
                 "action": try action.toJson(),
             ]
 
-            EventBroker.instance.dispatchEvent("notification_action_opened", data: data)
+            EventBroker.instance.dispatchEvent("notification_action_opened", data: data, retainUntilConsumed: true)
         } catch {
             logger.error("Failed to emit the notification_action_opened event.", error: error)
         }
@@ -347,7 +347,7 @@ extension NotificarePushPlugin: NotificarePushDelegate {
             data["responseText"] = responseText
         }
 
-        EventBroker.instance.dispatchEvent("unknown_notification_action_opened", data: data)
+        EventBroker.instance.dispatchEvent("unknown_notification_action_opened", data: data, retainUntilConsumed: true)
     }
 
     public func notificare(_ notificarePush: NotificarePush, didChangeNotificationSettings granted: Bool) {

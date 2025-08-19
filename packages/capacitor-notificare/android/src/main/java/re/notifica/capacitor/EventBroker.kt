@@ -3,7 +3,7 @@ package re.notifica.capacitor
 import com.getcapacitor.JSObject
 import org.json.JSONObject
 
-internal typealias NotifyListenersFunction = (name: String, data: JSObject?) -> Unit
+internal typealias NotifyListenersFunction = (name: String, data: JSObject?, retainUntilConsumed: Boolean) -> Unit
 
 internal object EventBroker {
     private var notifyListenersFunction: NotifyListenersFunction? = null
@@ -14,26 +14,27 @@ internal object EventBroker {
 
         if (eventQueue.isNotEmpty()) {
             logger.debug("Processing event queue with ${eventQueue.size} items.")
-            eventQueue.forEach { notifyListenersFunction(it.name, it.data) }
+            eventQueue.forEach { notifyListenersFunction(it.name, it.data, it.retainUntilConsumed) }
             eventQueue.clear()
         }
     }
 
-    fun dispatchEvent(name: String, data: JSONObject?) {
-        dispatchEvent(name, data?.let { JSObject.fromJSONObject(it) })
+    fun dispatchEvent(name: String, data: JSONObject?, retainUntilConsumed: Boolean = false) {
+        dispatchEvent(name, data?.let { JSObject.fromJSONObject(it) }, retainUntilConsumed)
     }
 
-    fun dispatchEvent(name: String, data: JSObject?) {
+    fun dispatchEvent(name: String, data: JSObject?, retainUntilConsumed: Boolean = false) {
         val notifyListenersFunction = notifyListenersFunction ?: run {
-            eventQueue.add(Event(name, data))
+            eventQueue.add(Event(name, data, retainUntilConsumed))
             return
         }
 
-        notifyListenersFunction(name, data)
+        notifyListenersFunction(name, data, retainUntilConsumed)
     }
 
     private data class Event(
         val name: String,
         val data: JSObject?,
+        val retainUntilConsumed: Boolean
     )
 }

@@ -1,7 +1,7 @@
 import Foundation
 import Capacitor
 
-internal typealias NotifyListenersFunction = (_ eventName: String, _ data: [String: Any]?) -> Void
+internal typealias NotifyListenersFunction = (_ eventName: String, _ data: [String: Any]?, _ retainUntilConsumed: Bool) -> Void
 
 internal class EventBroker {
     private init() {}
@@ -21,17 +21,18 @@ internal class EventBroker {
         }
     }
     
-    internal func dispatchEvent(_ name: String, data: [String: Any]?) {
+    internal func dispatchEvent(_ name: String, data: [String: Any]?, retainUntilConsumed: Bool = false) {
         guard let notifyListenersFunction = notifyListenersFunction else {
-            queue.append(Event(name: name, data: data))
+            queue.append(Event(name: name, data: data, retainUntilConsumed: retainUntilConsumed))
             return
         }
         
-        notifyListenersFunction(name, data)
+        notifyListenersFunction(name, data, retainUntilConsumed)
     }
     
     internal struct Event {
         let name: String
         let data: [String: Any]?
+        let retainUntilConsumed: Bool
     }
 }

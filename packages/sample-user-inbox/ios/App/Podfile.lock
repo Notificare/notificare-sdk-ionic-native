@@ -10,21 +10,21 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (6.0.2):
     - Capacitor
-  - CapacitorNotificare (4.2.1):
+  - CapacitorNotificare (4.2.2):
     - Capacitor
     - Notificare/NotificareKit (= 4.2.2)
     - Notificare/NotificareUtilitiesKit (= 4.2.2)
-  - CapacitorNotificarePush (4.2.1):
+  - CapacitorNotificarePush (4.2.2):
     - Capacitor
     - Notificare/NotificareKit (= 4.2.2)
     - Notificare/NotificarePushKit (= 4.2.2)
     - Notificare/NotificareUtilitiesKit (= 4.2.2)
-  - CapacitorNotificarePushUi (4.2.1):
+  - CapacitorNotificarePushUi (4.2.2):
     - Capacitor
     - Notificare/NotificareKit (= 4.2.2)
     - Notificare/NotificarePushUIKit (= 4.2.2)
     - Notificare/NotificareUtilitiesKit (= 4.2.2)
-  - CapacitorNotificareUserInbox (4.2.1):
+  - CapacitorNotificareUserInbox (4.2.2):
     - Capacitor
     - Notificare/NotificareKit (= 4.2.2)
     - Notificare/NotificareUserInboxKit (= 4.2.2)
@@ -90,10 +90,10 @@ SPEC CHECKSUMS:
   CapacitorCordova: f48c89f96c319101cd2f0ce8a2b7449b5fb8b3dd
   CapacitorHaptics: 05d33e20e394b1977dfd2a00a2621e04098164c1
   CapacitorKeyboard: 5bf4458dd989b56a60ea15c92cbca5fbfae6e9f9
-  CapacitorNotificare: 01fa8dc99ed718149d37bbcbfd835d6368993002
-  CapacitorNotificarePush: ffdc30551e458208462a0b82a51a0f1908fc58b0
-  CapacitorNotificarePushUi: 12e27a2afaa314782c56748eb341077314bafad7
-  CapacitorNotificareUserInbox: 956cdd23f19fd599ae569f5ed474a03dd8037d6f
+  CapacitorNotificare: deaa55fff5e9480c0304b6cf92f9e02215c213f8
+  CapacitorNotificarePush: 87c14779f8496042c4846d3434fa329e6b98d11c
+  CapacitorNotificarePushUi: 26b22e3d0d9cce9a9c540c75c29fc80550e73f3d
+  CapacitorNotificareUserInbox: 1f03e6b1b9c708d9a2630146bd948691e6664b83
   CapacitorStatusBar: 9ed7f06318fd436917072a9bf60fda56d12c8bdb
   Notificare: 16be1792142667eb152894d09d868294e098e762
 
