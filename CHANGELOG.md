@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Upcoming Release
+## 4.2.3
 
 - Events `onUrlOpened`, `onNotificationOpened`, `onNotificationActionOpened`, `onUnknownNotificationOpened` and `onUnknownNotificationActionOpened` are now retained until consumed
 
