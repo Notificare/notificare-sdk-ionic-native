@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.2.4
+
+- Add required referrer for embedded YouTube videos
+
 ## 4.2.3
 
 - Events `onUrlOpened`, `onNotificationOpened`, `onNotificationActionOpened`, `onUnknownNotificationOpened` and `onUnknownNotificationActionOpened` are now retained until consumed
