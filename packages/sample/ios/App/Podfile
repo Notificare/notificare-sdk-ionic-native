@@ -36,5 +36,5 @@ target 'App' do
 end
 
 target 'NotificationServiceExtension' do
-  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.2.3'
+  pod 'Notificare/NotificareNotificationServiceExtensionKit', '4.2.4'
 end
