@@ -10,74 +10,74 @@ PODS:
     - Capacitor
   - CapacitorNotificare (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareAssets (4.2.5):
     - Capacitor
-    - Notificare/NotificareAssetsKit (= 4.2.4)
-    - Notificare/NotificareKit (= 4.2.4)
+    - Notificare/NotificareAssetsKit (= 4.2.5)
+    - Notificare/NotificareKit (= 4.2.5)
   - CapacitorNotificareGeo (4.2.5):
     - Capacitor
-    - Notificare/NotificareGeoKit (= 4.2.4)
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareGeoKit (= 4.2.5)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareInAppMessaging (4.2.5):
     - Capacitor
-    - Notificare/NotificareInAppMessagingKit (= 4.2.4)
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareInAppMessagingKit (= 4.2.5)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareInbox (4.2.5):
     - Capacitor
-    - Notificare/NotificareInboxKit (= 4.2.4)
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareInboxKit (= 4.2.5)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareLoyalty (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareLoyaltyKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareLoyaltyKit (= 4.2.5)
   - CapacitorNotificarePush (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificarePushKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificarePushKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificarePushUi (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificarePushUIKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificarePushUIKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareScannables (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareScannablesKit (= 4.2.4)
-    - Notificare/NotificareUtilitiesKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareScannablesKit (= 4.2.5)
+    - Notificare/NotificareUtilitiesKit (= 4.2.5)
   - CapacitorNotificareUserInbox (4.2.5):
     - Capacitor
-    - Notificare/NotificareKit (= 4.2.4)
-    - Notificare/NotificareUserInboxKit (= 4.2.4)
+    - Notificare/NotificareKit (= 4.2.5)
+    - Notificare/NotificareUserInboxKit (= 4.2.5)
   - CapacitorStatusBar (7.0.2):
     - Capacitor
-  - Notificare/NotificareAssetsKit (4.2.4):
+  - Notificare/NotificareAssetsKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareGeoKit (4.2.4):
+  - Notificare/NotificareGeoKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareInAppMessagingKit (4.2.4):
+  - Notificare/NotificareInAppMessagingKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareInboxKit (4.2.4):
+  - Notificare/NotificareInboxKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareKit (4.2.4):
+  - Notificare/NotificareKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareLoyaltyKit (4.2.4):
+  - Notificare/NotificareLoyaltyKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareNotificationServiceExtensionKit (4.2.4)
-  - Notificare/NotificarePushKit (4.2.4):
+  - Notificare/NotificareNotificationServiceExtensionKit (4.2.5)
+  - Notificare/NotificarePushKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificarePushUIKit (4.2.4):
+  - Notificare/NotificarePushUIKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareScannablesKit (4.2.4):
+  - Notificare/NotificareScannablesKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareUserInboxKit (4.2.4):
+  - Notificare/NotificareUserInboxKit (4.2.5):
     - Notificare/NotificareUtilitiesKit
-  - Notificare/NotificareUtilitiesKit (4.2.4)
+  - Notificare/NotificareUtilitiesKit (4.2.5)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -96,7 +96,7 @@ DEPENDENCIES:
   - CapacitorNotificareScannables (from `../../../capacitor-notificare-scannables`)
   - CapacitorNotificareUserInbox (from `../../../capacitor-notificare-user-inbox`)
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - Notificare/NotificareNotificationServiceExtensionKit (= 4.2.4)
+  - Notificare/NotificareNotificationServiceExtensionKit (= 4.2.5)
 
 SPEC REPOS:
   trunk:
@@ -142,19 +142,19 @@ SPEC CHECKSUMS:
   CapacitorCordova: 5e58d04631bc5094894ac106e2bf1da18a9e6151
   CapacitorHaptics: 7be406a91e4eb87287f321c6c68e1709d6837b3a
   CapacitorKeyboard: 4db71e694e7afb5d7c0be09b05495c19f7d6c914
-  CapacitorNotificare: 3a8ffb124d931aa05dc1998db64780b06af5324e
-  CapacitorNotificareAssets: 973849c474580f2ea7e0c3f6c325bdc4e99122a3
-  CapacitorNotificareGeo: 374726621ff9866eff7d9cf452bba06e90d1cd66
-  CapacitorNotificareInAppMessaging: f5d5c66400035288daff768f710884670fdeeef4
-  CapacitorNotificareInbox: ad4fc8f24ba775886fcbea046c7c58b06a74257d
-  CapacitorNotificareLoyalty: d50e5be9ba28547ad16e5c801c837a518ebee16c
-  CapacitorNotificarePush: 490e190e2d342f30bca5cd80baba31b3dca77445
-  CapacitorNotificarePushUi: 5901df491b2b1a5af3e2660c0956fe54fa9e6af0
-  CapacitorNotificareScannables: 07cdcab3415be92130dae16f51681f3700466918
-  CapacitorNotificareUserInbox: 1f9e72429ec2134c1e4cfae6d25d47ddd9469976
+  CapacitorNotificare: f666730365d5490f49571efdfae2b216e3635fa2
+  CapacitorNotificareAssets: 9daa1fe4450f0672ee49cec174e6ac230a714145
+  CapacitorNotificareGeo: ac7e1ef555dd3ca739df50396ae9e9711581df00
+  CapacitorNotificareInAppMessaging: 3f4d4343ec10cb07e1532ff3a3a21bd416815169
+  CapacitorNotificareInbox: c9a8dbf467b9dacd2fdef9305e4be62eafc44fe1
+  CapacitorNotificareLoyalty: f11006c29206fd92c768e58ff9a99549413d49d2
+  CapacitorNotificarePush: 48baec6d834c111b360b41aeea1271665066885c
+  CapacitorNotificarePushUi: cedb535a5e150114bf6ce7802c961839ea8e8f2f
+  CapacitorNotificareScannables: f67e9934e27c510112bc2a988c1b76e0d30402b6
+  CapacitorNotificareUserInbox: 9209b3dddb01fc7d99e178739ebfd0a27cd22596
   CapacitorStatusBar: e04d05e121d5a5979c29eb4249186a4e4a84cacb
-  Notificare: e7da68f89e8d7e50cb8a94c9dc1e2c81fc131ecd
+  Notificare: bf4b1dd06288f3c3c2aa1d3d8ea51bdbf5c38295
 
-PODFILE CHECKSUM: b4cffab38dda064b50febc6ae4401e85d5a702af
+PODFILE CHECKSUM: 93317b95807b0cba8329007b478420399af5d900
 
 COCOAPODS: 1.16.2
